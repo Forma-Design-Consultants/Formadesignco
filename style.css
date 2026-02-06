@@ -1,0 +1,1063 @@
+/* ================= GLOBAL STYLES ================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #929191;
+    color: #2b2b2b;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+h1,
+h2 {
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+/* ================= TRANSITIONS ================= */
+.reveal {
+    position: relative;
+    transform: translateY(40px);
+    opacity: 0;
+    transition: all 1.2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+}
+
+.reveal.active {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* ================= HEADER & NAV ================= */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    border-bottom: 2px solid #000000;
+    padding: 20px 0;
+    z-index: 1000;
+}
+
+
+.nav-container {
+    height: 80px; /* Increased from 60px to accommodate a larger logo */
+    width: 95%;   /* Expanded width to move logo further left */
+    max-width: 1400px; /* Higher max-width to allow corner positioning */
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    height: 110px; /* Increased from 80px */
+    width: auto;
+    margin-top: -10px; /* Moves it slightly toward the top corner */
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05); /* Subtle interaction effect */
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 40px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #2b2b2b;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+/* ================= NAV HOVER ANIMATION ================= */
+nav ul li a {
+    position: relative;
+    padding-bottom: 5px; /* Space for the underline */
+}
+
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #2b2b2b; /* Matches your text color */
+    transition: width 0.3s ease-in-out;
+}
+
+nav ul li a:hover::after {
+    width: 100%;
+}
+
+/* ================= HERO SECTION ================= */
+.hero {
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+.cta-button {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 15px 40px;
+    background: #fff;
+    color: #1a1a1a;
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+.cta-button:hover {
+    background: #2b2b2b;
+    color: white;
+}
+
+/* ================= SERVICES ================= */
+.services {
+    padding: 100px 0;
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    text-align: center;
+}
+
+.service-grid {
+    margin-top: 60px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
+}
+
+.service-card {
+    position: relative;
+    height: 400px;
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+}
+
+.service-card h2 {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: white;
+    z-index: 2;
+}
+
+.service-card-content {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    transition: 0.4s;
+    z-index: 3;
+}
+
+.service-card:hover .service-card-content {
+    opacity: 1;
+}
+
+/* ================= INFO DETAILS ================= */
+.info-details {
+    padding: 120px 0;
+    background-color: #ffffff;
+}
+
+.info-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.info-list li {
+    margin-top: 15px;
+    padding-left: 15px;
+    border-left: 2px solid #000;
+    list-style: none;
+}
+
+.image-placeholder {
+    background: #f4f4f4;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+/* ================= DESIGN LAB ================= */
+.futuristic-projects {
+    padding: 120px 0;
+    background-color: #2b2b2b;
+    color: #ffffff;
+    text-align: center;
+}
+
+.futu-title {
+    font-size: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 10px;
+}
+
+.futu-grid {
+    width: 90%;
+    max-width: 1200px;
+    margin: 80px auto 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.futu-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 50px 30px;
+    text-align: left;
+    transition: 0.5s;
+}
+
+.futu-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #ffffff;
+}
+
+.futu-tag {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #929191;
+    margin-bottom: 20px;
+}
+
+.futu-line {
+    width: 30px;
+    height: 1px;
+    background: #ffffff;
+    margin-top: 30px;
+    transition: 0.5s;
+}
+
+.futu-card:hover .futu-line {
+    width: 100%;
+}
+
+/* ================= TECH STATS ================= */
+.tech-stats {
+    padding: 80px 0;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    border-top: 1px solid #000;
+}
+
+.stat-box {
+    text-align: center;
+    padding: 20px;
+}
+
+.stat-number {
+    display: block;
+    font-size: 3rem;
+    font-weight: 600;
+}
+
+.stat-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #929191;
+    letter-spacing: 2px;
+}
+
+/* ================= NEW MODULES & ADD SECTIONS ================= */
+.module-tag {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    color: #929191;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.module-title {
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+}
+
+/* Process Matrix */
+.process-matrix {
+    padding: 120px 0;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.matrix-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.matrix-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-top: 60px;
+}
+
+.matrix-item {
+    border-top: 1px solid #000;
+    padding-top: 30px;
+}
+
+.matrix-num {
+    font-size: 14px;
+    font-weight: 600;
+    color: #929191;
+}
+
+/* Innovation Section */
+.innovation-section {
+    padding: 120px 0;
+    background-color: #f8f8f8;
+}
+
+.innovation-content {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+}
+
+.glass-orb {
+    width: 250px;
+    height: 250px;
+    background: rgba(146, 145, 145, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 3px;
+    margin: auto;
+}
+
+/* Virtual Landing */
+.virtual-landing {
+    padding: 150px 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), #1a1a1a;
+}
+
+/* 1. Eco-Intelligence Landing */
+.eco-intelligence {
+    padding: 120px 0;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.eco-grid {
+    width: 90%;
+    max-width: 1200px;
+    margin: 60px auto 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+}
+
+.eco-card {
+    padding: 40px;
+    border: 1px solid #e5e5e5;
+    text-align: left;
+    transition: 0.5s;
+}
+
+.eco-card:hover {
+    background: #000;
+    color: #fff;
+}
+
+/* 2. Digital Twin Landing */
+.digital-twin {
+    padding: 120px 0;
+    background-color: #1a1a1a;
+}
+
+.twin-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+}
+
+.wireframe-cube {
+    width: 200px;
+    height: 200px;
+    border: 1px solid #929191;
+    margin: auto;
+    animation: rotateCube 10s infinite linear;
+}
+
+@keyframes rotateCube {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.twin-text {
+    text-align: left;
+}
+
+/* 3. Horizon Landing */
+.horizon-landing {
+    padding: 180px 0;
+    background: #000;
+    color: #fff;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.horizon-bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 15rem;
+    font-weight: 900;
+    opacity: 0.05;
+    letter-spacing: 50px;
+    pointer-events: none;
+}
+
+.horizon-content {
+    position: relative;
+    z-index: 2;
+}
+/* --- FUTURISTIC LOCATIONS --- */
+.locations-area {
+    padding: 120px 0;
+    background: #000;
+    overflow: hidden;
+}
+
+.location-grid-futuristic {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 40px;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    perspective: 1000px; /* Essential for 3D depth */
+}
+
+.location-perspective {
+    transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.location-card-v2 {
+    position: relative;
+    display: block;
+    background: #0a0a0a;
+    border: 1px solid #1a1a1a;
+    padding: 40px;
+    text-decoration: none;
+    color: #fff;
+    height: 300px;
+    overflow: hidden;
+    transition: all 0.5s ease;
+    transform-style: preserve-3d;
+}
+
+/* Moving background effect on hover */
+.location-card-v2:hover {
+    border-color: #fff;
+    transform: rotateX(5deg) rotateY(-5deg) scale(1.02);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 20px rgba(255,255,255,0.05);
+}
+
+.zone-code {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: #444;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.location-card-v2 h2 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 10px;
+    letter-spacing: -1px;
+}
+
+/* Pulsing Status Dot */
+.status-indicator {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #929191;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-indicator span {
+    width: 6px;
+    height: 6px;
+    background: #fff;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 10px #fff;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.3; transform: scale(1.5); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+.location-card-v2 p {
+    color: #929191;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.location-card-v2 small {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #fff;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.4s ease;
+}
+
+.location-card-v2:hover small {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Card Overlay Shine */
+.card-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 100%);
+    pointer-events: none;
+}
+
+/* ================= LOCATIONS & FOOTER ================= */
+.locations {
+    background-color: #b4b4b4;
+    padding: 100px 0;
+}
+
+.location-grid {
+    width: 90%;
+    max-width: 1200px;
+    margin: 60px auto 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+}
+
+.location-card {
+    padding: 40px;
+    background: #fff;
+    text-align: center;
+    border: 1px solid #e5e5e5;
+}
+
+.location-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.contact {
+    padding: 100px 0;
+    width: 90%;
+    max-width: 800px;
+    margin: auto;
+    text-align: center;
+}
+
+form {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+input,
+textarea {
+    padding: 15px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+}
+
+button {
+    background-color: #2b2b2b;
+    color: white;
+    padding: 15px;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+footer {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    padding: 80px 0 30px 0;
+}
+
+.footer-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+}
+
+.footer-logo-white {
+    height: 50px;
+    filter: brightness(10) invert(1) !important;
+}
+
+.footer-header {
+    color: #929191;
+    font-size: 14px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 40px;
+    font-size: 12px;
+    color: #666;
+}
+
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+    .nav-container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    nav ul {
+        gap: 15px;
+        margin-top: 10px;
+    }
+
+    .hero-content h1 {
+        font-size: 2.2rem;
+    }
+
+    .info-container,
+    .innovation-content,
+    .twin-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .horizon-bg-text {
+        font-size: 5rem;
+        letter-spacing: 10px;
+    }
+}
+
+/* ================= MODAL ================= */
+#contractor-form input::placeholder {
+    color: #555;
+}
+
+#contractor-form select:focus, 
+#contractor-form input:focus {
+    outline: none;
+    border-color: #fff !important;
+}
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 3000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.modal-content {
+    background: #fff;
+    margin: 5% auto;
+    padding: 20px;
+    width: 80%;
+    position: relative;
+}
+
+.close-button {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 35px;
+    cursor: pointer;
+}
+.futu-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 20px;
+    color: #000; /* For the white background section */
+    transition: transform 0.3s ease;
+}
+
+.matrix-item:hover .futu-icon {
+    transform: translateY(-5px) scale(1.1);
+}
+
+/* If the icons are in a dark section, use this: */
+.process-matrix .futu-icon {
+    color: #000;
+}
+
+/* Digital Twin section specific icons if needed */
+.digital-twin .futu-icon {
+    color: #fff;
+    filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
+}
+
+/* ================= MODERN MOBILE & IPHONE OPTIMIZATION ================= */
+
+/* Specific targeting for iPhone 17 Pro Max and modern high-res mobile devices */
+@media screen and (max-width: 440px) {
+    nav ul {
+        gap: 12px; /* Slightly tighter gap for 5 items */
+    }
+    nav a {
+        font-size: 11px; /* Sharper font for the 5-item layout */
+    }
+}
+@media screen and (max-width: 440px) {
+    
+    /* 1. Handling the Dynamic Island / Notch Safe Areas */
+    header {
+        padding-top: env(safe-area-inset-top, 20px); /* Pushes content below the Dynamic Island */
+        padding-bottom: 15px;
+        height: auto;
+    }
+
+    .nav-container {
+        height: auto;
+        flex-direction: column;
+        gap: 10px;
+        width: 90%;
+    }
+
+    /* 2. Logo Scaling for Small Screens */
+    .logo {
+        height: 70px; /* Reduced for mobile to prevent overcrowding */
+        margin-top: 0;
+    }
+
+    /* 3. Improved Navigation (Touch Targets) */
+    nav ul {
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding-bottom: 5px;
+    }
+
+    nav a {
+        font-size: 13px; /* Smaller but sharper */
+        letter-spacing: 1px;
+    }
+
+    /* 4. Responsive Typography */
+    .hero-content h1 {
+        font-size: 2rem;
+        letter-spacing: 2px;
+        padding: 0 10px;
+    }
+
+    .futu-title {
+        font-size: 1.8rem;
+        letter-spacing: 5px;
+    }
+
+    .module-title {
+        font-size: 1.6rem;
+    }
+
+    /* 5. Fluid Layout Adjustments */
+    .info-container,
+    .innovation-content,
+    .twin-container,
+    .eco-grid,
+    .location-grid,
+    .futu-grid {
+        grid-template-columns: 1fr !important; /* Forces single column */
+        gap: 30px;
+        width: 92%;
+    }
+
+    /* 6. Form Optimization for Mobile Keyboards */
+    input, textarea {
+        font-size: 16px !important; /* Prevents iOS from auto-zooming on focus */
+        width: 100%;
+        border-radius: 0; /* Maintains the architectural sharp-edge look */
+    }
+
+    button, .cta-button {
+        width: 100%; /* Full width buttons are easier to tap on mobile */
+        padding: 18px;
+        font-size: 14px;
+    }
+
+    /* 7. Design Lab / Futuristic Cards */
+    .futu-card {
+        padding: 30px 20px;
+    }
+
+    /* 8. Fix for the Horizon Background Text */
+    .horizon-bg-text {
+        font-size: 4rem;
+        letter-spacing: 5px;
+        white-space: nowrap;
+    }
+
+    /* 9. Glass Orb Scaling */
+    .glass-orb {
+        width: 180px;
+        height: 180px;
+        font-size: 9px;
+    }
+}
+
+/* Landscape Mode Optimization (preventing overlap) */
+@media screen and (max-height: 450px) and (orientation: landscape) {
+    header {
+        position: relative; /* Unfix header so it doesn't cover the screen in landscape */
+    }
+    .hero {
+        height: 150vh; /* Allow scrolling in short landscape views */
+    }
+}
+
+/* --- RESPONSIVE FIXES --- */
+
+/* For Tablets and Mobile */
+@media (max-width: 992px) {
+    .futu-grid {
+        grid-template-columns: 1fr; /* Stack cards vertically */
+        gap: 40px;
+        padding: 0 20px;
+    }
+
+    .futu-card.featured, 
+    .futu-card {
+        transform: scale(1) !important; /* Remove scaling on mobile to save space */
+        margin: 0 auto;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .location-grid-futuristic {
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+}
+
+/* For Small Phones */
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .module-title {
+        font-size: 1.8rem;
+    }
+
+    .cta-button {
+        width: 100%; /* Full width buttons for easier tapping */
+        text-align: center;
+    }
+}
+#form-status {
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 4px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+/* The Green Success Style */
+.status-success {
+    background: rgba(0, 0, 0, 0.1);
+    color: #000000;
+    border: 1px solid #000000;
+    display: block !important;
+}
+
+/* The Error Style (just in case) */
+.status-error {
+    background: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
+    border: 1px solid #e74c3c;
+    display: block !important;
+}
+/* ================= TEAM PAGE STYLES ================= */
+
+.team-section {
+    padding: 100px 0;
+    background-color: #474747;
+    min-height: 100vh;
+}
+
+.team-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+}
+
+.team-card {
+    background: #ffffff;
+    border: 1px solid #000000;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover Effect: Invert Colors for Futuristic Feel */
+.team-card:hover {
+    border-color: #000;
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+.member-image-placeholder {
+    width: 100%;
+    height: 350px;
+    background-color: #919191;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #000000;
+}
+
+.placeholder-box {
+    color: #999;
+    letter-spacing: 2px;
+    font-size: 12px;
+}
+
+.member-info {
+    padding: 30px;
+}
+
+/* Tech Header (ID and Dot) */
+.tech-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.code {
+    font-family: 'Inter', monospace; /* Monospace for tech feel */
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #999;
+    text-transform: uppercase;
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    background-color: #27ae60; /* Active Green */
+    border-radius: 50%;
+    box-shadow: 0 0 5px #27ae60;
+}
+
+.team-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.role {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.contact-data {
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+    font-size: 0.85rem;
+    color: #444;
+    line-height: 1.8;
+}
+
+.contact-data p {
+    font-family: monospace; /* Gives it the 'data' look */
+}
+
+/* Mobile Fix for Team */
+@media (max-width: 768px) {
+    .team-container {
+        grid-template-columns: 1fr;
+        padding: 0 20px;
+    }
+}

@@ -1,0 +1,110 @@
+// --- FORM SELECTORS ---
+const contactForm = document.getElementById('contact-form');
+const contractorForm = document.getElementById('contractor-form'); // New Selector
+
+// --- EMAILJS CONFIG ---
+const serviceID = 'service_zxix26i';
+const templateID = 'template_myacve9'; 
+
+// --- HOMEOWNER CONTACT FORM LOGIC ---
+if (contactForm) {
+    contactForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const submitBtn = document.getElementById('submit-btn');
+        const formStatus = document.getElementById('form-status');
+        
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Sending...";
+
+        emailjs.sendForm(serviceID, templateID, this)
+            .then(() => {
+                submitBtn.innerText = "Message Sent";
+                formStatus.style.display = "block";
+                formStatus.style.color = "#ffffff";
+                formStatus.innerText = "FORMA Architecture: Building with intention. We’ve received your inquiry. Our team is reviewing your vision and will reach out shortly.";
+                contactForm.reset();
+            }, (err) => {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Try Again";
+                formStatus.style.display = "block";
+                formStatus.style.color = "#ff4d4d";
+                formStatus.innerText = "Error: " + JSON.stringify(err);
+            });
+    });
+}
+
+// --- CONTRACTOR PARTNER FORM LOGIC ---
+if (contractorForm) {
+    contractorForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const partnerBtn = this.querySelector('button');
+        
+        partnerBtn.disabled = true;
+        partnerBtn.innerText = "Processing...";
+
+        // Note: You can use the same template, or create a specific one in EmailJS
+        emailjs.sendForm(serviceID, templateID, this)
+            .then(() => {
+                partnerBtn.innerText = "Application Received";
+                setTimeout(() => {
+                    closeContractor(); // Close modal after success
+                    partnerBtn.disabled = false;
+                    partnerBtn.innerText = "Submit Credentials";
+                    contractorForm.reset();
+                }, 2000);
+            }, (err) => {
+                partnerBtn.disabled = false;
+                partnerBtn.innerText = "Error. Try Again";
+                console.error("Contractor Form Error:", err);
+            });
+    });
+}
+// Ensure contractorForm sends to your partner list
+if (contractorForm) {
+    contractorForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const partnerBtn = this.querySelector('button');
+        partnerBtn.innerText = "VERIFYING CSLB..."; // Futuristic wording
+        
+        emailjs.sendForm(serviceID, templateID, this)
+            .then(() => {
+                partnerBtn.innerText = "PARTNER REQUEST SENT";
+                setTimeout(() => { closeContractor(); contractorForm.reset(); }, 2500);
+            });
+    });
+}
+
+// --- MODAL & GLOBAL FUNCTIONS ---
+
+function openContractor() {
+    document.getElementById("contractorModal").style.display = "block";
+}
+
+function closeContractor() {
+    document.getElementById("contractorModal").style.display = "none";
+}
+
+// Ensure Map functions are global
+function openMap(state) {
+    var modal = document.getElementById("mapModal");
+    var iframe = document.getElementById("mapFrame");
+    var maps = {
+        'california': 'https://www.google.com/maps/embed?pb=YOUR_CALI_ID', 
+        'utah': 'https://www.google.com/maps/embed?pb=YOUR_UTAH_ID'
+    };
+    iframe.src = maps[state];
+    modal.style.display = "block";
+}
+
+function closeMap() {
+    document.getElementById("mapModal").style.display = "none";
+    document.getElementById("mapFrame").src = "";
+}
+
+// Handle clicking outside of any modal to close it
+window.onclick = function(event) {
+    const mapModal = document.getElementById("mapModal");
+    const conModal = document.getElementById("contractorModal");
+    if (event.target == mapModal) { closeMap(); }
+    if (event.target == conModal) { closeContractor(); }
+}
