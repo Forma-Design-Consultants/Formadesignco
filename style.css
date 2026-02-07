@@ -177,8 +177,8 @@ nav ul li a:hover::after {
    
     
     /* BIGGER TEXT SETTINGS */
-    font-size: 5rem;              /* Significant increase in size */
-    font-weight: 400;             /* Bolder weight for impact */
+    font-size: 3rem;              /* Significant increase in size */
+    font-weight: 150;             /* Bolder weight for impact */
     text-transform: uppercase;
     letter-spacing: 12px;         /* Wide spacing for an architectural look */
     line-height: 1.1;
@@ -218,7 +218,7 @@ nav ul li a:hover::after {
     position: absolute;
     bottom: 20px;
     left: 20px;
-    color: white;
+    color: rgb(255, 255, 255);
     z-index: 2;
 }
 
