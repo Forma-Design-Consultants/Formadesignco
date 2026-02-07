@@ -683,6 +683,7 @@ footer {
     color: #666;
 }
 
+
 /* ================= MOBILE ================= */
 @media (max-width: 768px) {
     .nav-container {
@@ -885,5 +886,178 @@ footer {
     }
     .hero {
         height: 150vh; /* Allow scrolling in short landscape views */
+    }
+}
+
+/* --- RESPONSIVE FIXES --- */
+
+/* For Tablets and Mobile */
+@media (max-width: 992px) {
+    .futu-grid {
+        grid-template-columns: 1fr; /* Stack cards vertically */
+        gap: 40px;
+        padding: 0 20px;
+    }
+
+    .futu-card.featured, 
+    .futu-card {
+        transform: scale(1) !important; /* Remove scaling on mobile to save space */
+        margin: 0 auto;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .location-grid-futuristic {
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+}
+
+/* For Small Phones */
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .module-title {
+        font-size: 1.8rem;
+    }
+
+    .cta-button {
+        width: 100%; /* Full width buttons for easier tapping */
+        text-align: center;
+    }
+}
+#form-status {
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 4px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+/* The Green Success Style */
+.status-success {
+    background: rgba(0, 0, 0, 0.1);
+    color: #000000;
+    border: 1px solid #000000;
+    display: block !important;
+}
+
+/* The Error Style (just in case) */
+.status-error {
+    background: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
+    border: 1px solid #e74c3c;
+    display: block !important;
+}
+/* ================= TEAM PAGE STYLES ================= */
+
+.team-section {
+    padding: 100px 0;
+    background-color: #474747;
+    min-height: 100vh;
+}
+
+.team-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+}
+
+.team-card {
+    background: #ffffff;
+    border: 1px solid #000000;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover Effect: Invert Colors for Futuristic Feel */
+.team-card:hover {
+    border-color: #000;
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+.member-image-placeholder {
+    width: 100%;
+    height: 350px;
+    background-color: #919191;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #000000;
+}
+
+.placeholder-box {
+    color: #999;
+    letter-spacing: 2px;
+    font-size: 12px;
+}
+
+.member-info {
+    padding: 30px;
+}
+
+/* Tech Header (ID and Dot) */
+.tech-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.code {
+    font-family: 'Inter', monospace; /* Monospace for tech feel */
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #999;
+    text-transform: uppercase;
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    background-color: #27ae60; /* Active Green */
+    border-radius: 50%;
+    box-shadow: 0 0 5px #27ae60;
+}
+
+.team-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.role {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.contact-data {
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+    font-size: 0.85rem;
+    color: #444;
+    line-height: 1.8;
+}
+
+.contact-data p {
+    font-family: monospace; /* Gives it the 'data' look */
+}
+
+/* Mobile Fix for Team */
+@media (max-width: 768px) {
+    .team-container {
+        grid-template-columns: 1fr;
+        padding: 0 20px;
     }
 }
