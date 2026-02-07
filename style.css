@@ -177,7 +177,7 @@ nav ul li a:hover::after {
     
     /* BIGGER TEXT SETTINGS */
     font-size: 5rem;              /* Significant increase in size */
-    font-weight: 700;             /* Bolder weight for impact */
+    font-weight: 400;             /* Bolder weight for impact */
     text-transform: uppercase;
     letter-spacing: 12px;         /* Wide spacing for an architectural look */
     line-height: 1.1;
@@ -1153,4 +1153,5 @@ footer {
     }
     
 }
+
 
