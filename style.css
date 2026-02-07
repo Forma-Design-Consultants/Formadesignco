@@ -134,13 +134,65 @@ nav ul li a:hover::after {
     color: white;
 }
 
-/* ================= SERVICES ================= */
+/* ================= SERVICES FIXED ================= */
 .services {
+    position: relative;
     padding: 100px 0;
-    width: 90%;
-    max-width: 1200px;
+    width: 100%;
+    /* Remove the max-width: 1200px from here so the video can go full width */
+    max-width: none; 
     margin: auto;
     text-align: center;
+    background-color: #000; /* Fallback background */
+    overflow: hidden;
+}
+
+/* THE VIDEO BACKGROUND */
+.services-video-bg2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: 1; 
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    opacity: 0.5; /* Adjusted so you can see your text clearly */
+}
+
+/* THE CONTAINER (Keeps your content centered and on top) */
+.services-container {
+    position: relative;
+    z-index: 2; /* Important: Puts content above video */
+    width: 90%;
+    max-width: 1200px; /* Moves the 1200px constraint here */
+    margin: auto;
+}
+
+/* ================= CORE SERVICES HEADER STYLES ================= */
+.services-container h1 {
+    color: #ffffff;
+    
+    /* BIGGER TEXT SETTINGS */
+    font-size: 5rem;              /* Significant increase in size */
+    font-weight: 700;             /* Bolder weight for impact */
+    text-transform: uppercase;
+    letter-spacing: 12px;         /* Wide spacing for an architectural look */
+    line-height: 1.1;
+    margin-bottom: 60px;          /* More space before the grid starts */
+    
+    /* TEXT DEPTH */
+    text-shadow: 2px 4px 10px rgba(0, 0, 0, 0.5); /* Helps legibility over video */
+}
+
+/* RESPONSIVE SIZE FOR MOBILE DEVICES */
+@media screen and (max-width: 768px) {
+    .services-container h1 {
+        font-size: 2.8rem;        /* Smaller on phones so it doesn't break lines */
+        letter-spacing: 5px;      /* Tighter spacing for smaller screens */
+    }
 }
 
 .service-grid {
@@ -153,11 +205,12 @@ nav ul li a:hover::after {
 .service-card {
     position: relative;
     height: 400px;
-    background-color: #000;
+    background-color: rgba(0, 0, 0, 0.7); /* Slight transparency looks great over video */
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .service-card h2 {
@@ -178,6 +231,7 @@ nav ul li a:hover::after {
     opacity: 0;
     transition: 0.4s;
     z-index: 3;
+    color: #2b2b2b;
 }
 
 .service-card:hover .service-card-content {
@@ -1099,3 +1153,4 @@ footer {
     }
     
 }
+
