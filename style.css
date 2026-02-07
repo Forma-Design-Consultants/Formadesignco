@@ -1054,10 +1054,48 @@ footer {
     font-family: monospace; /* Gives it the 'data' look */
 }
 
+/*   VIDEO BACKGROUND FRONT PAGE */
+/* ================= HERO VIDEO OPTIMIZATION ================= */
+.hero {
+    position: relative;
+    overflow: hidden;
+    /* We keep the black background as a fallback */
+    background: #000; 
+}
+
+.hero-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: 1; /* Sits behind content */
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    /* Optional: Slight opacity to keep text perfectly legible */
+    opacity: 0.6; 
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2; /* Ensures text and buttons stay on top of video */
+}
+
+/* Ensure buttons stand out against moving background */
+.cta-button.outline {
+    background: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+    margin-left: 15px;
+}
+
 /* Mobile Fix for Team */
 @media (max-width: 768px) {
     .team-container {
         grid-template-columns: 1fr;
         padding: 0 20px;
     }
+    
 }
