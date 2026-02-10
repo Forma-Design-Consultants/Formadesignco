@@ -3,9 +3,9 @@
    ============================================================ */
 
 // --- CONFIGURATION ---
-const serviceID = 'service_d8l3yh6';
-const CLIENT_TEMPLATE_ID = 'template_f5ctunh';     // For Homeowners
-const CONTRACTOR_TEMPLATE_ID = 'template_o16az14'; // For Partner Applications
+const serviceID = 'service_zxix26i';
+const CLIENT_TEMPLATE_ID = 'template_myacve9';     // For Homeowners
+const CONTRACTOR_TEMPLATE_ID = 'template_ddigvcd'; // For Partner Applications
 
 // --- SELECTORS ---
 const contactForm = document.getElementById('contact-form');
@@ -147,4 +147,3 @@ function reveal() {
 
 window.addEventListener("scroll", reveal);
 reveal(); // Run on load
-
