@@ -2,18 +2,12 @@
    FORMA ARCHITECTURE - GLOBAL HANDLER
    ============================================================ */
 
-// --- CONFIGURATION ---
 const serviceID = 'service_d8l3yh6';
-const CLIENT_TEMPLATE_ID = 'template_f5ctunh';     // For Homeowners
-const CONTRACTOR_TEMPLATE_ID = 'template_o16az14'; // For Partner Applications
+const CLIENT_TEMPLATE_ID = 'template_f5ctunh';     // Homeowner Inquiry
+const CONTRACTOR_TEMPLATE_ID = 'template_o16az14'; // Partner App
 
-// --- SELECTORS ---
+// 1. Homeowner Form
 const contactForm = document.getElementById('contact-form');
-const contractorForm = document.getElementById('contractor-form');
-
-/* ============================================================
-   1. HOMEOWNER CONTACT FORM
-   ============================================================ */
 if (contactForm) {
     contactForm.addEventListener('submit', function(event) {
         event.preventDefault();
@@ -23,33 +17,31 @@ if (contactForm) {
         submitBtn.disabled = true;
         submitBtn.innerText = "TRANSMITTING...";
 
-        // Uses CLIENT_TEMPLATE_ID (template_myacve9)
         emailjs.sendForm(serviceID, CLIENT_TEMPLATE_ID, this)
             .then(() => {
                 submitBtn.innerText = "MESSAGE SENT";
                 formStatus.style.display = "block";
                 formStatus.className = "status-success";
-                formStatus.innerText = "FORMA Architecture: Building with intention. We’ve received your inquiry and will reach out shortly.";
+                formStatus.innerText = "FORMA Architecture: Inquiry received. We will reach out shortly.";
                 contactForm.reset();
             }, (err) => {
                 submitBtn.disabled = false;
                 submitBtn.innerText = "TRY AGAIN";
                 formStatus.style.display = "block";
                 formStatus.className = "status-error";
-                formStatus.innerText = "Transmission Error: " + JSON.stringify(err);
+                formStatus.innerText = "Error: " + JSON.stringify(err);
             });
     });
 }
 
-/* ============================================================
-   2. CONTRACTOR PARTNER FORM (MODAL)
-   ============================================================ */
+// 2. Contractor Form
+const contractorForm = document.getElementById('contractor-form');
 if (contractorForm) {
     contractorForm.addEventListener('submit', function(event) {
         event.preventDefault();
-        
         const partnerBtn = this.querySelector('button');
         let statusDiv = document.getElementById('contractor-status');
+        
         if (!statusDiv) {
             statusDiv = document.createElement('div');
             statusDiv.id = 'contractor-status';
@@ -57,18 +49,13 @@ if (contractorForm) {
         }
 
         partnerBtn.disabled = true;
-        partnerBtn.innerText = "VERIFYING CSLB..."; 
+        partnerBtn.innerText = "VERIFYING..."; 
 
-        // Uses CONTRACTOR_TEMPLATE_ID (template_ddigvcd)
         emailjs.sendForm(serviceID, CONTRACTOR_TEMPLATE_ID, this)
             .then(() => {
                 partnerBtn.innerText = "CREDENTIALS SENT";
-                
+                statusDiv.className = "status-success";
                 statusDiv.style.display = "block";
-                statusDiv.style.color = "#27ae60"; 
-                statusDiv.style.marginTop = "15px";
-                statusDiv.style.fontSize = "12px";
-                statusDiv.style.textTransform = "uppercase";
                 statusDiv.innerText = "✓ Credentials received. Verification in progress.";
                 
                 setTimeout(() => { 
@@ -80,70 +67,50 @@ if (contractorForm) {
                 }, 3000);
             }, (err) => {
                 partnerBtn.disabled = false;
-                partnerBtn.innerText = "RETRY TRANSMISSION";
+                partnerBtn.innerText = "RETRY";
+                statusDiv.className = "status-error";
                 statusDiv.style.display = "block";
-                statusDiv.style.color = "#ff4d4d";
-                statusDiv.innerText = "Error: Connection timed out.";
+                statusDiv.innerText = "Connection Error.";
             });
     });
 }
 
-/* ============================================================
-   3. UI & MODAL LOGIC
-   ============================================================ */
+// 3. UI Logic (Modals & Maps)
+function openContractor() { document.getElementById("contractorModal").style.display = "block"; }
+function closeContractor() { document.getElementById("contractorModal").style.display = "none"; }
 
-function openContractor() {
-    const modal = document.getElementById("contractorModal");
-    if(modal) modal.style.display = "block";
-}
-
-function closeContractor() {
-    const modal = document.getElementById("contractorModal");
-    if(modal) modal.style.display = "none";
-}
-
-// Map Functions
 function openMap(state) {
     const modal = document.getElementById("mapModal");
     const iframe = document.getElementById("mapFrame");
     const maps = {
-        'california': 'https://www.google.com/maps/embed?pb=YOUR_CALI_LINK', 
+        'california': 'https://www.google.com/maps/embed?pb=YOUR_CALI_LINK', ',
         'utah': 'https://www.google.com/maps/embed?pb=YOUR_UTAH_LINK'
     };
     if(iframe && maps[state]) {
         iframe.src = maps[state];
-        if(modal) modal.style.display = "block";
+        modal.style.display = "block";
     }
 }
 
 function closeMap() {
-    const modal = document.getElementById("mapModal");
-    const iframe = document.getElementById("mapFrame");
-    if(modal) modal.style.display = "none";
-    if(iframe) iframe.src = "";
+    document.getElementById("mapModal").style.display = "none";
+    document.getElementById("mapFrame").src = "";
 }
 
-// Close on outside click
 window.onclick = function(event) {
-    const mapModal = document.getElementById("mapModal");
-    const conModal = document.getElementById("contractorModal");
-    if (event.target === mapModal) closeMap();
-    if (event.target === conModal) closeContractor();
+    if (event.target.className === "modal") {
+        closeMap();
+        closeContractor();
+    }
 }
 
-/* ============================================================
-   4. SCROLL ANIMATION
-   ============================================================ */
+// 4. Scroll Reveal
 function reveal() {
-    const reveals = document.querySelectorAll(".reveal");
-    reveals.forEach(el => {
-        let windowHeight = window.innerHeight;
-        let elementTop = el.getBoundingClientRect().top;
-        if (elementTop < windowHeight - 150) {
+    document.querySelectorAll(".reveal").forEach(el => {
+        if (el.getBoundingClientRect().top < window.innerHeight - 150) {
             el.classList.add("active");
         }
     });
 }
-
 window.addEventListener("scroll", reveal);
-reveal(); // Run on load
+reveal();
