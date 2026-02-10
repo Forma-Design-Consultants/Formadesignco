@@ -148,3 +148,4 @@ function reveal() {
 window.addEventListener("scroll", reveal);
 
 reveal(); // Run on load
+
