@@ -4,8 +4,8 @@
 
 // --- CONFIGURATION ---
 const serviceID = 'service_zxix26i';
-const CLIENT_TEMPLATE_ID = 'template_myacve9';     // For Homeowners
-const CONTRACTOR_TEMPLATE_ID = 'template_ddigvcd'; // For Partner Applications
+const CLIENT_TEMPLATE_ID = 'template_un4k29c';     // For Homeowners
+const CONTRACTOR_TEMPLATE_ID = 'template_un4k29c'; // For Partner Applications
 
 // --- SELECTORS ---
 const contactForm = document.getElementById('contact-form');
