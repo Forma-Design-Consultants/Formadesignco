@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORMA | Contact</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background-color: #000000; margin: 0; font-family: 'Inter', sans-serif; color: #ffffff; }
+        
+     
+    :root {
+        --safe-top: env(safe-area-inset-top, 20px);
+        --safe-bottom: env(safe-area-inset-bottom, 20px);
+    }
+
+    body { 
+        background-color: #000000; 
+        margin: 0; 
+        font-family: 'Inter', sans-serif; 
+        color: #ffffff; 
+        -webkit-font-smoothing: antialiased;
+    }
+    
+    .contact-selection-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: calc(120px + var(--safe-top)) 20px 80px 20px;
+        text-align: center;
+    }
+
+    .contact-header { margin-bottom: 60px; }
+    .contact-header span { 
+        font-size: 10px; 
+        letter-spacing: 4px; 
+        color: #555; 
+        text-transform: uppercase; 
+        display: block;
+        margin-bottom: 15px;
+    }
+    .contact-header h1 { 
+        font-size: clamp(28px, 8vw, 38px); 
+        letter-spacing: 3px; 
+        margin: 0; 
+        font-weight: 400; 
+        text-transform: uppercase;
+    }
+
+    .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 30px;
+        margin-top: 50px;
+    }
+
+    .contact-link { 
+        text-decoration: none; 
+        color: inherit; 
+        display: block; 
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .contact-card {
+        background-color: #0a0a0a;
+        border: 1px solid #1a1a1a;
+        padding: 60px 40px;
+        text-align: left;
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+    }
+
+    /* Desktop Hover */
+    @media (hover: hover) {
+        .contact-link:hover .contact-card {
+            border-color: #444;
+            background-color: #0f0f0f;
+            transform: translateY(-8px);
+        }
+        .contact-link:hover .status-dot {
+            background-color: #fff;
+            box-shadow: 0 0 15px rgba(255,255,255,1);
+        }
+    }
+
+    /* Mobile Active State */
+    .contact-link:active .contact-card {
+        background-color: #151515;
+        border-color: #666;
+        transform: scale(0.98);
+    }
+
+    .type-label {
+        font-size: 9px;
+        color: #444;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        display: block;
+        margin-bottom: 30px;
+    }
+
+    .contact-card h2 {
+        font-size: clamp(24px, 5vw, 32px);
+        margin: 0 0 15px 0;
+        font-weight: 500;
+        letter-spacing: 1px;
+    }
+
+    .action-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 40px;
+    }
+
+    .status-dot {
+        width: 6px;
+        height: 6px;
+        background-color: #ffffff; /* Dimmed by default */
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 12px;
+        transition: all 0.3s ease;
+    }
+
+    /* Active pulse for the status dot */
+    .contact-link:nth-child(1) .status-dot { background-color: #fff; box-shadow: 0 0 8px rgba(255,255,255,0.5); }
+
+    .action-text {
+        font-size: 11px;
+        letter-spacing: 2px;
+        color: #888;
+        text-transform: uppercase;
+    }
+
+    .contact-card p {
+        font-size: 15px;
+        color: #666;
+        line-height: 1.8;
+        margin: 0;
+        max-width: 320px;
+    }
+
+    @media (max-width: 600px) {
+        .contact-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .contact-card {
+            padding: 45px 30px;
+        }
+        footer {
+            padding-bottom: calc(40px + var(--safe-bottom)) !important;
+        }
+    }
+</style>
+    </style>
+</head>
+<body>
+
+
+    <header>
+        <div class="nav-container">
+            <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="services.html">SERVICES</a></li>
+                    <li><a href="packages.html">PACKAGES</a></li>
+                    <li><a href="process.html">PROCESS</a></li>
+                    <li><a href="locations.html">LOCATIONS</a></li>
+                    <li><a href="team.html">ABOUT US</a></li>
+                    <li><a href="contact.html">CONTACT</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="contact-selection-container">
+        <div class="contact-header">
+            <span>INQUIRY CHANNELS</span>
+            <h1>GET STARTED</h1>
+        </div>
+
+        <div class="contact-grid">
+            <a href="consultant.html" class="contact-link">
+                <div class="contact-card">
+                    <span class="type-label">FOR_CLIENTS</span>
+                    <h2>Consultation</h2>
+                    <div class="action-container">
+                        <span class="status-dot"></span>
+                        <span class="action-text">PROJECT INQUIRY</span>
+                    </div>
+                    <p>Start your architectural journey. Schedule a free session to discuss your vision and feasibility.</p>
+                </div>
+            </a>
+
+            <a href="partner.html" class="contact-link">
+                <div class="contact-card">
+                    <span class="type-label">FOR_CONTRACTORS</span>
+                    <h2>Partnership</h2>
+                    <div class="action-container">
+                        <span class="status-dot"></span>
+                        <span class="action-text">VENDOR APPLICATION</span>
+                    </div>
+                    <p>Join our network of elite builders. Gain access to qualified, ready-to-build residential projects.</p>
+                </div>
+                
+            </a>
+        </div>
+    </div>
+    <footer style="background-color: rgb(0, 0, 0); color: #fff; padding: 80px 0; text-align: center; border-top: 1px solid #4e4e4e; position: relative; z-index: 2;">
+        <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" style="width: 100px; filter: invert(1); margin-bottom: 20px;">
+        <p style="font-size: 12px; letter-spacing: 2px; opacity: 0.5;">© 2026 FORMA DESIGN CONSULTANTS</p>
+    </footer>
+
+    <script src="form-handler.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script type="text/javascript">
+   (function(){
+      emailjs.init("alap2C2Fda-y4hFG8");
+   })();
+</script>
+
+<script>
+window.onload = function() {
+    document.getElementById('contact-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const btn = document.getElementById('submit-btn');
+        btn.innerHTML = 'SENDING...';
+
+        // Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual EmailJS IDs
+        emailjs.sendForm('service_id', 'template_id', this)
+            .then(function() {
+                btn.innerHTML = 'TRANSMIT INQUIRY';
+                alert('Inquiry Sent Successfully!');
+            }, function(error) {
+                btn.innerHTML = 'TRANSMIT INQUIRY';
+                alert('Failed to send: ' + JSON.stringify(error));
+            });
+    });
+}
+</script>
+</body>
+</html>
