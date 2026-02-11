@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORMA | Contact</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background-color: #000000; margin: 0; font-family: 'Inter', sans-serif; color: #ffffff; }
+        
+        .contact-selection-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 140px 20px 100px 20px;
+            text-align: center;
+        }
+
+        .contact-header { margin-bottom: 60px; }
+        .contact-header span { 
+            font-size: 10px; 
+            letter-spacing: 4px; 
+            color: #555; 
+            text-transform: uppercase; 
+            display: block;
+            margin-bottom: 15px;
+        }
+        .contact-header h1 { 
+            font-size: 38px; 
+            letter-spacing: 3px; 
+            margin: 0; 
+            font-weight: 400; 
+            text-transform: uppercase;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        /* Link Wrapper to make whole card clickable */
+        .contact-link { text-decoration: none; color: inherit; display: block; }
+
+        .contact-card {
+            background-color: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            padding: 60px 50px;
+            text-align: left;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .contact-link:hover .contact-card {
+            border-color: #333;
+            background-color: #0f0f0f;
+            transform: translateY(-5px);
+        }
+
+        .type-label {
+            font-size: 10px;
+            color: #444;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 30px;
+        }
+
+        .contact-card h2 {
+            font-size: 32px;
+            margin: 0 0 15px 0;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .action-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #fff;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 10px;
+            box-shadow: 0 0 8px rgba(255,255,255,0.5);
+        }
+
+        .action-text {
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: #888;
+            text-transform: uppercase;
+        }
+
+        .contact-card p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.8;
+            max-width: 300px;
+        }
+    </style>
+</head>
+<body>
+
+
+    <header>
+        <div class="nav-container">
+            <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="services.html">SERVICES</a></li>
+                    <li><a href="packages.html">PACKAGES</a></li>
+                    <li><a href="process.html">PROCESS</a></li>
+                    <li><a href="locations.html">LOCATIONS</a></li>
+                    <li><a href="team.html">ABOUT US</a></li>
+                    <li><a href="contact.html">CONTACT</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="contact-selection-container">
+        <div class="contact-header">
+            <span>INQUIRY CHANNELS</span>
+            <h1>GET STARTED</h1>
+        </div>
+
+        <div class="contact-grid">
+            <a href="consultant.html" class="contact-link">
+                <div class="contact-card">
+                    <span class="type-label">FOR_CLIENTS</span>
+                    <h2>Consultation</h2>
+                    <div class="action-container">
+                        <span class="status-dot"></span>
+                        <span class="action-text">PROJECT INQUIRY</span>
+                    </div>
+                    <p>Start your architectural journey. Schedule a free session to discuss your vision and feasibility.</p>
+                </div>
+            </a>
+
+            <a href="partner.html" class="contact-link">
+                <div class="contact-card">
+                    <span class="type-label">FOR_CONTRACTORS</span>
+                    <h2>Partnership</h2>
+                    <div class="action-container">
+                        <span class="status-dot"></span>
+                        <span class="action-text">VENDOR APPLICATION</span>
+                    </div>
+                    <p>Join our network of elite builders. Gain access to qualified, ready-to-build residential projects.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <script src="form-handler.js"></script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORMA | Our Process</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background-color: #ffffff; margin: 0; font-family: 'Inter', sans-serif; color: #000; }
+        
+        .process-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 20px 80px 20px;
+        }
+
+        .process-header { text-align: center; margin-bottom: 80px; }
+        /* Changed from #888 to #000 */
+        .process-header span { font-size: 12px; letter-spacing: 4px; color: #000; text-transform: uppercase; font-weight: 600; }
+        /* Explicitly setting header to black */
+        .process-header h1 { font-size: 36px; letter-spacing: 2px; margin: 10px 0; font-weight: 400; color: #000; }
+
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2px; 
+            background-color: #eee; 
+            border: 1px solid #eee;
+        }
+
+        .matrix-item {
+            background-color: #fff;
+            padding: 60px 40px;
+            transition: all 0.3s ease;
+        }
+
+        .matrix-item:hover { background-color: #fcfcfc; }
+
+        .matrix-number {
+            font-size: 12px;
+            color: #000;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .matrix-item h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #000;
+        }
+
+        /* Changed from #666 to #000 */
+        .matrix-item p {
+            font-size: 14px;
+            color: #000;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="services.html">SERVICES</a></li>
+                    <li><a href="packages.html">PACKAGES</a></li>
+                    <li><a href="process.html">PROCESS</a></li>
+                    <li><a href="locations.html">LOCATIONS</a></li>
+                    <li><a href="team.html">ABOUT US</a></li>
+                    <li><a href="contact.html">CONTACT</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="process-container">
+        <div class="process-header">
+            <span>EXECUTION ROADMAP</span>
+            <h1>HOW IT WORKS</h1>
+        </div>
+
+        <div class="matrix-grid">
+            <div class="matrix-item">
+                <span class="matrix-number">01 / INTAKE</span>
+                <h3>Discovery & Feasibility</h3>
+                <p>We analyze your property's zoning, topography, and local regulations to determine exactly what can be built.</p>
+            </div>
+
+            <div class="matrix-item">
+                <span class="matrix-number">02 / DESIGN</span>
+                <h3>Architectural Concept</h3>
+                <p>Creating high-fidelity 3D models and floor plans that balance aesthetic noir design with functional living.</p>
+            </div>
+
+            <div class="matrix-item">
+                <span class="matrix-number">03 / PERMITS</span>
+                <h3>City Approvals</h3>
+                <p>We handle the bureaucracy. Our team submits plans and manages the back-and-forth with city officials for approval.</p>
+            </div>
+
+            <div class="matrix-item">
+                <span class="matrix-number">04 / MATCHING</span>
+                <h3>Contractor Sourcing</h3>
+                <p>We connect you with our vetted network of builders and provide bid management to ensure fair pricing.</p>
+            </div>
+
+            <div class="matrix-item">
+                <span class="matrix-number">05 / BUILD</span>
+                <h3>Project Oversight</h3>
+                <p>Forma acts as your single point of contact during construction to ensure the design is executed perfectly.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <img src="logo2.jpg" alt="FORMA" class="footer-logo-white">
+                <p>Forma — Where Design Meets Execution.</p>
+            </div>
+            <div class="footer-col"></div>
+        </div>
+        <div class="footer-bottom"><p>© 2026 FORMA Design Consultants | All rights reserved</p></div>
+    </footer>
+
+</body>
+</html>

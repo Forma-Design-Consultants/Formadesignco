@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORMA | Partner Application</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background-color: #000000; margin: 0; font-family: 'Inter', sans-serif; color: #000; }
+        
+        .partner-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 140px 20px 100px 20px;
+        }
+
+        .partner-header { text-align: center; margin-bottom: 60px; }
+        /* Darkened for consistency */
+        .partner-header span { font-size: 10px; letter-spacing: 4px; color: #ffffff; text-transform: uppercase; display: block; margin-bottom: 10px; font-weight: 600; }
+        .partner-header h1 { font-size: 36px; letter-spacing: 2px; margin: 0; font-weight: 400; text-transform: uppercase; color: #fafafa; }
+        .partner-header p { color: #ffffff; font-size: 14px; margin-top: 15px; line-height: 1.6; }
+
+        .form-card {
+            background: #fff;
+            padding: 50px;
+            /* Border changed to Black */
+            border: 1px solid #000000; 
+        }
+
+        .form-group { margin-bottom: 25px; }
+        
+        label { 
+            display: block; 
+            font-size: 11px; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            margin-bottom: 10px; 
+            color: #000000;
+            font-weight: 700;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="url"],
+        textarea {
+            width: 100%;
+            padding: 15px;
+            /* Border changed to Black */
+            border: 1px solid #000;
+            background: #fff;
+            font-family: inherit;
+            font-size: 14px;
+            box-sizing: border-box;
+            outline: none;
+            transition: all 0.3s ease;
+            color: #000;
+        }
+
+        /* Thicker border on focus for a premium feel */
+        input:focus, textarea:focus { border-width: 2px; }
+
+        .submit-area { margin-top: 40px; }
+
+        #contractor-form button {
+            width: 100%;
+            padding: 20px;
+            background: #000;
+            color: #fff;
+            border: 1px solid #000;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #contractor-form button:hover { 
+            background: #fff; 
+            color: #000; 
+        }
+
+        #contractor-form button:disabled { background: #888; border-color: #888; cursor: not-allowed; }
+
+        #contractor-status {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 13px;
+            display: none;
+            padding: 15px;
+            border: 1px solid #000; /* Added black border to status box */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="services.html">SERVICES</a></li>
+                    <li><a href="packages.html">PACKAGES</a></li>
+                    <li><a href="process.html">PROCESS</a></li>
+                    <li><a href="locations.html">LOCATIONS</a></li>
+                    <li><a href="team.html">ABOUT US</a></li>
+                    <li><a href="contact.html">CONTACT</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="partner-container">
+        <div class="partner-header">
+            <span>NETWORK EXPANSION</span>
+            <h1>Partner with Forma</h1>
+            <p>We provide licensed contractors with vetted, design-ready residential projects. Submit your credentials to join our preferred vendor list.</p>
+        </div>
+
+        <div class="form-card">
+            <form id="contractor-form">
+                <div class="form-group">
+                    <label>Company Name</label>
+                    <input type="text" name="company_name" placeholder="Legal Entity Name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Contact Name</label>
+                    <input type="text" name="contact_person" placeholder="Primary Contact" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" name="user_email" placeholder="email@company.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label>License Number & State</label>
+                    <input type="text" name="license_info" placeholder="CSLB # or equivalent" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Portfolio / Website URL</label>
+                    <input type="url" name="portfolio_url" placeholder="https://www.yourwork.com">
+                </div>
+
+                <div class="form-group">
+                    <label>Primary Service Area</label>
+                    <input type="text" name="service_area" placeholder="e.g. Los Angeles, CA or Salt Lake City, UT" required>
+                </div>
+
+                <div class="submit-area">
+                    <button type="submit">Submit Credentials</button>
+                    <div id="contractor-status"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        (function() {
+            emailjs.init("YOUR_PUBLIC_KEY"); 
+        })();
+    </script>
+    <script src="form-handler.js"></script>
+
+</body>
+</html>
