@@ -3,65 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FORMA | Our Process</title>
+    <title>FORMA | Execution Roadmap</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        body { background-color: #ffffff; margin: 0; font-family: 'Inter', sans-serif; color: #000; }
+        body { background-color: #000; margin: 0; font-family: 'Inter', sans-serif; color: #fff; overflow-x: hidden; }
         
-        .process-container {
+        /* Video Background Control */
+        .video-bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .services-video-bg2 {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            opacity: 0.25; /* Subtle video visibility */
+        }
+
+        .process-wrapper {
+            position: relative;
+            z-index: 2;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 120px 20px 80px 20px;
+            padding: 160px 20px 100px 20px;
         }
 
-        .process-header { text-align: center; margin-bottom: 80px; }
-        /* Changed from #888 to #000 */
-        .process-header span { font-size: 12px; letter-spacing: 4px; color: #000; text-transform: uppercase; font-weight: 600; }
-        /* Explicitly setting header to black */
-        .process-header h1 { font-size: 36px; letter-spacing: 2px; margin: 10px 0; font-weight: 400; color: #000; }
-
-        .matrix-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2px; 
-            background-color: #eee; 
-            border: 1px solid #eee;
+        .process-header {
+            text-align: center;
+            margin-bottom: 80px;
         }
 
-        .matrix-item {
-            background-color: #fff;
-            padding: 60px 40px;
-            transition: all 0.3s ease;
-        }
-
-        .matrix-item:hover { background-color: #fcfcfc; }
-
-        .matrix-number {
-            font-size: 12px;
-            color: #000;
-            font-weight: 700;
-            display: block;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-        }
-
-        .matrix-item h3 {
-            font-size: 20px;
-            margin-bottom: 15px;
+        .process-header span {
+            font-size: 10px;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #000;
+            opacity: 0.6;
+            display: block;
+            margin-bottom: 10px;
         }
 
-        /* Changed from #666 to #000 */
-        .matrix-item p {
+        .process-header h1 {
+            font-size: 36px;
+            letter-spacing: 6px;
+            font-weight: 400;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        /* Roadmap Grid */
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .process-step {
+            padding: 60px 40px;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.02);
+            transition: background 0.4s ease;
+        }
+
+        .process-step:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .step-num {
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: #888;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .process-step h2 {
+            font-size: 18px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .process-step p {
             font-size: 14px;
-            color: #000;
-            line-height: 1.6;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.7);
+            margin: 0;
+        }
+
+        /* Empty block matching the design */
+        .empty-step {
+            background: rgba(255, 255, 255, 0.05);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 900px) {
+            .process-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 600px) {
+            .process-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
+
+    <div class="video-bg-container">
+        <video autoplay muted loop playsinline class="services-video-bg2">
+            <source src="VIDEO_BACKGROUND3.mp4" type="video/mp4">
+        </video>
+    </div>
 
     <header>
         <div class="nav-container">
@@ -80,55 +145,52 @@
         </div>
     </header>
 
-    <div class="process-container">
+    <div class="process-wrapper">
         <div class="process-header">
-            <span>EXECUTION ROADMAP</span>
-            <h1>HOW IT WORKS</h1>
+            <span>Execution Roadmap</span>
+            <h1>How It Works</h1>
         </div>
-
-        <div class="matrix-grid">
-            <div class="matrix-item">
-                <span class="matrix-number">01 / INTAKE</span>
-                <h3>Discovery & Feasibility</h3>
+        
+        <div class="process-grid">
+            
+            <div class="process-step">
+                <span class="step-num">01 / INTAKE</span>
+                <h2>Discovery & Feasibility</h2>
                 <p>We analyze your property's zoning, topography, and local regulations to determine exactly what can be built.</p>
             </div>
 
-            <div class="matrix-item">
-                <span class="matrix-number">02 / DESIGN</span>
-                <h3>Architectural Concept</h3>
+            <div class="process-step">
+                <span class="step-num">02 / DESIGN</span>
+                <h2>Architectural Concept</h2>
                 <p>Creating high-fidelity 3D models and floor plans that balance aesthetic noir design with functional living.</p>
             </div>
 
-            <div class="matrix-item">
-                <span class="matrix-number">03 / PERMITS</span>
-                <h3>City Approvals</h3>
+            <div class="process-step">
+                <span class="step-num">03 / PERMITS</span>
+                <h2>City Approvals</h2>
                 <p>We handle the bureaucracy. Our team submits plans and manages the back-and-forth with city officials for approval.</p>
             </div>
 
-            <div class="matrix-item">
-                <span class="matrix-number">04 / MATCHING</span>
-                <h3>Contractor Sourcing</h3>
+            <div class="process-step">
+                <span class="step-num">04 / MATCHING</span>
+                <h2>Contractor Sourcing</h2>
                 <p>We connect you with our vetted network of builders and provide bid management to ensure fair pricing.</p>
             </div>
 
-            <div class="matrix-item">
-                <span class="matrix-number">05 / BUILD</span>
-                <h3>Project Oversight</h3>
+            <div class="process-step">
+                <span class="step-num">05 / BUILD</span>
+                <h2>Project Oversight</h2>
                 <p>Forma acts as your single point of contact during construction to ensure the design is executed perfectly.</p>
             </div>
+
+            <div class="empty-step"></div>
+
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-col">
-                <img src="logo2.jpg" alt="FORMA" class="footer-logo-white">
-                <p>Forma — Where Design Meets Execution.</p>
-            </div>
-            <div class="footer-col"></div>
-        </div>
-        <div class="footer-bottom"><p>© 2026 FORMA Design Consultants | All rights reserved</p></div>
+    <footer style="background-color: rgba(0,0,0,0.9); color: #fff; padding: 80px 0; text-align: center; border-top: 1px solid #1a1a1a; position: relative; z-index: 2;">
+        <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" style="width: 100px; filter: invert(1); margin-bottom: 20px;">
+        <p style="font-size: 11px; letter-spacing: 2px; opacity: 0.5;">© 2026 FORMA DESIGN CONSULTANTS</p>
     </footer>
 
 </body>
