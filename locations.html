@@ -1,354 +1,419 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>FORMA | Our Locations</title>
+
     <link rel="stylesheet" href="style.css">
+
     <style>
+
         /* Specific Styles for the Noir Locations Look */
-        body { 
-            background-color: #000000; 
-            margin: 0; 
-            font-family: 'Inter', sans-serif; 
+
+        body {
+
+            background-color: #000000;
+
+            margin: 0;
+
+            font-family: 'Inter', sans-serif;
+
             color: #ffffff;
+
         }
-        
+
+       
+
         .locations-container {
+
             max-width: 1200px;
+
             margin: 0 auto;
+
             padding: 140px 20px 100px 20px;
+
             text-align: center;
+
         }
+
+
 
         .locations-header { margin-bottom: 60px; }
-        .locations-header span { 
-            font-size: 10px; 
-            letter-spacing: 4px; 
-            color: #555555; 
-            text-transform: uppercase; 
-            display: block;
-            margin-bottom: 15px;
-        }
-        .locations-header h1 { 
-            font-size: 38px; 
-            letter-spacing: 3px; 
-            margin: 0; 
-            font-weight: 400; 
+
+        .locations-header span {
+
+            font-size: 10px;
+
+            letter-spacing: 4px;
+
+            color: #555555;
+
             text-transform: uppercase;
+
+            display: block;
+
+            margin-bottom: 15px;
+
         }
+
+        .locations-header h1 {
+
+            font-size: 38px;
+
+            letter-spacing: 3px;
+
+            margin: 0;
+
+            font-weight: 400;
+
+            text-transform: uppercase;
+
+        }
+
+
 
         .location-grid {
+
             display: grid;
+
             grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+
             gap: 30px;
+
             margin-top: 50px;
+
         }
+
+
 
         .location-card {
+
             background-color: #0a0a0a;
+
             border: 1px solid #8b8b8b;
+
             padding: 60px 50px;
+
             text-align: left;
+
             transition: all 0.3s ease;
+
             cursor: pointer; /* Makes it clear it's clickable */
+
         }
+
+
 
         .location-card:hover {
+
             border-color: #ffffff;
+
             background-color: #0f0f0f;
+
         }
+
+
 
         .zone-label {
+
             font-size: 10px;
+
             color: #444;
+
             letter-spacing: 2px;
+
             text-transform: uppercase;
+
             display: block;
+
             margin-bottom: 30px;
+
         }
+
+
 
         .location-card h2 {
+
             font-size: 32px;
+
             margin: 0 0 15px 0;
+
             font-weight: 500;
+
             letter-spacing: 1px;
+
         }
+
+
 
         .status-container {
+
             display: flex;
+
             align-items: center;
+
             margin-bottom: 40px;
+
         }
+
+
 
         .status-dot {
+
             width: 6px;
+
             height: 6px;
+
             background-color: #fff;
+
             border-radius: 50%;
+
             display: inline-block;
+
             margin-right: 10px;
+
             box-shadow: 0 0 8px rgba(255,255,255,0.5);
+
         }
+
+
 
         .status-text {
+
             font-size: 11px;
+
             letter-spacing: 2px;
+
             color: #888;
+
             text-transform: uppercase;
+
         }
+
+
 
         .location-card p {
+
             font-size: 14px;
+
             color: #666;
+
             line-height: 1.8;
+
             max-width: 280px;
+
         }
+
+
 
         /* --- MAP MODAL STYLES --- */
+
         .map-modal {
-            display: none; 
+
+            display: none;
+
             position: fixed;
+
             top: 0; left: 0;
+
             width: 100%; height: 100%;
+
             background-color: rgba(0,0,0,0.9);
+
             z-index: 9999;
+
             justify-content: center;
+
             align-items: center;
+
         }
+
+
 
         .modal-content {
+
             position: relative;
+
             width: 90%;
+
             max-width: 1000px;
+
             height: 70vh;
+
             background: #ffffff;
+
             border: 1px solid #333;
+
         }
+
+
 
         .close-btn {
+
             position: absolute;
+
             top: -40px;
+
             right: 0;
+
             color: #fff;
+
             font-size: 30px;
+
             cursor: pointer;
+
         }
+
+
 
         #mapFrame {
+
             width: 100%;
+
             height: 100%;
+
             border: none;
+
             filter: grayscale(1) invert(0.9); /* Keeps the noir map look */
+
         }
-    :root {
-        --safe-top: env(safe-area-inset-top, 20px);
-        --safe-bottom: env(safe-area-inset-bottom, 20px);
-    }
-
-    body { 
-        background-color: #000000; 
-        margin: 0; 
-        font-family: 'Inter', sans-serif; 
-        color: #ffffff;
-        -webkit-text-size-adjust: 100%;
-    }
-    
-    /* Prevent body scroll when modal is active */
-    body.modal-open { overflow: hidden; }
-
-    .locations-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: calc(100px + var(--safe-top)) 20px 80px 20px;
-        text-align: center;
-    }
-
-    .locations-header { margin-bottom: 40px; }
-    .locations-header span { 
-        font-size: 10px; 
-        letter-spacing: 4px; 
-        color: #555; 
-        text-transform: uppercase; 
-        display: block;
-        margin-bottom: 15px;
-    }
-    .locations-header h1 { 
-        font-size: clamp(24px, 8vw, 38px); 
-        letter-spacing: 3px; 
-        margin: 0; 
-        font-weight: 400; 
-        text-transform: uppercase;
-    }
-
-    .location-grid {
-        display: grid;
-        /* Adjusted minmax for better mobile scaling */
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 20px;
-        margin-top: 40px;
-    }
-
-    .location-card {
-        background-color: #0a0a0a;
-        border: 1px solid #333; /* Subtler border for mobile */
-        padding: 40px 30px;
-        text-align: left;
-        transition: all 0.3s ease;
-        -webkit-tap-highlight-color: transparent;
-    }
-
-    .location-card:active { background-color: #111; border-color: #fff; }
-
-    .zone-label {
-        font-size: 9px;
-        color: #444;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        margin-bottom: 20px;
-        display: block;
-    }
-
-    .location-card h2 {
-        font-size: 28px;
-        margin: 0 0 10px 0;
-        font-weight: 500;
-        letter-spacing: 1px;
-    }
-
-    .status-container {
-        display: flex;
-        align-items: center;
-        margin-bottom: 30px;
-    }
-
-    .status-dot {
-        width: 6px; height: 6px;
-        background-color: #fff;
-        border-radius: 50%;
-        margin-right: 10px;
-        box-shadow: 0 0 8px rgba(255,255,255,0.5);
-    }
-
-    .status-text {
-        font-size: 10px;
-        letter-spacing: 2px;
-        color: #888;
-    }
-
-    .location-card p {
-        font-size: 14px;
-        color: #666;
-        line-height: 1.6;
-        margin: 0;
-    }
-
-    /* --- MOBILE MAP MODAL OPTIMIZATION --- */
-    .map-modal {
-        display: none; 
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background-color: rgba(0,0,0,0.95);
-        z-index: 10000;
-        padding-top: var(--safe-top);
-    }
-
-    .modal-content {
-        position: relative;
-        width: 100%;
-        height: 80vh; /* Shorter to allow tapping background to exit */
-        background: #000;
-        margin-top: 50px;
-    }
-
-    .close-btn {
-        position: absolute;
-        top: -50px;
-        right: 20px;
-        color: #fff;
-        font-size: 40px; /* Larger for thumb tap */
-        padding: 10px;
-    }
-
-    #mapFrame {
-        width: 100%;
-        height: 100%;
-        border: none;
-        filter: grayscale(1) invert(0.9);
-    }
-
-    @media (max-width: 600px) {
-        .location-grid { grid-template-columns: 1fr; }
-        .location-card { padding: 40px 25px; }
-        footer { padding-bottom: calc(40px + var(--safe-bottom)) !important; }
-    }
-</style>
 
     </style>
+
 </head>
+
 <body>
 
+
+
     <header>
+
         <div class="nav-container">
+
             <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA" class="logo">
+
             <nav>
+
                 <ul>
+
                     <li><a href="index.html">HOME</a></li>
+
                     <li><a href="services.html">SERVICES</a></li>
+
                     <li><a href="packages.html">PACKAGES</a></li>
+
                     <li><a href="process.html">PROCESS</a></li>
+
                     <li><a href="locations.html">LOCATIONS</a></li>
+
                     <li><a href="team.html">ABOUT US</a></li>
+
                     <li><a href="contact.html">CONTACT</a></li>
+
                 </ul>
+
             </nav>
+
         </div>
+
     </header>
 
+
+
     <div class="locations-container">
+
         <div class="locations-header">
+
             <span>OPERATIONAL ZONES</span>
+
             <h1>OUR LOCATIONS</h1>
+
         </div>
+
+
 
         <div class="location-grid">
+
             <div class="location-card" onclick="openMap('california')">
+
                 <span class="zone-label">ZONE_01</span>
+
                 <h2>California</h2>
+
                 <div class="status-container">
+
                     <span class="status-dot"></span>
+
                     <span class="status-text">ACTIVE</span>
+
                 </div>
+
                 <p>Architecture, ADU Design, and Full-Scale Development.</p>
+
             </div>
+
+
 
             <div class="location-card" onclick="openMap('utah')">
+
                 <span class="zone-label">ZONE_02</span>
+
                 <h2>Utah</h2>
+
                 <div class="status-container">
+
                     <span class="status-dot"></span>
+
                     <span class="status-text">ACTIVE</span>
+
                 </div>
+
                 <p>Minimalist Design and Functional Residential Planning.</p>
+
             </div>
+
         </div>
+
     </div>
+
+
 
     <div id="mapModal" class="map-modal">
+
         <div class="modal-content">
+
             <span class="close-btn" onclick="closeMap()">×</span>
+
             <iframe id="mapFrame" src="" allowfullscreen="" loading="lazy"></iframe>
+
         </div>
+
     </div>
 
+
+
     <footer style="background-color: rgba(0,0,0,0.9); color: #fff; padding: 80px 0; text-align: center; border-top: 1px solid #1a1a1a; position: relative; z-index: 2;">
+
         <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" style="width: 100px; filter: invert(1); margin-bottom: 20px;">
+
         <p style="font-size: 12px; letter-spacing: 2px; opacity: 0.5;">© 2026 FORMA DESIGN CONSULTANTS</p>
+
     </footer>
 
+
+
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
     <script src="form-handler.js"></script>
 
+
+
 </body>
+
 </html>
