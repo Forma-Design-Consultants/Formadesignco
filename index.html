@@ -4,30 +4,113 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FORMA | Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <header>
-    <div class="nav-container">
-        <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA Logo" class="logo">
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="packages.html">Packages</a></li>
-                <li><a href="process.html">Process</a></li>
-                <li><a href="locations.html">Locations</a></li>
-                <li><a href="team.html">About Us</a></li> 
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
+    <style>
+        /* Essential layout additions for new sections */
+        .roadmap-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            max-width: 1200px;
+            margin: 0 auto;
+            border-top: 1px solid #333;
+            border-left: 1px solid #333;
+        }
+        .roadmap-box {
+            padding: 60px 40px;
+            border-right: 1px solid #333;
+            border-bottom: 1px solid #333;
+            text-align: left;
+            transition: background 0.3s ease;
+        }
+        .roadmap-box:hover { background: #0a0a0a; }
+        .roadmap-box.highlight { background: #111; }
+        
+        .blueprint-showcase {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            padding: 40px;
+            background: #fff;
+        }
+        .blueprint-item {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            /* Grayscale removed here so they are always colorful */
+            filter: none; 
+            transition: transform 0.5s ease;
+        }
+        /* Hover effect changed from color-shift to a slight zoom for better feel */
+        .blueprint-item:hover { 
+            transform: scale(1.02);
+        }
+
+        .atelier-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: #000;
+            align-items: center;
+        }
+        .atelier-images {
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+            gap: 10px;
+            padding: 40px;
+        }
+        .atelier-images img { width: 100%; height: 300px; object-fit: cover; }
+        
+        @media (max-width: 768px) {
+            .roadmap-grid, .atelier-grid, .blueprint-showcase { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
-    <section class="hero" style="height: 100vh;">
+
+    <div id="mapModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeMap()">×</span>
+            <iframe id="mapFrame" src="" width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </div>
+
+    <div id="contractorModal" class="modal">
+        <div class="modal-content" style="max-width: 600px; background: #000; color: #fff; border: 1px solid #333;">
+            <span class="close-button" onclick="closeContractor()" style="color: #fff;">×</span>
+            <div style="padding: 20px;">
+                <span class="module-tag">Partner Application</span>
+                <h2>Join the Network</h2>
+                <form id="contractor-form" style="display: flex; flex-direction: column; gap: 15px; margin-top:20px;">
+                    <input type="text" name="company_name" placeholder="Company Name" required style="background: #111; border: 1px solid #333; color: #fff; padding: 15px;">
+                    <input type="email" name="contact_email" placeholder="Email Address" required style="background: #111; border: 1px solid #333; color: #fff; padding: 15px;">
+                    <button type="submit" style="background: #fff; color: #000; padding: 15px; cursor: pointer; font-weight: 600; border: none;">Submit Credentials</button>
+                    <div id="contractor-status" style="margin-top: 10px; font-size: 13px; text-align: center; display: none;"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="nav-container">
+            <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA Logo" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="packages.html">Packages</a></li>
+                    <li><a href="process.html">Process</a></li>
+                    <li><a href="locations.html">Locations</a></li>
+                    <li><a href="team.html">About Us</a></li> 
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
         <video autoplay muted loop playsinline class="hero-video">
             <source src="VIDEO_BACKGROUND.mp4" type="video/mp4">
         </video>
-
         <div class="hero-content">
             <h1>DESIGN. BUILD. FINANCE. SIMPLIFIED.</h1>
             <p>We help California homeowners and investors plan, design, and execute construction projects...</p>
@@ -36,14 +119,88 @@
                 <a href="packages.html" class="cta-button outline">Explore Our Packages</a>
             </div>
         </div>
-
     </section>
 
-    <section class="tech-stats" style="background: #000; border: none; padding: 20px 0;">
+    <section class="tech-stats" style="background: #000; padding: 20px 0;">
         <div class="stat-box"><span class="stat-label" style="color: #fff;">✔ Vetted Contractors</span></div>
         <div class="stat-box"><span class="stat-label" style="color: #fff;">✔ Clear Pricing & Scope</span></div>
         <div class="stat-box"><span class="stat-label" style="color: #fff;">✔ End-to-End Project Support</span></div>
         <div class="stat-box"><span class="stat-label" style="color: #fff;">✔ ADUs, Remodels & New Builds</span></div>
     </section>
+
+    <section class="info-details" style="padding: 100px 0;">
+        <div class="info-container">
+            <div class="info-text">
+                <span class="module-tag">ONE PARTNER. EVERY STEP.</span>
+                <h2 style="font-size: 2.5rem; margin: 20px 0;">Forma is your single point of contact.</h2>
+                <p style="color: #555; line-height: 1.8;">We bridge the gap between design, contractors, and financing so your project moves faster, smoother, and with fewer surprises.</p>
+            </div>
+            <div class="info-image" style="position: relative; display: flex; align-items: center; gap: 20px;">
+                <img src="https://images.unsplash.com/photo-1627847151154-4bfc6e0bf33d?w=600&h=400&fit=crop" style="width: 70%; height: 400px; object-fit: cover;">
+                <div class="glass-orb" style="width: 150px; height: 150px; background: #f0f0f0; border: 1px solid #ddd; font-size: 10px; color: #333;">PROTECTED INVESTMENT</div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #fff; padding: 60px 0;">
+        <div style="text-align: center; margin-bottom: 40px;">
+            <span class="module-tag" style="color: #aaa;">WHY CLIENTS CHOOSE FORMA</span>
+            <h2 style="font-size: 2.2rem; font-weight: 300; margin-top: 10px;">WE DON'T JUST DRAW PLANS — WE BUILD.</h2>
+        </div>
+        <div class="blueprint-showcase">
+            <img src="https://images.pexels.com/photos/17174766/pexels-photo-17174766.jpeg?w=600&h=700&fit=crop" class="blueprint-item" alt="Blueprint 1">
+            <img src="https://images.unsplash.com/photo-1718893389568-22a2a039998c?w=600&h=700&fit=crop" class="blueprint-item" alt="Build 1">
+            <img src="https://images.unsplash.com/photo-1627847151154-4bfc6e0bf33d?w=600&h=700&fit=crop" class="blueprint-item" alt="Build 2">
+        </div>
+    </section>
+
+    <section class="atelier-grid">
+        <div class="atelier-images">
+            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600" alt="Studio 1">
+            <img src="https://images.unsplash.com/photo-1742440710226-450e3b85c100?w=600&h=400&fit=crop" alt="Studio 2">
+        </div>
+        <div class="atelier-content" style="padding: 80px; color: #fff;">
+            <span class="module-tag" style="color: #666;">VIRTUAL ATELIER</span>
+            <h2 style="font-size: 2.5rem; margin-top: 20px; font-weight: 300;">BUILT ON REAL-WORLD EXPERIENCE</h2>
+        </div>
+    </section>
+
+    <section class="final-cta" style="padding: 120px 20px; text-align: center; background: #fff;">
+        <h2 style="font-size: 2.2rem; font-weight: 400; letter-spacing: 2px;">READY TO START YOUR PROJECT THE RIGHT WAY?</h2>
+        <p style="color: #666; margin: 20px 0 40px;">Avoid costly mistakes and delays. Let Forma guide your project from idea to execution.</p>
+        <a href="contact.html" class="cta-button" style="background: #000; color: #fff; padding: 18px 50px;">GET IN TOUCH</a>
+    </section>
+
+    <footer style="background-color: rgb(0, 0, 0); color: #fff; padding: 80px 0; text-align: center; border-top: 1px solid #1a1a1a; position: relative; z-index: 2;">
+        <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" style="width: 100px; filter: invert(1); margin-bottom: 20px;">
+        <p style="font-size: 12px; letter-spacing: 2px; opacity: 0.5;">© 2026 FORMA DESIGN CONSULTANTS</p>
+    </footer>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+       (function(){ emailjs.init({ publicKey: "alap2C2Fda-y4hFG8" }); })();
+    </script>
+    <script>
+        function openMap(state) {
+            document.getElementById("mapModal").style.display = "block";
+        }
+        function closeMap() {
+            document.getElementById("mapModal").style.display = "none";
+        }
+        function openContractor() {
+            document.getElementById("contractorModal").style.display = "block";
+        }
+        function closeContractor() {
+            document.getElementById("contractorModal").style.display = "none";
+        }
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                closeMap();
+                closeContractor();
+            }
+        }
+    </script>
+    
+
 </body>
 </html>
