@@ -6,30 +6,22 @@
     <title>FORMA | Execution Roadmap</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        body { background-color: #000; margin: 0; font-family: 'Inter', sans-serif; color: #fff; overflow-x: hidden; }
+        body { background-color: #000; margin: 0; font-family: 'Inter', sans-serif; color: #fff; }
         
-        /* Video Background Control */
+        /* Video Background */
         .video-bg-container {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; overflow: hidden;
         }
 
-        .services-video-bg2 {
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            position: absolute;
-            top: 50%;
-            left: 50%;
+        .process-video-bg {
+            min-width: 100%; min-height: 100%;
+            width: auto; height: auto;
+            position: absolute; top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             object-fit: cover;
-            opacity: 0.25; /* Subtle video visibility */
+            opacity: 0.3;
         }
 
         .process-wrapper {
@@ -37,93 +29,43 @@
             z-index: 2;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 160px 20px 100px 20px;
-        }
-
-        .process-header {
+            padding: 140px 20px 100px 20px;
             text-align: center;
-            margin-bottom: 80px;
         }
 
-        .process-header span {
-            font-size: 10px;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            opacity: 0.6;
-            display: block;
-            margin-bottom: 10px;
-        }
+        .process-header span { font-size: 10px; letter-spacing: 4px; color: #888; text-transform: uppercase; }
+        .process-header h1 { font-size: 42px; letter-spacing: 3px; margin: 15px 0 60px 0; font-weight: 400; text-transform: uppercase; }
 
-        .process-header h1 {
-            font-size: 36px;
-            letter-spacing: 6px;
-            font-weight: 400;
-            text-transform: uppercase;
-            margin: 0;
-        }
-
-        /* Roadmap Grid */
-        .process-grid {
+        /* Roadmap Grid - Updated to 3 columns to fit 6 steps perfectly */
+        .roadmap-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 1px; /* Creates the thin line effect between boxes */
+            background-color: rgba(255,255,255,0.1); /* Line color */
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        .process-step {
+        .step-card {
+            background-color: rgba(0, 0, 0, 0.6);
             padding: 60px 40px;
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.02);
-            transition: background 0.4s ease;
+            text-align: left;
+            transition: background 0.3s ease;
         }
 
-        .process-step:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
+        .step-card:hover { background-color: rgba(255, 255, 255, 0.05); }
 
-        .step-num {
-            font-size: 10px;
-            letter-spacing: 2px;
-            color: #888;
-            margin-bottom: 20px;
-            display: block;
-        }
+        .step-num { font-size: 11px; letter-spacing: 2px; color: #888; text-transform: uppercase; display: block; margin-bottom: 20px; }
+        .step-card h2 { font-size: 18px; letter-spacing: 1px; text-transform: uppercase; margin: 0 0 15px 0; font-weight: 600; }
+        .step-card p { font-size: 13px; line-height: 1.8; color: rgba(255,255,255,0.7); margin: 0; }
 
-        .process-step h2 {
-            font-size: 18px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            color: #fff;
-        }
-
-        .process-step p {
-            font-size: 14px;
-            line-height: 1.7;
-            color: rgba(255, 255, 255, 0.7);
-            margin: 0;
-        }
-
-        /* Empty block matching the design */
-        .empty-step {
-            background: rgba(255, 255, 255, 0.05);
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        @media (max-width: 900px) {
-            .process-grid { grid-template-columns: 1fr 1fr; }
-        }
-        @media (max-width: 600px) {
-            .process-grid { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 992px) { .roadmap-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { .roadmap-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
     <div class="video-bg-container">
-        <video autoplay muted loop playsinline class="services-video-bg2">
+        <video autoplay muted loop playsinline class="process-video-bg">
             <source src="VIDEO_BACKGROUND3.mp4" type="video/mp4">
         </video>
     </div>
@@ -147,44 +89,46 @@
 
     <div class="process-wrapper">
         <div class="process-header">
-            <span>Execution Roadmap</span>
-            <h1>How It Works</h1>
+            <span>EXECUTION ROADMAP</span>
+            <h1>HOW IT WORKS</h1>
         </div>
         
-        <div class="process-grid">
-            
-            <div class="process-step">
+        <div class="roadmap-grid">
+            <div class="step-card">
                 <span class="step-num">01 / INTAKE</span>
-                <h2>Discovery & Feasibility</h2>
+                <h2>DISCOVERY & FEASIBILITY</h2>
                 <p>We analyze your property's zoning, topography, and local regulations to determine exactly what can be built.</p>
             </div>
 
-            <div class="process-step">
+            <div class="step-card">
                 <span class="step-num">02 / DESIGN</span>
-                <h2>Architectural Concept</h2>
+                <h2>ARCHITECTURAL CONCEPT</h2>
                 <p>Creating high-fidelity 3D models and floor plans that balance aesthetic noir design with functional living.</p>
             </div>
 
-            <div class="process-step">
+            <div class="step-card">
                 <span class="step-num">03 / PERMITS</span>
-                <h2>City Approvals</h2>
+                <h2>CITY APPROVALS</h2>
                 <p>We handle the bureaucracy. Our team submits plans and manages the back-and-forth with city officials for approval.</p>
             </div>
 
-            <div class="process-step">
+            <div class="step-card">
                 <span class="step-num">04 / MATCHING</span>
-                <h2>Contractor Sourcing</h2>
+                <h2>CONTRACTOR SOURCING</h2>
                 <p>We connect you with our vetted network of builders and provide bid management to ensure fair pricing.</p>
             </div>
 
-            <div class="process-step">
+            <div class="step-card">
                 <span class="step-num">05 / BUILD</span>
-                <h2>Project Oversight</h2>
+                <h2>PROJECT OVERSIGHT</h2>
                 <p>Forma acts as your single point of contact during construction to ensure the design is executed perfectly.</p>
             </div>
 
-            <div class="empty-step"></div>
-
+            <div class="step-card">
+                <span class="step-num">06 / COMPLETION</span>
+                <h2>THE FORMA HANDOVER</h2>
+                <p>A rigorous final quality audit followed by a formal key presentation. Your space is now a FORMA-certified masterpiece.</p>
+            </div>
         </div>
     </div>
 
@@ -195,4 +139,3 @@
 
 </body>
 </html>
-
