@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORMA | Selected Works</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background-color: #fff; color: #000; }
+
+        .gallery-hero {
+            padding: 120px 20px 60px 20px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .gallery-hero h1 {
+            font-size: 3rem;
+            font-weight: 300;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+        }
+
+        /* Filter Buttons - Updated for high visibility & hover */
+        .filter-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 1px solid #000;
+            padding: 12px 28px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: all 0.3s ease;
+            color: #000;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: #000;
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        /* Masonry Grid Layout */
+        .masonry-container {
+            column-count: 3;
+            column-gap: 20px;
+            padding: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            break-inside: avoid;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+
+        .item-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 30px;
+            color: #fff;
+        }
+
+        .gallery-item:hover .item-overlay { opacity: 1; }
+        .gallery-item:hover img { transform: scale(1.05); }
+
+        .project-category { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: #ccc; margin-bottom: 5px; }
+        .project-title { font-size: 1.2rem; font-weight: 400; }
+
+        /* MODAL POP-UP STYLES */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.95);
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 1000px;
+            background: #fff;
+            position: relative;
+            animation: fadeIn 0.4s;
+        }
+
+        @keyframes fadeIn { from {opacity: 0; transform: translateY(20px);} to {opacity: 1; transform: translateY(0);} }
+
+        .modal-body { padding: 50px; color: #000; }
+        .modal-body h2 { font-size: 2.5rem; font-weight: 300; margin-bottom: 15px; }
+        .modal-body p { line-height: 1.8; color: #555; font-size: 1.1rem; }
+        
+        .close-modal {
+            position: fixed;
+            top: 20px; right: 30px;
+            color: #fff; font-size: 50px;
+            cursor: pointer;
+            z-index: 10000;
+        }
+
+        @media (max-width: 1024px) { .masonry-container { column-count: 2; } }
+        @media (max-width: 600px) { .masonry-container { column-count: 1; padding: 20px; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA Logo" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="packages.html">Packages</a></li>
+                    <li><a href="process.html">Process</a></li>
+                    <li><a href="locations.html">Locations</a></li>
+                    <li><a href="gallery.html" class="active">Work</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="gallery-hero">
+        <span class="module-tag">PORTFOLIO & CASE STUDIES</span>
+        <h1>BUILT FOR LIFE.</h1>
+        <div class="filter-nav">
+            <button class="filter-btn active" onclick="filterGallery('all')">All Projects</button>
+            <button class="filter-btn" onclick="filterGallery('adu')">ADUs</button>
+            <button class="filter-btn" onclick="filterGallery('interior')">Interiors</button>
+            <button class="filter-btn" onclick="filterGallery('commercial')">Commercial</button>
+        </div>
+    </section>
+
+    <div id="projectModal" class="modal">
+        <span class="close-modal">&times;</span>
+        <div class="modal-content">
+            <img id="modalImg" src="" style="width:100%">
+            <div class="modal-body">
+                <h2 id="modalTitle">Project Title</h2>
+                <p id="modalDesc">Detailed description of the build process, materials used, and the final result.</p>
+                <br>
+                <a href="estimate.html" style="background: #000; color: #fff; padding: 15px 40px; text-decoration: none; display: inline-block;">INQUIRE ABOUT THIS PROJECT</a>
+            </div>
+        </div>
+    </div>
+
+    <section class="masonry-container">
+        
+        <div class="gallery-item" data-category="adu" onclick="openProject('The Venice Minimalist', 'Modern ADU', 'High-end garage conversion with custom oak cabinetry.', 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200')">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800" alt="ADU">
+            <div class="item-overlay"><span class="project-category">ADU</span><h3 class="project-title">The Venice Minimalist</h3></div>
+        </div>
+        <div class="gallery-item" data-category="adu" onclick="openProject('Santa Monica Guest House', 'ADU', 'Ground-up 800sqft guest house with rooftop deck.', 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200')">
+            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800" alt="ADU">
+            <div class="item-overlay"><span class="project-category">ADU</span><h3 class="project-title">Santa Monica Guest House</h3></div>
+        </div>
+        <div class="gallery-item" data-category="adu" onclick="openProject('The Backyard Studio', 'ADU', 'A creative detached studio for a local artist.', 'https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=1200')">
+            <img src="https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=800" alt="ADU">
+            <div class="item-overlay"><span class="project-category">ADU</span><h3 class="project-title">The Backyard Studio</h3></div>
+        </div>
+        <div class="gallery-item" data-category="adu" onclick="openProject('Glass Studio ADU', 'ADU', 'Maximum transparency in this small footprint dwelling.', 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=1200')">
+            <img src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=800" alt="ADU">
+            <div class="item-overlay"><span class="project-category">ADU</span><h3 class="project-title">Glass Studio ADU</h3></div>
+        </div>
+        <div class="gallery-item" data-category="adu" onclick="openProject('Echo Park Expansion', 'ADU', 'Second story addition with sustainable materials.', 'https://images.unsplash.com/photo-1449156001437-3a1621acda26?w=1200')">
+            <img src="https://images.unsplash.com/photo-1449156001437-3a1621acda26?w=800" alt="ADU">
+            <div class="item-overlay"><span class="project-category">ADU</span><h3 class="project-title">Echo Park Expansion</h3></div>
+        </div>
+        <div class="gallery-item" data-category="adu" onclick="openProject('The Pool House', 'ADU', 'Modern cabana with full bathroom and kitchenette.', 'https://images.unsplash.com/photo-1600596542815-60c37c663d12?w=1200')">
+            <img src="https://images.unsplash.com/photo-1600596542815-60c37c663d12?w=800" alt="ADU">
+            <div class="item-overlay"><span class="project-category">ADU</span><h3 class="project-title">The Pool House</h3></div>
+        </div>
+        <div class="gallery-item" data-category="adu" onclick="openProject('Silver Lake Loft', 'ADU', 'Industrial loft conversion of a detached garage.', 'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?w=1200')">
+            <img src="https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?w=800" alt="ADU">
+            <div class="item-overlay"><span class="project-category">ADU</span><h3 class="project-title">Silver Lake Loft</h3></div>
+        </div>
+        <div class="gallery-item" data-category="adu" onclick="openProject('Modern Cottage', 'ADU', 'Blending classic cottage feel with modern architectural lines.', 'https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?w=1200')">
+            <img src="https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?w=800" alt="ADU">
+            <div class="item-overlay"><span class="project-category">ADU</span><h3 class="project-title">Modern Cottage</h3></div>
+        </div>
+
+        <div class="gallery-item" data-category="interior" onclick="openProject('Chef\'s Kitchen', 'Interior', 'Professional grade kitchen renovation in Malibu.', 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=1200')">
+            <img src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=800" alt="Interior">
+            <div class="item-overlay"><span class="project-category">Interior</span><h3 class="project-title">Chef's Kitchen</h3></div>
+        </div>
+        <div class="gallery-item" data-category="interior" onclick="openProject('Mid-Century Revival', 'Interior', 'Restoring a 1960s living room with period-correct detail.', 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1200')">
+            <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800" alt="Interior">
+            <div class="item-overlay"><span class="project-category">Interior</span><h3 class="project-title">Mid-Century Revival</h3></div>
+        </div>
+        <div class="gallery-item" data-category="interior" onclick="openProject('Spa Master Bath', 'Interior', 'Carrara marble and brass fixture bathroom remodel.', 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1200')">
+            <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=800" alt="Interior">
+            <div class="item-overlay"><span class="project-category">Interior</span><h3 class="project-title">Spa Master Bath</h3></div>
+        </div>
+        <div class="gallery-item" data-category="interior" onclick="openProject('Zen Lounge', 'Interior', 'Custom wood slat walls for a meditative space.', 'https://images.unsplash.com/photo-1505693419173-42b9258a01b4?w=1200')">
+            <img src="https://images.unsplash.com/photo-1505693419173-42b9258a01b4?w=800" alt="Interior">
+            <div class="item-overlay"><span class="project-category">Interior</span><h3 class="project-title">Zen Lounge</h3></div>
+        </div>
+        <div class="gallery-item" data-category="interior" onclick="openProject('The Great Room', 'Interior', 'Knocking out walls to create a 40-foot open living space.', 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200')">
+            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800" alt="Interior">
+            <div class="item-overlay"><span class="project-category">Interior</span><h3 class="project-title">The Great Room</h3></div>
+        </div>
+        <div class="gallery-item" data-category="interior" onclick="openProject('Penthouse Suite', 'Interior', 'Luxury bedroom remodel with integrated lighting.', 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=1200')">
+            <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800" alt="Interior">
+            <div class="item-overlay"><span class="project-category">Interior</span><h3 class="project-title">Penthouse Suite</h3></div>
+        </div>
+        <div class="gallery-item" data-category="interior" onclick="openProject('Walk-in Closet', 'Interior', 'Custom millwork and lighting for a high-end walk-in.', 'https://images.unsplash.com/photo-1558997519-83ea9252edf8?w=1200')">
+            <img src="https://images.unsplash.com/photo-1558997519-83ea9252edf8?w=800" alt="Interior">
+            <div class="item-overlay"><span class="project-category">Interior</span><h3 class="project-title">Walk-in Closet</h3></div>
+        </div>
+        <div class="gallery-item" data-category="interior" onclick="openProject('Home Cinema', 'Interior', 'Acoustically treated theater room for private viewing.', 'https://images.unsplash.com/photo-1593784991095-a205069470b6?w=1200')">
+            <img src="https://images.unsplash.com/photo-1593784991095-a205069470b6?w=800" alt="Interior">
+            <div class="item-overlay"><span class="project-category">Interior</span><h3 class="project-title">Home Cinema</h3></div>
+        </div>
+
+        <div class="gallery-item" data-category="commercial" onclick="openProject('HQ Tower Lobby', 'Commercial', 'Corporate entryway using raw concrete and warm wood.', 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200')">
+            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800" alt="Commercial">
+            <div class="item-overlay"><span class="project-category">Commercial</span><h3 class="project-title">HQ Tower Lobby</h3></div>
+        </div>
+        <div class="gallery-item" data-category="commercial" onclick="openProject('Tech Hub Office', 'Commercial', 'An open-plan collaborative office for a AI startup.', 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200')">
+            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800" alt="Commercial">
+            <div class="item-overlay"><span class="project-category">Commercial</span><h3 class="project-title">Tech Hub Office</h3></div>
+        </div>
+        <div class="gallery-item" data-category="commercial" onclick="openProject('Coffee Hub', 'Commercial', 'Modern cafe design with custom steel bar.', 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1200')">
+            <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800" alt="Commercial">
+            <div class="item-overlay"><span class="project-category">Commercial</span><h3 class="project-title">Coffee Hub</h3></div>
+        </div>
+        <div class="gallery-item" data-category="commercial" onclick="openProject('Retail Flagship', 'Commercial', 'High-visibility storefront renovation in Beverly Hills.', 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200')">
+            <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800" alt="Commercial">
+            <div class="item-overlay"><span class="project-category">Commercial</span><h3 class="project-title">Retail Flagship</h3></div>
+        </div>
+        <div class="gallery-item" data-category="commercial" onclick="openProject('Boutique Hotel Lobby', 'Commercial', 'Curating a first impression through lighting and art.', 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200')">
+            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800" alt="Commercial">
+            <div class="item-overlay"><span class="project-category">Commercial</span><h3 class="project-title">Boutique Hotel Lobby</h3></div>
+        </div>
+        <div class="gallery-item" data-category="commercial" onclick="openProject('Co-working Space', 'Commercial', 'Multi-functional desks and meeting room buildouts.', 'https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?w=1200')">
+            <img src="https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?w=800" alt="Commercial">
+            <div class="item-overlay"><span class="project-category">Commercial</span><h3 class="project-title">Co-working Space</h3></div>
+        </div>
+        <div class="gallery-item" data-category="commercial" onclick="openProject('The Glass Atrium', 'Commercial', 'Steel structure atrium with integrated drainage.', 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1200')">
+            <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800" alt="Commercial">
+            <div class="item-overlay"><span class="project-category">Commercial</span><h3 class="project-title">The Glass Atrium</h3></div>
+        </div>
+        <div class="gallery-item" data-category="commercial" onclick="openProject('Rooftop Restaurant', 'Commercial', 'Outdoor bar and structural canopy construction.', 'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=1200')">
+            <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800" alt="Commercial">
+            <div class="item-overlay"><span class="project-category">Commercial</span><h3 class="project-title">Rooftop Restaurant</h3></div>
+        </div>
+
+    </section>
+
+    <section style="background: #000; color: #fff; text-align: center; padding: 100px 20px;">
+        <h2 style="font-size: 2rem; margin-bottom: 20px; font-weight: 300;">WANT RESULTS LIKE THESE?</h2>
+        <p style="color: #888; margin-bottom: 40px;">Contact us today to start your journey with FORMA BUILD.</p>
+        <a href="estimate.html" style="background: #fff; color: #000; padding: 18px 50px; text-decoration: none; font-weight: 600; font-size: 13px;">START YOUR ESTIMATE</a>
+    </section>
+
+    <footer style="background: #000; color: #fff; padding: 40px; border-top: 1px solid #222; text-align: center;">
+        <div class="footer-bottom">
+            &copy; 2026 FORMA BUILD. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        function filterGallery(category) {
+            const items = document.querySelectorAll('.gallery-item');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.innerText.toLowerCase().includes(category) || (category === 'all' && btn.innerText === 'ALL PROJECTS')) {
+                    btn.classList.add('active');
+                }
+            });
+
+            items.forEach(item => {
+                if (category === 'all' || item.getAttribute('data-category') === category) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Modal Logic
+        const modal = document.getElementById("projectModal");
+        const closeBtn = document.querySelector(".close-modal");
+
+        function openProject(title, category, description, imgUrl) {
+            document.getElementById("modalImg").src = imgUrl;
+            document.getElementById("modalTitle").innerText = title;
+            document.getElementById("modalDesc").innerText = description;
+            modal.style.display = "block";
+            document.body.style.overflow = "hidden"; // Disable scroll
+        }
+
+        closeBtn.onclick = function() {
+            modal.style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto";
+            }
+        }
+    </script>
+</body>
+</html>
