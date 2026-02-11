@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORMA | Design. Build. Finance. Simplified.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Map Modal -->
+    <div id="mapModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeMap()">×</span>
+            <iframe id="mapFrame" src="" width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </div>
+
+    <!-- Contractor Modal -->
+    <div id="contractorModal" class="modal">
+        <div class="modal-content" style="max-width: 600px; background: #000; color: #fff; border: 1px solid #333;">
+            <span class="close-button" onclick="closeContractor()" style="color: #fff;">×</span>
+            <div style="padding: 20px;">
+                <span class="module-tag">Partner Application</span>
+                <h2 style="margin-bottom: 10px;">Join the Network</h2>
+                <p style="color: #929191; font-size: 14px; margin-bottom: 30px;">Partner with FORMA to receive pre-scoped, permit-ready residential projects.</p>
+                
+                <form id="contractor-form" style="display: flex; flex-direction: column; gap: 15px;">
+                    <input type="text" name="company_name" placeholder="Company Name" required style="background: #111; border: 1px solid #333; color: #fff; padding: 15px;">
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <input type="text" name="contact_name" placeholder="Contact Name" required style="background: #111; border: 1px solid #333; color: #fff; padding: 15px;">
+                        <input type="email" name="contact_email" placeholder="Email Address" required style="background: #111; border: 1px solid #333; color: #fff; padding: 15px;">
+                    </div>
+                    
+                    <select name="specialization" style="padding: 15px; background: #111; border: 1px solid #333; color: #929191; font-family: inherit;">
+                        <option value="">Primary Specialization</option>
+                        <option value="adu">ADU / Conversions</option>
+                        <option value="ground-up">Ground-up Residential</option>
+                        <option value="remodel">High-end Remodeling</option>
+                    </select>
+                    
+                    <button type="submit" style="background: #fff; color: #000; padding: 15px; cursor: pointer; font-weight: 600; text-transform: uppercase; border: none;">Submit Credentials</button>
+                    
+                    <div id="contractor-status" style="margin-top: 10px; font-size: 13px; text-align: center; display: none;"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="nav-container">
+            <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA Logo" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#packages">Packages</a></li>
+                    <li><a href="#how-it-works">Process</a></li>
+                    <li><a href="#locations">Locations</a></li>
+                    <li><a href="team.html">About Us</a></li> 
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <video autoplay muted loop playsinline class="hero-video">
+            <source src="VIDEO_BACKGROUND.mp4" type="video/mp4">
+        </video>
+
+        <div class="hero-content">
+            <h1>DESIGN. BUILD. FINANCE. SIMPLIFIED.</h1>
+            <p>We help California homeowners and investors plan, design, and execute construction projects...</p>
+            <div class="hero-btns">
+                <a href="#contact" class="cta-button">Get a Free Project Consultation</a>
+                <a href="#packages" class="cta-button outline">Explore Our Packages</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stats -->
+    <section class="tech-stats reveal" style="background: #000; color: #fff; border: none;">
+        <div class="stat-box"><span class="stat-label" style="color: #fff;">✔ Vetted Contractors</span></div>
+        <div class="stat-box"><span class="stat-label" style="color: #fff;">✔ Clear Pricing & Scope</span></div>
+        <div class="stat-box"><span class="stat-label" style="color: #fff;">✔ End-to-End Project Support</span></div>
+        <div class="stat-box"><span class="stat-label" style="color: #fff;">✔ ADUs, Remodels & New Builds</span></div>
+    </section>
+
+    <!-- Info Details -->
+    <section class="info-details">
+        <div class="info-container">
+            <div class="info-text reveal">
+                <span class="module-tag">One Partner. Every Step.</span>
+                <h2>Forma is your single point of contact.</h2>
+                <p>We bridge the gap between design, contractors, and financing so your project moves faster, smoother, and with fewer surprises.</p>
+                <p style="margin-top: 20px;">Whether you're building an ADU, remodeling, or developing property, we handle the coordination — you stay informed and in control.</p>
+            </div>
+            <div class="info-image reveal">
+                <div class="image-placeholder">
+                    <img src="https://images.unsplash.com/photo-1627847151154-4bfc6e0bf33d?w=600&h=400&fit=crop" alt="Project Coordination" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Matrix -->
+    <section id="how-it-works" class="process-matrix" style="background: #f8f8f8;">
+        <div class="matrix-container">
+            <div class="reveal">
+                <span class="module-tag">Execution Roadmap</span>
+                <h2 class="module-title">How It Works</h2>
+            </div>
+            <div class="matrix-grid">
+                <div class="matrix-item reveal">
+                    <div class="futu-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path><path d="M11 8v6M8 11h6"></path></svg>
+                    </div>
+                    <span class="matrix-num">01</span>
+                    <h4>Consultation & Feasibility</h4>
+                    <p>We evaluate goals, budget, site constraints, and zoning to determine what's realistically possible.</p>
+                </div>
+                <div class="matrix-item reveal">
+                    <div class="futu-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M2 12h20"></path><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M3 9h18M9 21V9"></path></svg>
+                    </div>
+                    <span class="matrix-num">02</span>
+                    <h4>Design & Planning</h4>
+                    <p>Our design team prepares plans, layouts, and documentation tailored to your project and jurisdiction.</p>
+                </div>
+                <div class="matrix-item reveal">
+                    <div class="futu-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><path d="M17 11l2 2 4-4"></path></svg>
+                    </div>
+                    <span class="matrix-num">03</span>
+                    <h4>Contractor Matching</h4>
+                    <p>We connect you with vetted contractors who are a fit for your scope, timeline, and budget — not random bids.</p>
+                </div>
+                <div class="matrix-item reveal">
+                    <div class="futu-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    </div>
+                    <span class="matrix-num">04</span>
+                    <h4>Build Support & Oversight</h4>
+                    <p>We stay involved through construction to ensure alignment between plans, contractors, and expectations.</p>
+                </div>
+                <div class="matrix-item reveal">
+                    <div class="futu-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"></path></svg>
+                    </div>
+                    <span class="matrix-num">05</span>
+                    <h4>Financing</h4>
+                    <p>We help explore financing pathways so projects don't stall due to cash flow or upfront costs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Packages -->
+    <section id="packages" class="futuristic-projects" style="background-color: #ffffff; color: #000; padding: 100px 0;">
+        <div class="reveal" style="text-align: center; margin-bottom: 60px;">
+            <span class="module-tag">Investment Tiers</span>
+            <h2 class="module-title">Strategic Project Packages</h2>
+            <p style="color: #666; max-width: 700px; margin: 0 auto;">Transparent starting points for every stage of your development journey.</p>
+        </div>
+        <div class="futu-grid">
+            <div class="futu-card reveal" style="border: 2px solid #000; background: #fff;">
+                <div class="futu-tag" style="color: #000; font-weight: 600;">Phase 01</div>
+                <h3>The Blueprint</h3>
+                <p>Ideal for homeowners needing clarity before committing to construction.</p>
+                <ul style="list-style: none; padding: 0; margin-top: 20px; font-size: 0.9rem; line-height: 2;">
+                    <li>• Feasibility & Zoning Study</li>
+                    <li>• Preliminary Architectural Concepts</li>
+                    <li>• Estimated Budget Projections</li>
+                </ul>
+                <a href="#contact" class="cta-button" style="width: 100%; text-align: center; margin-top: 20px; background: #000; color: #fff; display: block;">Inquire</a>
+            </div>
+            <div class="futu-card reveal" style="background: #000; color: #fff; transform: scale(1.05); z-index: 10;">
+                <div class="futu-tag" style="color: #929191;">Most Popular</div>
+                <h3 style="color: #fff;">The ADU Specialist</h3>
+                <p>A complete end-to-end solution for garage conversions and detached units.</p>
+                <ul style="list-style: none; padding: 0; margin-top: 20px; font-size: 0.9rem; line-height: 2;">
+                    <li>• Full Permit-Ready Plans</li>
+                    <li>• Vetted Contractor Matching</li>
+                    <li>• Financing Strategy Session</li>
+                </ul>
+                <a href="#contact" class="cta-button" style="width: 100%; text-align: center; margin-top: 20px; background: #fff; color: #000; display: block;">Start ADU</a>
+            </div>
+            <div class="futu-card reveal" style="border: 2px solid #000000; background: #ffffff;">
+                <div class="futu-tag">Enterprise</div>
+                <h3>Ground-Up Build</h3>
+                <p>For custom modern homes and multi-unit residential developments.</p>
+                <ul style="list-style: none; padding: 0; margin-top: 20px; font-size: 0.9rem; line-height: 2;">
+                    <li>• Site Topography Mapping</li>
+                    <li>• Bespoke Architectural Design</li>
+                    <li>• Bid Management</li>
+                </ul>
+                <a href="#contact" class="cta-button" style="width: 100%; text-align: center; margin-top: 20px; background: #000; color: #fff; display: block;">Book Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="services">
+        <video autoplay muted loop playsinline class="services-video-bg2">
+            <source src="VIDEO_BACKGROUND3.mp4" type="video/mp4">
+        </video>
+        
+        <div class="services-container">
+            <h1>OUR CORE SERVICES</h1>
+            <div class="service-grid">
+                <div class="service-card reveal">
+                    <img src="https://images.unsplash.com/photo-1721244654394-36a7bc2da288?w=600&h=800&fit=crop" class="card-bg" alt="Architectural Design">
+                    <div class="service-card-content">
+                        <h2>Architectural Design</h2>
+                        <P>Architectural Design</P>
+                        <p>Concepts, layouts, permit-ready plans, and revisions.</p>
+                    </div>
+                </div>
+                <div class="service-card reveal">
+                    <img src="https://images.unsplash.com/photo-1627141234469-24711efb373c?w=600&h=800&fit=crop" class="card-bg" alt="ADU Development">
+                    <div class="service-card-content">
+                        <h2>ADU Development</h2>
+                        <p>ADU Development</p>
+                        <p>Maximizing property value.</p>
+                    </div>
+                </div>
+                <div class="service-card reveal">
+                    <img src="https://images.pexels.com/photos/17174767/pexels-photo-17174767.jpeg?w=600&h=800&fit=crop" class="card-bg" alt="Contractor Sourcing">
+                    <div class="service-card-content">
+                        <h2>Contractor Sourcing</h2>
+                        <p>Contractor Sourcing</p>
+                        <p>Vetted professionals for precision.</p>
+                    </div>
+                </div>
+                <div class="service-card reveal">
+                    <img src="https://images.unsplash.com/photo-1721244653757-b76cc4679dfb?w=600&h=800&fit=crop" class="card-bg" alt="Project Strategy">
+                    <div class="service-card-content">
+                        <h2>Project Strategy</h2>
+                        <p>Project Strategy</p>
+                        <p>Feasibility and roadmap planning.</p>
+                    </div>
+                </div>
+                <div class="service-card reveal">
+                    <img src="https://images.unsplash.com/photo-1742415106160-594d07f6cc23?w=600&h=800&fit=crop" class="card-bg" alt="Financing Guidance">
+                    <div class="service-card-content">
+                        <h2>Financing Guidance</h2>
+                        <p>Financing Guidance</p><STYLE></STYLE></p>
+                        <p>Navigating capital requirements.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Innovation Section -->
+    <section class="innovation-section">
+        <div class="innovation-content">
+            <div class="innovation-text reveal">
+                <span class="module-tag">WHY CLIENTS CHOOSE FORMA</span>
+                <h1 class="module-title">WE DON'T JUST DRAW PLANS — WE BUILD.</h1>
+            </div>
+            <div class="glass-orb reveal">PROTECTED INVESTMENT</div>
+        </div>
+        
+        <div class="photo-showcase">
+            <img src="https://images.pexels.com/photos/17174766/pexels-photo-17174766.jpeg?w=600&h=700&fit=crop" class="reveal-img" alt="Luxury Architecture 1">
+            <img src="https://images.unsplash.com/photo-1718893389568-22a2a039998c?w=600&h=700&fit=crop" class="reveal-img" alt="Luxury Architecture 2">
+            <img src="https://images.unsplash.com/photo-1627847151154-4bfc6e0bf33d?w=600&h=700&fit=crop" class="reveal-img" alt="Luxury Architecture 3">
+        </div>
+    </section>
+
+    <!-- Digital Twin -->
+    <section class="digital-twin">
+        <div class="twin-container">
+            <div class="digital-twin-visual reveal">
+                <div class="cube-system">
+                    <div class="wireframe-cube"></div>
+                    <div class="data-scanner"></div>
+                    <div class="data-nodes">
+                        <span class="node n1">STRUCTURAL: OK</span>
+                        <span class="node n2">LOAD: 22%</span>
+                        <span class="node n3">SYNC: ACTIVE</span>
+                    </div>
+                </div>
+                
+                <div class="atelier-photos">
+                    <img src="https://images.unsplash.com/photo-1742440710226-450e3b85c100?w=600&h=400&fit=crop" class="reveal-img" alt="Design Studio 1">
+                    <img src="https://images.unsplash.com/photo-1742440710136-1976b1cad864?w=600&h=400&fit=crop" class="reveal-img" alt="Design Studio 2">
+                </div>
+            </div>
+            <div class="twin-text reveal">
+                <span class="module-tag" style="color:#929191;">VIRTUAL ATELIER</span>
+                <h1 class="module-title" style="color:#fff;">BUILT ON REAL-WORLD EXPERIENCE</h1>
+            </div>
+        </div>
+    </section>
+
+    <!-- For Contractors -->
+    <section class="futuristic-projects" style="background-color: #f4f4f4; color: #000;">
+        <div class="reveal">
+            <span class="module-tag">Partnership</span>
+            <h1 class="futu-title" style="font-size: 2.5rem; color: #000;">For Contractors</h1>
+            <p style="max-width: 800px; margin: 0 auto 40px auto;">Forma partners with licensed, insured contractors looking for qualified, ready-to-build projects.</p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; text-align: left; max-width: 900px; margin: 0 auto;">
+                <div>
+                    <h4 style="border-bottom: 1px solid #ccc; padding-bottom: 10px;">WE HANDLE</h4>
+                    <ul style="list-style: none; padding: 20px 0; line-height: 2;">
+                        <li>• Client Education</li>
+                        <li>• Project Scoping</li>
+                        <li>• Design Readiness</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="border-bottom: 1px solid #ccc; padding-bottom: 10px;">YOU GET</h4>
+                    <ul style="list-style: none; padding: 20px 0; line-height: 2;">
+                        <li>• Pre-qualified Leads</li>
+                        <li>• Clear Scope & Expectations</li>
+                        <li>• Higher Close Rates</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <a href="javascript:void(0)" onclick="openContractor()" class="cta-button reveal" style="background: #000; color: #fff; margin-top: 50px;">Apply to Become a Partner Contractor</a>
+    </section>
+
+    <!-- Locations -->
+    <section id="locations" class="locations-area">
+        <div class="reveal">
+            <span class="module-tag" style="display: block; text-align: center; margin-bottom: 10px;">Operational Zones</span>
+            <h1 class="module-title" style="text-align:center; color: #fff; margin-bottom: 60px;">Our Locations</h1>
+        </div>
+        
+        <div class="location-grid-futuristic">
+            <div class="location-perspective reveal">
+                <a href="javascript:void(0)" onclick="openMap('california')" class="location-card-v2">
+                    <div class="card-overlay"></div>
+                    <div class="card-content">
+                        <span class="zone-code">ZONE_01</span>
+                        <h2>California</h2>
+                        <div class="status-indicator"><span></span> ACTIVE</div>
+                        <p>Architecture, ADU Design, and Full-Scale Development.</p>
+                        <small>INITIALIZE MAP SCAN →</small>
+                    </div>
+                </a>
+            </div>
+
+            <div class="location-perspective reveal">
+                <a href="javascript:void(0)" onclick="openMap('utah')" class="location-card-v2">
+                    <div class="card-overlay"></div>
+                    <div class="card-content">
+                        <span class="zone-code">ZONE_02</span>
+                        <h2>Utah</h2>
+                        <div class="status-indicator"><span></span> ACTIVE</div>
+                        <p>Minimalist Design and Functional Residential Planning.</p>
+                        <small>INITIALIZE MAP SCAN →</small>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="hero" style="min-height: 40vh; background: #fff; color: #000; border-top: 1px solid #eee;">
+        <div class="hero-content">
+            <h1 class="reveal" style="color: #000;">Ready to Start Your Project the Right Way?</h1>
+            <p class="reveal" style="color: #666;">Avoid costly mistakes, delays, and miscommunication. Let Forma guide your project from idea to execution.</p>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact">
+        <h1 class="reveal">Schedule Your Free Consultation</h1>
+        <form id="contact-form" class="reveal">
+            <input type="text" name="name" id="user_name" placeholder="Name" required>
+            <input type="email" name="email" id="user_email" placeholder="Email" required>
+            <textarea name="message" id="message" placeholder="Tell us about your project..." required></textarea>
+            
+            <button type="submit" id="submit-btn">Get Started</button>
+            <div id="form-status" style="margin-top: 20px; font-weight: 500; display: none;"></div>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <img src="logo2.jpg" alt="FORMA" class="footer-logo-white">
+                <p>Forma — Where Design Meets Execution.</p>
+            </div>
+            <div class="footer-col"></div>
+        </div>
+        <div class="footer-bottom"><p>© 2026 FORMA DESIGN | All rights reserved</p></div>
+    </footer>
+
+    <!-- EmailJS Library -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+       (function(){ emailjs.init({ publicKey: "alap2C2Fda-y4hFG8" }); })();
+    </script>
+    
+    <!-- Main JavaScript -->
+    <script>
+        // Scroll Reveal Animation
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal, .reveal-img");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                if (elementTop < windowHeight - 150) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal();
+
+        // Map Modal Functions
+        function openMap(state) {
+            var modal = document.getElementById("mapModal");
+            var iframe = document.getElementById("mapFrame");
+            var maps = {
+                'california': 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3305.733248043701!2d-118.2436849!3d34.0522342!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c648fa1d48d9%3A0x7123456789abcdef!2sCalifornia!5e0!3m2!1sen!2sus!4v1234567890',
+                'utah': 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3021.844485!2d-111.891047!3d40.760779!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87528a27!2sSalt+Lake+City%2C+UT!5e0!3m2!1sen!2sus!4v1234567890'
+            };
+            iframe.src = maps[state];
+            modal.style.display = "block";
+        }
+        
+        function closeMap() {
+            var modal = document.getElementById("mapModal");
+            var iframe = document.getElementById("mapFrame");
+            modal.style.display = "none";
+            iframe.src = "";
+        }
+
+        // Contractor Modal Functions
+        function openContractor() {
+            document.getElementById("contractorModal").style.display = "block";
+        }
+        
+        function closeContractor() {
+            document.getElementById("contractorModal").style.display = "none";
+        }
+
+        // Close modals on outside click
+        window.onclick = function(event) {
+            var mapModal = document.getElementById("mapModal");
+            var conModal = document.getElementById("contractorModal");
+            if (event.target === mapModal) closeMap();
+            if (event.target === conModal) closeContractor();
+        }
+
+        // Contact Form Handler
+        document.getElementById('contact-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const submitBtn = document.getElementById('submit-btn');
+            const formStatus = document.getElementById('form-status');
+            
+            submitBtn.disabled = true;
+            submitBtn.innerText = "TRANSMITTING...";
+
+            emailjs.sendForm('service_d8l3yh6', 'template_f5ctunh', this)
+                .then(() => {
+                    submitBtn.innerText = "MESSAGE SENT";
+                    formStatus.style.display = "block";
+                    formStatus.className = "status-success";
+                    formStatus.innerText = "FORMA Architecture: Building with intention. We've received your inquiry and will reach out shortly.";
+                    document.getElementById('contact-form').reset();
+                }, (err) => {
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = "TRY AGAIN";
+                    formStatus.style.display = "block";
+                    formStatus.className = "status-error";
+                    formStatus.innerText = "Transmission Error: " + JSON.stringify(err);
+                });
+        });
+
+        // Contractor Form Handler
+        document.getElementById('contractor-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const partnerBtn = this.querySelector('button');
+            const statusDiv = document.getElementById('contractor-status');
+
+            partnerBtn.disabled = true;
+            partnerBtn.innerText = "VERIFYING..."; 
+            statusDiv.style.display = "none";
+
+            emailjs.sendForm('service_d8l3yh6', 'template_o16az14', this)
+                .then(() => {
+                    partnerBtn.innerText = "CREDENTIALS SENT";
+                    statusDiv.style.display = "block";
+                    statusDiv.style.color = "#27ae60";
+                    statusDiv.innerText = "✓ Success! Your credentials have been transmitted.";
+                    
+                    setTimeout(() => { 
+                        statusDiv.style.display = "none";
+                        partnerBtn.disabled = false;
+                        partnerBtn.innerText = "Submit Credentials";
+                        document.getElementById('contractor-form').reset(); 
+                        closeContractor(); 
+                    }, 3000);
+                }, (err) => {
+                    partnerBtn.disabled = false;
+                    partnerBtn.innerText = "RETRY SUBMISSION";
+                    statusDiv.style.display = "block";
+                    statusDiv.style.color = "#ff4d4d";
+                    statusDiv.innerText = "Error: Transmission failed. Please try again.";
+                    console.error("EmailJS Error:", err);
+                });
+        });
+    </script>
+</body>
+</html>
