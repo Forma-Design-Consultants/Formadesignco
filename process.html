@@ -1,281 +1,209 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>FORMA | Execution Roadmap</title>
-
     <link rel="stylesheet" href="style.css">
-
     <style>
-
-        body { background-color: #000; margin: 0; font-family: 'Inter', sans-serif; color: #fff; }
-
-       
-
-        /* Video Background */
-
-        .video-bg-container {
-
-            position: fixed;
-
-            top: 0; left: 0; width: 100%; height: 100%;
-
-            z-index: -1; overflow: hidden;
-
+        :root {
+            --safe-top: env(safe-area-inset-top, 20px);
+            --safe-bottom: env(safe-area-inset-bottom, 20px);
         }
 
-
+        body { 
+            background-color: #000000; 
+            margin: 0; 
+            font-family: 'Inter', sans-serif; 
+            color: #fff; 
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        
+        /* Fixed Video Layer */
+        .video-bg-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1; 
+            overflow: hidden;
+        }
 
         .process-video-bg {
-
             min-width: 100%; min-height: 100%;
-
             width: auto; height: auto;
-
             position: absolute; top: 50%; left: 50%;
-
             transform: translate(-50%, -50%);
-
             object-fit: cover;
-
-            opacity: 0.3;
-
+            opacity: 0.25; 
         }
-
-
 
         .process-wrapper {
-
             position: relative;
-
-            z-index: 2;
-
+            z-index: 999; /* Highest priority to stay above video */
             max-width: 1200px;
-
             margin: 0 auto;
-
-            padding: 140px 20px 100px 20px;
-
+            padding: calc(120px + var(--safe-top)) 20px 100px 20px;
             text-align: center;
-
         }
 
+        /* HEADER FIX: Cleaned up tags and forced visibility */
+        .process-header {
+            margin-bottom: 70px;
+            display: block;
+            width: 100%;
+        }
 
+        .process-header span { 
+            font-size: 13px; 
+            letter-spacing: 6px; 
+            color: #ffffff !important;
+            text-transform: uppercase; 
+            display: block;
+            margin-bottom: 15px;
+            font-weight: 200;
+            text-shadow: 0px 2px 10px rgba(0,0,0,1);
+        }
 
-        .process-header span { font-size: 10px; letter-spacing: 4px; color: #888; text-transform: uppercase; }
-
-        .process-header h1 { font-size: 42px; letter-spacing: 3px; margin: 15px 0 60px 0; font-weight: 400; text-transform: uppercase; }
-
-
-
-        /* Roadmap Grid - Updated to 3 columns to fit 6 steps perfectly */
+        .process-header h1 { 
+            font-size: clamp(32px, 8vw, 52px);
+            letter-spacing: 4px; 
+            margin: 0; 
+            font-weight: 400; 
+            text-transform: uppercase; 
+            color: #ffffff;
+            text-shadow: 0px 4px 20px rgba(0,0,0,1);
+        }
 
         .roadmap-grid {
-
             display: grid;
-
             grid-template-columns: repeat(3, 1fr);
-
-            gap: 1px; /* Creates the thin line effect between boxes */
-
-            background-color: rgba(255,255,255,0.1); /* Line color */
-
-            border: 1px solid rgba(255,255,255,0.1);
-
+            border-top: 1px solid rgba(255,255,255,0.2);
+            border-left: 1px solid rgba(255,255,255,0.2);
+            background: rgba(0,0,0,0.5);
         }
-
-
 
         .step-card {
-
-            background-color: rgba(0, 0, 0, 0.6);
-
-            padding: 60px 40px;
-
+            padding: 45px 35px;
             text-align: left;
-
-            transition: background 0.3s ease;
-
+            border-right: 1px solid rgba(255,255,255,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
-
-
 
         .step-card:hover { background-color: rgba(255, 255, 255, 0.05); }
 
+        .step-image-box {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
 
+        .step-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: saturate(1.1) contrast(1.1);
+            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
 
-        .step-num { font-size: 11px; letter-spacing: 2px; color: #888; text-transform: uppercase; display: block; margin-bottom: 20px; }
+        .step-card:hover .step-image { transform: scale(1.1); }
 
-        .step-card h2 { font-size: 18px; letter-spacing: 1px; text-transform: uppercase; margin: 0 0 15px 0; font-weight: 600; }
-
-        .step-card p { font-size: 13px; line-height: 1.8; color: rgba(255,255,255,0.7); margin: 0; }
-
-
+        .step-num { font-size: 11px; letter-spacing: 2px; color: #bbb; display: block; margin-bottom: 15px; font-weight: 600; }
+        .step-card h2 { font-size: 18px; letter-spacing: 1px; text-transform: uppercase; margin: 0 0 15px 0; font-weight: 600; color: #fff; }
+        .step-card p { font-size: 14px; line-height: 1.8; color: rgba(255,255,255,0.85); margin: 0; }
 
         @media (max-width: 992px) { .roadmap-grid { grid-template-columns: repeat(2, 1fr); } }
-
-        @media (max-width: 600px) { .roadmap-grid { grid-template-columns: 1fr; } }
-
+        @media (max-width: 600px) {
+            .roadmap-grid { grid-template-columns: 1fr; border-left: none; }
+            .step-card { border-left: none; border-right: none; padding: 40px 25px; }
+        }
     </style>
-
 </head>
-
 <body>
 
-
-
     <div class="video-bg-container">
-
         <video autoplay muted loop playsinline class="process-video-bg">
-
             <source src="VIDEO_BACKGROUND4.mp4" type="video/mp4">
-
         </video>
-
     </div>
-
-
 
     <header>
-
         <div class="nav-container">
-
             <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA" class="logo">
-
             <nav>
-
                 <ul>
-
                     <li><a href="index.html">HOME</a></li>
-
                     <li><a href="services.html">SERVICES</a></li>
-
                     <li><a href="packages.html">PACKAGES</a></li>
-
                     <li><a href="process.html">PROCESS</a></li>
-
                     <li><a href="locations.html">LOCATIONS</a></li>
-
                     <li><a href="team.html">ABOUT US</a></li>
-
                     <li><a href="contact.html">CONTACT</a></li>
-
                 </ul>
-
             </nav>
-
         </div>
-
     </header>
 
-
-
     <div class="process-wrapper">
-
         <div class="process-header">
-
             <span>EXECUTION ROADMAP</span>
-
             <h1>HOW IT WORKS</h1>
-
-        </div>
-
-       
-
-        <div class="roadmap-grid">
-
+        </div> <div class="roadmap-grid">
             <div class="step-card">
-
-                <span class="step-num">01 / INTAKE</span>
-
+                <div class="step-image-box">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80" alt="Strategy" class="step-image">
+                </div>
+                <span class="step-num">01 / STRATEGY</span>
                 <h2>DISCOVERY & FEASIBILITY</h2>
-
                 <p>We analyze your property's zoning, topography, and local regulations to determine exactly what can be built.</p>
-
             </div>
 
-
-
             <div class="step-card">
-
+                <div class="step-image-box">
+                    <img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&w=800&q=80" alt="Design" class="step-image">
+                </div>
                 <span class="step-num">02 / DESIGN</span>
-
                 <h2>ARCHITECTURAL CONCEPT</h2>
-
-                <p>Creating high-fidelity 3D models and floor plans that balance aesthetic noir design with functional living.</p>
-
+                <p>Creating high-fidelity 3D models and digital floor plans that balance aesthetic noir design with functional modern living.</p>
             </div>
 
-
+            <div class="step-card">
+                <div class="step-image-box">
+                    <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=800&q=80" alt="Finance" class="step-image">
+                </div>
+                <span class="step-num">03 / FINANCE</span>
+                <h2>BUDGET & CONTRACTS</h2>
+                <p>We finalize the numbers. From architectural plan reviews to securing your financial strategy for the build ahead.</p>
+            </div>
 
             <div class="step-card">
-
-                <span class="step-num">03 / PERMITS</span>
-
+                <div class="step-image-box">
+                    <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=800&q=80" alt="Permits" class="step-image">
+                </div>
+                <span class="step-num">04 / PERMITS</span>
                 <h2>CITY APPROVALS</h2>
-
-                <p>We handle the bureaucracy. Our team submits plans and manages the back-and-forth with city officials for approval.</p>
-
+                <p>We handle the bureaucracy. Our team manages the back-and-forth with city officials for the final permit stamp.</p>
             </div>
 
-
-
             <div class="step-card">
-
-                <span class="step-num">04 / MATCHING</span>
-
-                <h2>CONTRACTOR SOURCING</h2>
-
-                <p>We connect you with our vetted network of builders and provide bid management to ensure fair pricing.</p>
-
-            </div>
-
-
-
-            <div class="step-card">
-
+                <div class="step-image-box">
+                    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80" alt="Build" class="step-image">
+                </div>
                 <span class="step-num">05 / BUILD</span>
-
                 <h2>PROJECT OVERSIGHT</h2>
-
-                <p>Forma acts as your single point of contact during construction to ensure the design is executed perfectly.</p>
-
+                <p>Clean execution. Forma acts as your site manager, overseeing contractors to ensure a perfect project delivery.</p>
             </div>
-
-
-
-            <div class="step-card">
-
-                <span class="step-num">06 / COMPLETION</span>
-
-                <h2>THE FORMA HANDOVER</h2>
-
-                <p>A rigorous final quality audit followed by a formal key presentation. Your space is now a FORMA-certified masterpiece.</p>
-
-            </div>
-
         </div>
-
     </div>
 
-
-
-    <footer style="background-color: rgba(0,0,0,0.9); color: #fff; padding: 80px 0; text-align: center; border-top: 1px solid #1a1a1a; position: relative; z-index: 2;">
-
+    <footer style="background-color: rgba(0,0,0,0.9); color: #fff; padding: 80px 0; text-align: center; border-top: 1px solid #1a1a1a; position: relative; z-index: 999;">
         <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" style="width: 100px; filter: invert(1); margin-bottom: 20px;">
-
         <p style="font-size: 12px; letter-spacing: 2px; opacity: 0.5;">© 2026 FORMA DESIGN CONSULTANTS</p>
-
     </footer>
 
-
-
 </body>
-
 </html>

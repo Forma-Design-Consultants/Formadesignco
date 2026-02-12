@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORMA | ADU Design Concepts</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background-color: #000; margin: 0; font-family: 'Inter', sans-serif; color: #fff; }
+        
+        .gallery-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 140px 20px 100px 20px;
+        }
+
+        .gallery-header { text-align: center; margin-bottom: 80px; }
+        .gallery-header span { font-size: 10px; letter-spacing: 5px; color: #555; text-transform: uppercase; display: block; margin-bottom: 15px; }
+        .gallery-header h1 { font-size: 32px; letter-spacing: 2px; font-weight: 300; text-transform: uppercase; margin: 0; }
+        .gallery-header p { color: #888; font-size: 14px; margin-top: 20px; max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+
+        /* The 3-Slot Gallery Grid */
+        .rendering-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .render-item {
+            position: relative;
+            background: #111;
+            border: 1px solid #222;
+            transition: border-color 0.4s ease;
+        }
+
+        .render-item:hover { border-color: #555; }
+
+        .render-item img {
+            width: 100%;
+            height: 550px;
+            object-fit: cover;
+            display: block;
+            opacity: 0.7;
+            transition: opacity 0.4s ease, transform 0.6s ease;
+        }
+
+        .render-item:hover img {
+            opacity: 1;
+            transform: scale(1.02);
+        }
+
+        /* The Concept Labels */
+        .concept-tag {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            background: #fff;
+            color: #000;
+            padding: 12px 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            box-shadow: 10px 10px 0px rgba(255,255,255,0.1);
+        }
+
+        /* Footer/Navigation */
+        .gallery-footer {
+            margin-top: 100px;
+            text-align: center;
+            border-top: 1px solid #222;
+            padding-top: 60px;
+        }
+
+        .cta-select {
+            background: #fff;
+            color: #000;
+            padding: 20px 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 12px;
+            letter-spacing: 3px;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .cta-select:hover { background: #ccc; }
+
+        @media (max-width: 992px) {
+            .rendering-grid { grid-template-columns: 1fr; }
+            .render-item img { height: 400px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="gallery-container">
+        <div class="gallery-header">
+            <span>PRE-ENGINEERED MODELS</span>
+            <h1>Stock ADU Renderings</h1>
+            <p>Select a baseline architectural concept to begin your customization and feasibility phase.</p>
+        </div>
+
+        <div class="rendering-grid">
+            <div class="render-item">
+                <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80" alt="ADU Concept A">
+                <div class="concept-tag">Design Concept A</div>
+            </div>
+
+            <div class="render-item">
+                <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=800&q=80" alt="ADU Concept B">
+                <div class="concept-tag">Design Concept B</div>
+            </div>
+
+            <div class="render-item">
+                <img src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=800&q=80" alt="ADU Concept C">
+                <div class="concept-tag">Design Concept C</div>
+            </div>
+        </div>
+
+        <div class="gallery-footer">
+            <a href="contact.html" class="cta-select">INQUIRE ABOUT A CONCEPT</a>
+            <p style="margin-top: 30px;"><a href="packages.html" style="color: #555; text-decoration: none; font-size: 11px; letter-spacing: 1px;">← BACK TO PACKAGES</a></p>
+        </div>
+    </div>
+
+</body>
+</html>
