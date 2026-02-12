@@ -5,180 +5,251 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FORMA | The Collective</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
     <style>
+        /* ================= THE COLLECTIVE STYLES ================= */
+        :root {
+            --safe-top: env(safe-area-inset-top, 20px);
+        }
 
-    /* ================= THE COLLECTIVE STYLES ================= */
-    :root {
-        --safe-top: env(safe-area-inset-top, 20px);
-    }
+        body { 
+            background-color: #000; 
+            margin: 0; 
+            color: #7c7c7c; 
+            overflow-x: hidden; 
+            font-family: 'Inter', sans-serif;
+        }
 
-    body { background-color: #000; margin: 0; color: #fff; overflow-x: hidden; }
+        /* Fixed Navigation */
+        header {
+            background: #fff;
+            border-bottom: 1px solid #000000;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            padding: 20px 0;
+        }
 
-    /* Hero Section Adjustments */
-    .hero {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding-top: var(--safe-top);
-        text-align: center;
-    }
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
 
-    /* Grid Layout */
-    .team-section {
-        padding: 80px 20px;
-        background: #000;
-    }
+        .logo { height: 60px; width: auto; display: block; }
 
-    .team-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 40px;
-    }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
 
-    /* Team Card: Personnel Database Look */
-    .team-card {
-        background: #ffffff;
-        border: 1px solid #000000;
-        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        opacity: 0;
-        transform: translateY(30px);
-    }
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            margin: 0;
+            padding: 0;
+        }
 
-    .team-card.active {
-        opacity: 1;
-        transform: translateY(0);
-    }
+        nav ul li a {
+            text-decoration: none;
+            color: #000;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
 
-    .team-card:hover {
-        border-color: #000000;
-        background: #ffffff;
-    }
+        .nav-cta {
+            background: #000;
+            color: #fff;
+            padding: 12px 24px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
 
-    /* Image Placeholder / Profile Pic */
-    .member-image-placeholder {
-        width: 100%;
-        aspect-ratio: 1 / 1;
-        background: #ffffff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-bottom: 1px solid #1a1a1a;
-        overflow: hidden;
-    }
+        /* Hero Section Adjustments */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 180px 20px 100px 20px; 
+            text-align: center;
+            background: #fff;
+            color: #000;
+        }
 
-    .placeholder-box {
-        font-family: monospace;
-        font-size: 10px;
-        color: #000000;
-        letter-spacing: 2px;
-    }
+        .module-tag {
+            font-family: monospace;
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 15px;
+            color: #888;
+        }
 
-    /* Data Layout */
-    .member-info { padding: 30px; }
+        .hero h1 {
+            font-size: clamp(32px, 8vw, 64px);
+            font-weight: 400;
+            letter-spacing: -1px;
+            margin: 0 0 30px 0;
+            text-transform: uppercase;
+        }
 
-    .tech-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-    }
+        .hero-desc-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            border-left: 2px solid #000;
+            padding-left: 30px;
+            text-align: left;
+        }
 
-    .code {
-        font-family: monospace;
-        font-size: 10px;
-        color: #000000;
-    }
+        /* Grid Layout */
+        .team-section {
+            padding: 80px 20px;
+            background: #000;
+        }
 
-    .status-dot {
-        width: 6px;
-        height: 6px;
-        background: #00ff41; /* "Active" green for personnel */
-        border-radius: 50%;
-        box-shadow: 0 0 10px #00ff41;
-    }
+        .team-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+        }
 
-    .team-card h2 {
-        font-size: 20px;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        margin: 0 0 5px 0;
-        font-weight: 500;
-    }
+        /* Team Card */
+        .team-card {
+            background: #ffffff;
+            border: 1px solid #000000;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+        }
 
-    .role {
-        font-size: 25px;
-        color: #000000;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin-bottom: 25px;
-    }
+        .team-card.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-    .contact-data {
-        border-top: 1px solid #000000;
-        padding-top: 20px;
-    }
+        .member-image-placeholder {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: #f4f4f4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #eee;
+            overflow: hidden;
+        }
 
-    .contact-data p {
-        font-size: 11px;
-        font-family: monospace;
-        color: #444;
-        margin: 5px 0;
-        transition: color 0.3s;
-    }
+        .placeholder-box {
+            font-family: monospace;
+            font-size: 10px;
+            color: #999;
+            letter-spacing: 2px;
+        }
 
-    .team-card:hover .contact-data p { color: #888; }
+        .member-info { padding: 30px; color: #000; }
 
-    /* Info Details Section */
-    .info-details { padding: 100px 20px; }
-    
-    .cta-button {
-        display: inline-block;
-        padding: 15px 40px;
-        text-decoration: none;
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        transition: 0.3s;
-    }
+        .tech-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
-    /* Mobile Tweaks */
-    @media (max-width: 600px) {
-        .team-container { grid-template-columns: 1fr; }
-        .hero { height: auto; padding: 120px 20px 60px 20px; }
-    }
-</style>
+        .code {
+            font-family: monospace;
+            font-size: 10px;
+            color: #999;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #00ff41;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ff41;
+        }
+
+        .team-card h2 {
+            font-size: 20px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin: 0 0 5px 0;
+            font-weight: 500;
+        }
+
+        .role {
+            font-size: 14px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+        }
+
+        .contact-data {
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        .contact-data p {
+            font-size: 11px;
+            font-family: monospace;
+            color: #444;
+            margin: 5px 0;
+        }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s all ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 900px) {
+            .nav-right { display: none; } /* Hide complex nav on mobile */
+            .hero { padding-top: 140px; }
+        }
     </style>
 </head>
 <body>
 
     <header>
         <div class="nav-container">
-            <a href="index.html"><img src="logo1.jpg" alt="FORMA Logo" class="logo"></a>
-            <nav>
-                <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="packages.html">Packages</a></li>
-                <li><a href="process.html">Process</a></li>
-                <li><a href="locations.html">Locations</a></li>
-                <li><a href="team.html">About Us</a></li> 
-                <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </nav>
+            <a href="index.html">
+                <img src="logo1.jpg" alt="FORMA Logo" class="logo">
+            </a>
+            <div class="nav-right">
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="packages.html">Packages</a></li>
+                        <li><a href="process.html">Process</a></li>
+                        <li><a href="locations.html">Locations</a></li>
+                        <li><a href="team.html">About Us</a></li> 
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+                <a href="estimate.html" class="nav-cta">Free Estimate</a>
+            </div>
         </div>
     </header>
 
-    <section class="hero" style="height: 60vh; background: #fff; color: #000;">
+    <section class="hero">
         <div class="hero-content">
-            <span class="module-tag reveal" style="color: #666;">Personnel Database</span>
-            <h1 class="reveal" style="color: #000; margin-bottom: 20px;">The Collective</h1>
-            <div class="reveal" style="max-width: 800px; margin: 0 auto; border-left: 2px solid #000; padding-left: 20px; text-align: left;">
-                <p style="font-size: 1.2rem; color: #333;">Our team has experience across residential construction, real estate development, and project coordination giving clients practical guidance, not theory.</p>
+            <span class="module-tag reveal">Personnel Database</span>
+            <h1 class="reveal">The Collective</h1>
+            <div class="hero-desc-wrapper reveal">
+                <p style="font-size: 1.2rem; color: #333; margin: 0;">Our team brings together decades of experience across residential construction, real estate development, and high-end architectural design.</p>
             </div>
         </div>
     </section>
@@ -239,74 +310,13 @@
                     </div>
                 </div>
             </div>
-            <div class="team-card reveal">
-                <div class="member-image-placeholder">
-                    <div class="placeholder-box">IMG_01</div> 
-                </div>
-                <div class="member-info">
-                    <div class="tech-header">
-                        <span class="code">ID: ARCH_LEAD</span>
-                        <span class="status-dot"></span>
-                    </div>
-                    <h2>Alex Mercer</h2>
-                    <p class="role">Principal Architect</p>
-                    <div class="contact-data">
-                        <p>E: alex@forma.build</p>
-                        <p>P: +1 (555) 123-4567</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="team-card reveal" style="transition-delay: 0.1s;">
-                <div class="member-image-placeholder">
-                    <div class="placeholder-box">IMG_02</div>
-                </div>
-                <div class="member-info">
-                    <div class="tech-header">
-                        <span class="code">ID: PROJ_DIR</span>
-                        <span class="status-dot"></span>
-                    </div>
-                    <h2>Sarah Chen</h2>
-                    <p class="role">Head of Construction</p>
-                    <div class="contact-data">
-                        <p>E: sarah@forma.build</p>
-                        <p>P: +1 (555) 987-6543</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="team-card reveal" style="transition-delay: 0.2s;">
-                <div class="member-image-placeholder">
-                    <div class="placeholder-box">IMG_03</div>
-                </div>
-                <div class="member-info">
-                    <div class="tech-header">
-                        <span class="code">ID: FIN_STRAT</span>
-                        <span class="status-dot"></span>
-                    </div>
-                    <h2>Marcus Thorne</h2>
-                    <p class="role">Development Strategy</p>
-                    <div class="contact-data">
-                        <p>E: marcus@forma.build</p>
-                        <p>P: +1 (555) 456-7890</p>
-                    </div>
-                </div>
-            </div>
 
         </div>
     </section>
 
-    <section class="info-details" style="background: #111; color: #fff; border-top: 1px solid #333;">
-        <div class="reveal" style="text-align: center; max-width: 700px; margin: auto;">
-            <h2 style="color: #fff;">Join the Network</h2>
-            <p style="color: #999; margin-top: 20px;">We are always looking for visionary architects and reliable contractors.</p>
-            <a href="index.html#contact" class="cta-button" style="background: #fff; color: #000; margin-top: 30px;">Get in Touch</a>
-        </div>
-    </section>
-
-    <footer style="background-color: rgb(0, 0, 0); color: #fff; padding: 80px 0; text-align: center; border-top: 1px solid #000000; position: relative; z-index: 2;">
-        <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" style="width: 100px; filter: invert(1); margin-bottom: 20px;">
-        <p style="font-size: 12px; letter-spacing: 2px; opacity: 0.5;">© 2026 FORMA DESIGN CONSULTANTS</p>
+    <footer style="background-color: #000; color: #fff; padding: 80px 0; text-align: center; border-top: 1px solid #222;">
+        <img src="logo1.jpg" style="width: 100px; filter: invert(1); margin-bottom: 20px;">
+        <p style="font-size: 10px; letter-spacing: 2px; opacity: 0.5;">© 2026 FORMA DESIGN CONSULTANTS</p>
     </footer>
 
     <script>
@@ -315,10 +325,13 @@
             for (var i = 0; i < reveals.length; i++) {
                 var windowHeight = window.innerHeight;
                 var elementTop = reveals[i].getBoundingClientRect().top;
-                if (elementTop < windowHeight - 100) { reveals[i].classList.add("active"); }
+                if (elementTop < windowHeight - 100) { 
+                    reveals[i].classList.add("active"); 
+                }
             }
         }
         window.addEventListener("scroll", reveal);
+        window.addEventListener("load", reveal);
         reveal();
     </script>
 </body>
