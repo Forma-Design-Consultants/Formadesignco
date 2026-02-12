@@ -4,8 +4,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FORMA | Execution Roadmap</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
+        /* ================= NAVIGATION SYNC ================= */
+        header {
+            background: #fff; 
+            border-bottom: 1px solid #000;
+            width: 100%;
+            position: relative;
+            z-index: 2000; /* Higher than video layers */
+            padding: 20px 0;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 100%; 
+            padding: 0 60px; 
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .logo {
+            height: 90px !important; 
+            width: auto;
+            display: block;
+        }
+
+        .nav-right-group {
+            margin-left: auto; 
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #000;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        nav ul li a.active {
+            font-weight: 700;
+            border-bottom: 2px solid #000;
+            padding-bottom: 5px;
+        }
+
+        .nav-cta-btn {
+            background-color: #000;
+            color: #fff !important;
+            padding: 12px 24px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+            border: 1px solid #000;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .nav-cta-btn:hover {
+            background-color: #fff;
+            color: #000 !important;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container { flex-direction: column !important; padding: 20px; }
+            .nav-right-group { flex-direction: column; gap: 20px; margin-top: 20px; margin-left: 0; }
+            .logo { height: 70px !important; }
+        }
+
+        /* ================= PROCESS PAGE CONTENT ================= */
         :root {
             --safe-top: env(safe-area-inset-top, 20px);
             --safe-bottom: env(safe-area-inset-bottom, 20px);
@@ -20,7 +103,6 @@
             overflow-x: hidden;
         }
         
-        /* Fixed Video Layer */
         .video-bg-container {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -39,14 +121,13 @@
 
         .process-wrapper {
             position: relative;
-            z-index: 999; /* Highest priority to stay above video */
+            z-index: 100;
             max-width: 1200px;
             margin: 0 auto;
-            padding: calc(120px + var(--safe-top)) 20px 100px 20px;
+            padding: calc(80px + var(--safe-top)) 20px 100px 20px;
             text-align: center;
         }
 
-        /* HEADER FIX: Cleaned up tags and forced visibility */
         .process-header {
             margin-bottom: 70px;
             display: block;
@@ -133,18 +214,21 @@
 
     <header>
         <div class="nav-container">
-            <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA" class="logo">
-            <nav>
-                <ul>
-                    <li><a href="index.html">HOME</a></li>
-                    <li><a href="services.html">SERVICES</a></li>
-                    <li><a href="packages.html">PACKAGES</a></li>
-                    <li><a href="process.html">PROCESS</a></li>
-                    <li><a href="locations.html">LOCATIONS</a></li>
-                    <li><a href="team.html">ABOUT US</a></li>
-                    <li><a href="contact.html">CONTACT</a></li>
-                </ul>
-            </nav>
+            <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA Logo" class="logo">
+            <div class="nav-right-group">
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="packages.html">Packages</a></li>
+                        <li><a href="process.html" class="active">Process</a></li>
+                        <li><a href="locations.html">Locations</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+                <a href="estimate.html" class="nav-cta-btn">Free Estimate</a>
+            </div>
         </div>
     </header>
 
@@ -152,7 +236,9 @@
         <div class="process-header">
             <span>EXECUTION ROADMAP</span>
             <h1>HOW IT WORKS</h1>
-        </div> <div class="roadmap-grid">
+        </div> 
+        
+        <div class="roadmap-grid">
             <div class="step-card">
                 <div class="step-image-box">
                     <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80" alt="Strategy" class="step-image">

@@ -7,7 +7,90 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* ADVANCED STYLING VARIABLES - UNTOUCHED */
+        /* ================= NAVIGATION SYNC ================= */
+        header {
+            background: #fff; 
+            border-bottom: 1px solid #000;
+            width: 100%;
+            position: relative;
+            z-index: 1000;
+            padding: 20px 0;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 100%; 
+            padding: 0 60px; 
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .logo {
+            height: 90px !important; 
+            width: auto;
+            display: block;
+        }
+
+        .nav-right-group {
+            margin-left: auto; 
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #000;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        nav ul li a.active {
+            font-weight: 700;
+            border-bottom: 2px solid #000;
+            padding-bottom: 5px;
+        }
+
+        .nav-cta-btn {
+            background-color: #000;
+            color: #fff !important;
+            padding: 12px 24px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+            border: 1px solid #000;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        /* Styling for the Estimate button when we are on the Estimate page */
+        .nav-cta-active {
+            background-color: #fff;
+            color: #000 !important;
+            border: 1px solid #000;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container { flex-direction: column !important; padding: 20px; }
+            .nav-right-group { flex-direction: column; gap: 20px; margin-top: 20px; margin-left: 0; }
+            .logo { height: 70px !important; }
+        }
+
+        /* ================= WIZARD STYLING ================= */
         :root {
             --bg-dark: #050505;
             --surface-dark: #111111;
@@ -25,20 +108,16 @@
             background-size: 40px 40px;
             background-position: center top;
             color: var(--text-main);
-            margin: 0; /* Reset for header/footer consistency */
+            margin: 0;
+            font-family: 'Inter', sans-serif;
         }
 
-        /* Nav Override - EXACTLY AS PROVIDED */
-        header { background: rgb(255, 255, 255); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-light); }
-        .nav-container a { color: #000000; }
-        
-        /* WIZARD CONTAINER */
         .wizard-wrapper {
-            min-height: 85vh;
+            min-height: 80vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding-top: 80px;
+            padding: 60px 20px;
         }
 
         .wizard-card {
@@ -80,7 +159,6 @@
         .step-header h2 { font-size: 2rem; font-weight: 300; letter-spacing: -0.5px; margin-bottom: 10px; }
         .step-header p { color: var(--text-muted); font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase; }
 
-        /* SELECTION GRID */
         .selection-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
 
         .option-card {
@@ -90,7 +168,6 @@
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            position: relative;
         }
 
         .option-card:hover, .option-card.selected { background: #fff; transform: translateY(-2px); }
@@ -101,14 +178,12 @@
         .option-card h3 { font-size: 1rem; font-weight: 500; margin-bottom: 5px; }
         .option-card p { font-size: 0.8rem; color: #666; }
 
-        /* INPUTS */
         .input-group { margin-bottom: 20px; text-align: left; }
         .input-group label { display: block; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 8px; letter-spacing: 1px; }
         .input-group input, .input-group select {
             width: 100%; background: #000; border: 1px solid var(--border-light); color: #fff; padding: 15px; font-family: 'Inter', sans-serif; font-size: 1rem; outline: none; box-sizing: border-box;
         }
 
-        /* GRAPH & ANALYTICS */
         .analytics-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
         .graph-box { background: #000; border: 1px solid #222; height: 180px; display: flex; align-items: flex-end; justify-content: space-around; padding: 15px; }
         .bar { width: 35px; background: #fff; position: relative; transition: height 1s ease-out; height: 0; }
@@ -138,17 +213,20 @@
     <header>
         <div class="nav-container">
             <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA Logo" class="logo">
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="services.html">Services</a></li>
-                    <li><a href="packages.html">Packages</a></li>
-                    <li><a href="process.html">Process</a></li>
-                    <li><a href="locations.html">Locations</a></li>
-                    <li><a href="team.html">About Us</a></li> 
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </nav>
+            <div class="nav-right-group">
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="packages.html">Packages</a></li>
+                        <li><a href="process.html">Process</a></li>
+                        <li><a href="locations.html">Locations</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+                <a href="estimate.html" class="nav-cta-btn nav-cta-active">Free Estimate</a>
+            </div>
         </div>
     </header>
 
@@ -258,7 +336,6 @@
             document.getElementById('selectedType').value = name;
             document.getElementById('baseRate').value = rate;
             
-            // Visual feedback
             document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
             event.currentTarget.classList.add('selected');
 
@@ -270,7 +347,6 @@
             currentStep += n;
             document.getElementById('step' + currentStep).classList.add('active');
             
-            // Progress Bar Logic
             const progress = (currentStep / 3) * 100;
             document.getElementById('progressBar').style.width = progress + '%';
         }
@@ -281,18 +357,14 @@
             const sqft = parseFloat(document.getElementById('sqft').value);
             const multiplier = parseFloat(document.getElementById('finishTier').value);
 
-            // Calculation
             const lowEstimate = sqft * rate * multiplier;
             const highEstimate = lowEstimate * 1.15;
 
-            // UI Updates
             document.getElementById('res-type').innerText = type;
             document.getElementById('res-time').innerText = (rate > 250) ? "9-14 Months" : "5-8 Months";
             document.getElementById('res-price').innerText = `$${Math.round(lowEstimate).toLocaleString()} - $${Math.round(highEstimate).toLocaleString()}`;
 
             changeStep(1);
-
-            // Animate Graph
             
             setTimeout(() => {
                 document.getElementById('bar1').style.height = "50%";

@@ -6,163 +6,217 @@
     <title>FORMA | Our Core Services</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        body { background-color: #000; margin: 0; font-family: 'Inter', sans-serif; color: #fff; overflow-x: hidden; }
-        
-    /* ================= GLOBAL & SAFE AREAS ================= */
-    :root {
-        --safe-top: env(safe-area-inset-top, 20px);
-        --safe-bottom: env(safe-area-inset-bottom, 20px);
-    }
-
-    body { 
-        background-color: #000; 
-        margin: 0; 
-        font-family: 'Inter', sans-serif; 
-        color: #fff; 
-        overflow-x: hidden; 
-        -webkit-text-size-adjust: 100%;
-    }
-
-    /* Video Background - Hardware Accelerated */
-    .video-bg-container {
-        position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
-        z-index: -1; overflow: hidden;
-        will-change: transform;
-    }
-
-    .services-video-bg2 {
-        min-width: 100%; min-height: 100%;
-        width: auto; height: auto;
-        position: absolute; top: 50%; left: 50%;
-        transform: translate(-50%, -50%);
-        object-fit: cover;
-        opacity: 0.3; /* Slightly lower for better mobile text contrast */
-    }
-
-    /* Wrapper - Safe Area Aware */
-    .services-wrapper {
-        position: relative;
-        z-index: 2;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: calc(100px + var(--safe-top)) 20px 100px 20px;
-    }
-
-    .services-header {
-        text-align: center;
-        margin-bottom: 60px;
-    }
-
-    .services-header h1 {
-        font-size: 28px; /* Slightly smaller for mobile scaling */
-        letter-spacing: 5px;
-        font-weight: 300;
-        text-transform: uppercase;
-    }
-
-    /* Grid Setup - Fluid Flex */
-    .service-grid {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 20px;
-    }
-
-    /* Card Styling */
-    .service-card {
-        position: relative;
-        flex: 0 1 calc(33.333% - 20px);
-        min-width: 300px;
-        height: 450px;
-        overflow: hidden;
-        background-color: #111;
-        border: 1px solid rgba(255,255,255,0.05);
-        -webkit-tap-highlight-color: transparent;
-    }
-
-    .card-bg {
-        position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
-        object-fit: cover;
-        transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1), opacity 0.6s ease;
-        opacity: 0.6;
-    }
-
-    .service-card-content {
-        position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 30px;
-        background: rgba(0, 0, 0, 0.4);
-        transition: background 0.5s ease;
-        z-index: 2;
-        text-align: center;
-    }
-
-    /* Hidden elements logic */
-    .module-tag, .service-desc {
-        opacity: 0;
-        max-height: 0;
-        transform: translateY(20px);
-        transition: all 0.4s ease;
-        color: #fff;
-    }
-
-    .service-card-content h3 {
-        color: #fff;
-        font-size: 18px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        margin: 0;
-        transition: transform 0.4s ease;
-    }
-
-    /* --- MOBILE-SPECIFIC INTERACTION OVERRIDE --- */
-    @media (hover: hover) {
-        .service-card:hover .service-card-content { background: rgba(0, 0, 0, 0.8); }
-        .service-card:hover .module-tag, .service-card:hover .service-desc {
-            opacity: 1; max-height: 200px; transform: translateY(0);
+        /* ================= NAVIGATION SYNCED WITH INDEX.HTML ================= */
+        header {
+            background: #fff; 
+            border-bottom: 1px solid #000;
+            width: 100%;
+            position: relative;
+            z-index: 1000;
+            padding: 20px 0;
         }
-        .service-card:hover .card-bg { transform: scale(1.1); opacity: 0.2; }
-    }
 
-    /* For Touch Devices (iPhone/Android) */
-    @media (hover: none) {
-        .service-card-content {
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-            justify-content: flex-end; /* Align text to bottom for thumb reach */
+        .nav-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 100%; 
+            padding: 0 60px; 
+            box-sizing: border-box;
+            position: relative;
         }
-        .module-tag, .service-desc {
-            opacity: 1;
-            max-height: 200px;
-            transform: translateY(0);
-        }
-        .service-card h3 {
-            margin-bottom: 10px;
-        }
-    }
 
-    /* High-End Mobile Adjustments */
-    @media (max-width: 480px) {
-        .service-card {
-            flex: 0 1 100%;
-            height: 380px; /* Shorter cards to prevent endless scrolling */
+        .logo {
+            height: 90px !important; /* MATCHED BIG SIZE FROM INDEX */
+            width: auto;
+            display: block;
         }
+
+        .nav-right-group {
+            margin-left: auto; 
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #000;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .nav-cta-btn {
+            background-color: #000;
+            color: #fff !important;
+            padding: 12px 24px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+            border: 1px solid #000;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .nav-cta-btn:hover {
+            background-color: #fff;
+            color: #000 !important;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container { flex-direction: column !important; padding: 20px; }
+            .nav-right-group { flex-direction: column; gap: 20px; margin-top: 20px; margin-left: 0; }
+            .logo { height: 70px !important; }
+        }
+
+        /* ================= YOUR ORIGINAL PAGE STYLES (UNTOUCHED) ================= */
+        :root {
+            --safe-top: env(safe-area-inset-top, 20px);
+            --safe-bottom: env(safe-area-inset-bottom, 20px);
+        }
+
+        body { 
+            background-color: #000; 
+            margin: 0; 
+            font-family: 'Inter', sans-serif; 
+            color: #fff; 
+            overflow-x: hidden; 
+            -webkit-text-size-adjust: 100%;
+        }
+
+        .video-bg-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; overflow: hidden;
+            will-change: transform;
+        }
+
+        .services-video-bg2 {
+            min-width: 100%; min-height: 100%;
+            width: auto; height: auto;
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            opacity: 0.3; 
+        }
+
+        .services-wrapper {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: calc(100px + var(--safe-top)) 20px 100px 20px;
+        }
+
+        .services-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
         .services-header h1 {
-            font-size: 22px;
-            letter-spacing: 3px;
+            font-size: 28px; 
+            letter-spacing: 5px;
+            font-weight: 300;
+            text-transform: uppercase;
         }
-        footer {
-            padding-bottom: var(--safe-bottom) !important;
-        }
-    }
-</style>
 
-        /* Mobile Adjustments */
+        .service-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .service-card {
+            position: relative;
+            flex: 0 1 calc(33.333% - 20px);
+            min-width: 300px;
+            height: 450px;
+            overflow: hidden;
+            background-color: #111;
+            border: 1px solid rgba(255,255,255,0.05);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .card-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1), opacity 0.6s ease;
+            opacity: 0.6;
+        }
+
+        .service-card-content {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.4);
+            transition: background 0.5s ease;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .module-tag, .service-desc {
+            opacity: 0;
+            max-height: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+            color: #fff;
+        }
+
+        .service-card-content h3 {
+            color: #fff;
+            font-size: 18px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin: 0;
+            transition: transform 0.4s ease;
+        }
+
+        @media (hover: hover) {
+            .service-card:hover .service-card-content { background: rgba(0, 0, 0, 0.8); }
+            .service-card:hover .module-tag, .service-card:hover .service-desc {
+                opacity: 1; max-height: 200px; transform: translateY(0);
+            }
+            .service-card:hover .card-bg { transform: scale(1.1); opacity: 0.2; }
+        }
+
+        @media (hover: none) {
+            .service-card-content {
+                background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+                justify-content: flex-end; 
+            }
+            .module-tag, .service-desc {
+                opacity: 1;
+                max-height: 200px;
+                transform: translateY(0);
+            }
+            .service-card h3 {
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .service-card { flex: 0 1 100%; height: 380px; }
+            .services-header h1 { font-size: 22px; letter-spacing: 3px; }
+        }
+
         @media (max-width: 992px) { .service-card { flex: 0 1 calc(50% - 20px); } }
         @media (max-width: 600px) { .service-card { flex: 0 1 100%; } }
     </style>
@@ -178,17 +232,21 @@
     <header>
         <div class="nav-container">
             <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA" class="logo">
-            <nav>
-                <ul>
-                    <li><a href="index.html">HOME</a></li>
-                    <li><a href="services.html">SERVICES</a></li>
-                    <li><a href="packages.html">PACKAGES</a></li>
-                    <li><a href="process.html">PROCESS</a></li>
-                    <li><a href="locations.html">LOCATIONS</a></li>
-                    <li><a href="team.html">ABOUT US</a></li>
-                    <li><a href="contact.html">CONTACT</a></li>
-                </ul>
-            </nav>
+            <div class="nav-right-group">
+                <nav>
+                    <ul>
+                        <li><a href="index.html">HOME</a></li>
+                        <li><a href="services.html">SERVICES</a></li>
+                        <li><a href="gallery.html">GALLERY</a></li>
+                        <li><a href="packages.html">PACKAGES</a></li>
+                        <li><a href="process.html">PROCESS</a></li>
+                        <li><a href="locations.html">LOCATIONS</a></li>
+                        <li><a href="team.html">ABOUT US</a></li>
+                        <li><a href="contact.html">CONTACT</a></li>
+                    </ul>
+                </nav>
+                <a href="estimate.html" class="nav-cta-btn">Free Estimate</a>
+            </div>
         </div>
     </header>
 
@@ -198,7 +256,6 @@
         </div>
         
         <div class="service-grid">
-            
             <div class="service-card">
                 <img src="https://images.unsplash.com/photo-1721244654394-36a7bc2da288?w=600&h=800&fit=crop" class="card-bg">
                 <div class="service-card-content">
@@ -243,9 +300,6 @@
                     <p class="service-desc">Strategic financial planning and assistance to secure your project's future.</p>
                 </div>
             </div>
-
-            
-
         </div>
     </div>
 

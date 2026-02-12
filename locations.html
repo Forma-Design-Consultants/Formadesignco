@@ -1,419 +1,327 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>FORMA | Our Locations</title>
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-
     <style>
-
-        /* Specific Styles for the Noir Locations Look */
-
-        body {
-
-            background-color: #000000;
-
-            margin: 0;
-
-            font-family: 'Inter', sans-serif;
-
-            color: #ffffff;
-
+        /* ================= NAVIGATION SYNC ================= */
+        header {
+            background: #fff; 
+            border-bottom: 1px solid #000;
+            width: 100%;
+            position: relative;
+            z-index: 1000;
+            padding: 20px 0;
         }
 
-       
+        .nav-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 100%; 
+            padding: 0 60px; 
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .logo {
+            height: 90px !important; 
+            width: auto;
+            display: block;
+        }
+
+        .nav-right-group {
+            margin-left: auto; 
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #000;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        nav ul li a.active {
+            font-weight: 700;
+            border-bottom: 2px solid #000;
+            padding-bottom: 5px;
+        }
+
+        .nav-cta-btn {
+            background-color: #000;
+            color: #fff !important;
+            padding: 12px 24px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+            border: 1px solid #000;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .nav-cta-btn:hover {
+            background-color: #fff;
+            color: #000 !important;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container { flex-direction: column !important; padding: 20px; }
+            .nav-right-group { flex-direction: column; gap: 20px; margin-top: 20px; margin-left: 0; }
+            .logo { height: 70px !important; }
+        }
+
+        /* ================= LOCATIONS CONTENT ================= */
+        :root {
+            --safe-top: env(safe-area-inset-top, 20px);
+            --safe-bottom: env(safe-area-inset-bottom, 20px);
+        }
+
+        body { 
+            background-color: #000000; 
+            margin: 0; 
+            font-family: 'Inter', sans-serif; 
+            color: #ffffff;
+            -webkit-text-size-adjust: 100%;
+        }
+        
+        body.modal-open { overflow: hidden; }
 
         .locations-container {
-
             max-width: 1200px;
-
             margin: 0 auto;
-
-            padding: 140px 20px 100px 20px;
-
+            padding: calc(80px + var(--safe-top)) 20px 80px 20px;
             text-align: center;
-
         }
 
-
-
-        .locations-header { margin-bottom: 60px; }
-
-        .locations-header span {
-
-            font-size: 10px;
-
-            letter-spacing: 4px;
-
-            color: #555555;
-
-            text-transform: uppercase;
-
+        .locations-header { margin-bottom: 40px; }
+        .locations-header span { 
+            font-size: 10px; 
+            letter-spacing: 4px; 
+            color: #555; 
+            text-transform: uppercase; 
             display: block;
-
             margin-bottom: 15px;
-
         }
-
-        .locations-header h1 {
-
-            font-size: 38px;
-
-            letter-spacing: 3px;
-
-            margin: 0;
-
-            font-weight: 400;
-
+        .locations-header h1 { 
+            font-size: clamp(24px, 8vw, 38px); 
+            letter-spacing: 3px; 
+            margin: 0; 
+            font-weight: 400; 
             text-transform: uppercase;
-
         }
-
-
 
         .location-grid {
-
             display: grid;
-
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-
-            gap: 30px;
-
-            margin-top: 50px;
-
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
         }
-
-
 
         .location-card {
-
             background-color: #0a0a0a;
-
-            border: 1px solid #8b8b8b;
-
-            padding: 60px 50px;
-
+            border: 1px solid #333;
+            padding: 40px 30px;
             text-align: left;
-
             transition: all 0.3s ease;
-
-            cursor: pointer; /* Makes it clear it's clickable */
-
+            -webkit-tap-highlight-color: transparent;
+            cursor: pointer;
         }
-
-
 
         .location-card:hover {
-
             border-color: #ffffff;
-
             background-color: #0f0f0f;
-
         }
-
-
 
         .zone-label {
-
-            font-size: 10px;
-
+            font-size: 9px;
             color: #444;
-
             letter-spacing: 2px;
-
             text-transform: uppercase;
-
+            margin-bottom: 20px;
             display: block;
-
-            margin-bottom: 30px;
-
         }
-
-
 
         .location-card h2 {
-
-            font-size: 32px;
-
-            margin: 0 0 15px 0;
-
+            font-size: 28px;
+            margin: 0 0 10px 0;
             font-weight: 500;
-
             letter-spacing: 1px;
-
         }
-
-
 
         .status-container {
-
             display: flex;
-
             align-items: center;
-
-            margin-bottom: 40px;
-
+            margin-bottom: 30px;
         }
-
-
 
         .status-dot {
-
-            width: 6px;
-
-            height: 6px;
-
+            width: 6px; height: 6px;
             background-color: #fff;
-
             border-radius: 50%;
-
-            display: inline-block;
-
             margin-right: 10px;
-
             box-shadow: 0 0 8px rgba(255,255,255,0.5);
-
         }
-
-
 
         .status-text {
-
-            font-size: 11px;
-
+            font-size: 10px;
             letter-spacing: 2px;
-
             color: #888;
-
-            text-transform: uppercase;
-
         }
-
-
 
         .location-card p {
-
             font-size: 14px;
-
             color: #666;
-
-            line-height: 1.8;
-
-            max-width: 280px;
-
+            line-height: 1.6;
+            margin: 0;
         }
 
-
-
-        /* --- MAP MODAL STYLES --- */
-
+        /* --- MAP MODAL --- */
         .map-modal {
-
-            display: none;
-
+            display: none; 
             position: fixed;
-
             top: 0; left: 0;
-
             width: 100%; height: 100%;
-
-            background-color: rgba(0,0,0,0.9);
-
-            z-index: 9999;
-
-            justify-content: center;
-
-            align-items: center;
-
+            background-color: rgba(0,0,0,0.95);
+            z-index: 10000;
+            padding-top: var(--safe-top);
         }
-
-
 
         .modal-content {
-
             position: relative;
-
             width: 90%;
-
             max-width: 1000px;
-
             height: 70vh;
-
-            background: #ffffff;
-
+            background: #000;
+            margin: 50px auto;
             border: 1px solid #333;
-
         }
-
-
 
         .close-btn {
-
             position: absolute;
-
-            top: -40px;
-
+            top: -50px;
             right: 0;
-
             color: #fff;
-
-            font-size: 30px;
-
+            font-size: 40px;
             cursor: pointer;
-
+            padding: 10px;
         }
-
-
 
         #mapFrame {
-
             width: 100%;
-
             height: 100%;
-
             border: none;
-
-            filter: grayscale(1) invert(0.9); /* Keeps the noir map look */
-
+            filter: grayscale(1) invert(0.9);
         }
 
+        @media (max-width: 600px) {
+            .location-grid { grid-template-columns: 1fr; }
+            footer { padding-bottom: calc(40px + var(--safe-bottom)) !important; }
+        }
     </style>
-
 </head>
-
 <body>
 
-
-
     <header>
-
         <div class="nav-container">
-
-            <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA" class="logo">
-
-            <nav>
-
-                <ul>
-
-                    <li><a href="index.html">HOME</a></li>
-
-                    <li><a href="services.html">SERVICES</a></li>
-
-                    <li><a href="packages.html">PACKAGES</a></li>
-
-                    <li><a href="process.html">PROCESS</a></li>
-
-                    <li><a href="locations.html">LOCATIONS</a></li>
-
-                    <li><a href="team.html">ABOUT US</a></li>
-
-                    <li><a href="contact.html">CONTACT</a></li>
-
-                </ul>
-
-            </nav>
-
+            <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA Logo" class="logo">
+            <div class="nav-right-group">
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="packages.html">Packages</a></li>
+                        <li><a href="process.html">Process</a></li>
+                        <li><a href="locations.html" class="active">Locations</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+                <a href="estimate.html" class="nav-cta-btn">Free Estimate</a>
+            </div>
         </div>
-
     </header>
 
-
-
     <div class="locations-container">
-
         <div class="locations-header">
-
             <span>OPERATIONAL ZONES</span>
-
             <h1>OUR LOCATIONS</h1>
-
         </div>
-
-
 
         <div class="location-grid">
-
             <div class="location-card" onclick="openMap('california')">
-
                 <span class="zone-label">ZONE_01</span>
-
                 <h2>California</h2>
-
                 <div class="status-container">
-
                     <span class="status-dot"></span>
-
                     <span class="status-text">ACTIVE</span>
-
                 </div>
-
                 <p>Architecture, ADU Design, and Full-Scale Development.</p>
-
             </div>
-
-
 
             <div class="location-card" onclick="openMap('utah')">
-
                 <span class="zone-label">ZONE_02</span>
-
                 <h2>Utah</h2>
-
                 <div class="status-container">
-
                     <span class="status-dot"></span>
-
                     <span class="status-text">ACTIVE</span>
-
                 </div>
-
                 <p>Minimalist Design and Functional Residential Planning.</p>
-
             </div>
-
         </div>
-
     </div>
-
-
 
     <div id="mapModal" class="map-modal">
-
         <div class="modal-content">
-
             <span class="close-btn" onclick="closeMap()">×</span>
-
             <iframe id="mapFrame" src="" allowfullscreen="" loading="lazy"></iframe>
-
         </div>
-
     </div>
 
-
-
     <footer style="background-color: rgba(0,0,0,0.9); color: #fff; padding: 80px 0; text-align: center; border-top: 1px solid #1a1a1a; position: relative; z-index: 2;">
-
         <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" style="width: 100px; filter: invert(1); margin-bottom: 20px;">
-
         <p style="font-size: 12px; letter-spacing: 2px; opacity: 0.5;">© 2026 FORMA DESIGN CONSULTANTS</p>
-
     </footer>
 
+    <script>
+        function openMap(state) {
+            const modal = document.getElementById('mapModal');
+            const frame = document.getElementById('mapFrame');
+            let url = "";
+            
+            if(state === 'california') url = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3305.733248043701!2d-118.2436849!3d34.0522342!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c648fa1d4803%3A0xdec270154e2a27cc!2sLos%20Angeles%2C%20CA!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus";
+            if(state === 'utah') url = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3021.841578508906!2d-111.8910474!3d40.7607793!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87523d9488d1f395%3A0xc80b8f06e177fe62!2sSalt%20Lake%20City%2C%20UT!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus";
+            
+            frame.src = url;
+            modal.style.display = "block";
+            document.body.classList.add('modal-open');
+        }
 
-
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-
-    <script src="form-handler.js"></script>
-
-
+        function closeMap() {
+            const modal = document.getElementById('mapModal');
+            const frame = document.getElementById('mapFrame');
+            modal.style.display = "none";
+            frame.src = "";
+            document.body.classList.remove('modal-open');
+        }
+    </script>
 
 </body>
-
 </html>
