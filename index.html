@@ -21,11 +21,54 @@ html, body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* 2. Grid System Logic */
+/* 2. Full-Width Logic - Extends to edges */
 .roadmap-grid, .blueprint-showcase, .atelier-grid {
     display: grid;
-    max-width: 1200px;
-    margin: 0 auto;
+    width: 100%; 
+    max-width: 100% !important; /* Forces override of any previous 1200px cap */
+    margin: 0;
+    padding: 0;
+}
+
+/* Blueprint Showcase: Seamless wall of images */
+.blueprint-showcase { 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 0; 
+    background: #fff; 
+}
+
+/* Atelier Grid: Perfect 50/50 split matching your uploaded image */
+.atelier-grid { 
+    grid-template-columns: 1fr 1fr; 
+    background: #000; 
+    align-items: stretch; /* Ensures text block height matches image block */
+}
+
+/* 3. Image Handling for Full Bleed */
+.blueprint-item, .atelier-images img {
+    width: 100%;
+    height: 500px; /* Increased height for a more cinematic feel */
+    display: block;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Container for text sections that still need a bit of lateral breathing room */
+.info-container {
+    max-width: 100%; 
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+}
+
+.info-text {
+    padding: 0 10%; /* Uses percentages so text stays centered regardless of screen width */
+}
+
+.info-image img {
+    width: 100% !important;
+    height: 600px !important;
+    object-fit: cover;
 }
 
 .roadmap-grid { grid-template-columns: repeat(3, 1fr); border-top: 1px solid #333; border-left: 1px solid #333; }
