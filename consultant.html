@@ -8,37 +8,39 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/jpeg" href="logo1.jpg">
     <style>
-        /* ================= NAVIGATION SYNC ================= */
+        /* ================= NAVIGATION SYNC (EXACT MATCH) ================= */
+        :root {
+            --safe-top: env(safe-area-inset-top, 20px);
+            --header-height: 100px;
+        }
+
         header {
-            background: #fff; 
-            border-bottom: 1px solid #000;
+            background: #fff;
+            border-bottom: 1px solid #eee;
             width: 100%;
-            position: relative;
-            z-index: 1000;
-            padding: 20px 0;
+            position: fixed; 
+            top: 0;
+            left: 0;
+            z-index: 2000;
+            height: var(--header-height);
         }
 
         .nav-container {
             display: flex;
+            justify-content: space-between; 
             align-items: center;
             width: 100%;
-            max-width: 100%; 
-            padding: 0 60px; 
+            padding: 0 40px;
+            height: 100%;
             box-sizing: border-box;
-            position: relative;
         }
 
-        .logo {
-            height: 90px !important; 
-            width: auto;
-            display: block;
-        }
+        .logo { height: 85px; width: auto; }
 
         .nav-right-group {
-            margin-left: auto; 
             display: flex;
             align-items: center;
-            gap: 40px;
+            gap: 30px;
         }
 
         nav ul {
@@ -46,16 +48,23 @@
             list-style: none;
             margin: 0;
             padding: 0;
-            gap: 30px;
+            gap: 20px;
+            align-items: center;
         }
 
         nav ul li a {
             text-decoration: none;
             color: #000;
-            font-size: 12px;
-            font-weight: 500;
-            letter-spacing: 1.5px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
             text-transform: uppercase;
+        }
+
+        nav ul li a.active {
+            font-weight: 700;
+            border-bottom: 2px solid #000;
+            padding-bottom: 5px;
         }
 
         .nav-cta-btn {
@@ -78,17 +87,13 @@
         }
 
         @media (max-width: 768px) {
-            .nav-container { flex-direction: column !important; padding: 20px; }
-            .nav-right-group { flex-direction: column; gap: 20px; margin-top: 20px; margin-left: 0; }
-            .logo { height: 70px !important; }
+            header { height: auto; padding: 10px 0; }
+            .nav-container { flex-direction: column; }
+            .nav-right-group { flex-direction: column; gap: 15px; margin-top: 15px; }
+            nav ul { flex-wrap: wrap; justify-content: center; }
         }
 
         /* ================= CONSULTATION CONTENT ================= */
-        :root {
-            --safe-top: env(safe-area-inset-top, 20px);
-            --accent-color: #000000;
-        }
-
         body { 
             background-color: #000000; 
             margin: 0; 
@@ -99,19 +104,18 @@
         .consult-container {
             max-width: 700px;
             margin: 0 auto;
-            padding: calc(80px + var(--safe-top)) 20px 100px 20px;
+            padding: calc(var(--header-height) + 60px) 20px 100px 20px;
         }
 
         .consult-header { text-align: center; margin-bottom: 50px; }
-        .consult-header span { font-size: 10px; letter-spacing: 5px; color: #d1d1d1; text-transform: uppercase; display: block; margin-bottom: 15px; }
-        .consult-header h1 { font-size: clamp(28px, 6vw, 36px); letter-spacing: 2px; margin: 0; font-weight: 400; text-transform: uppercase; }
-        .consult-header p { color: #ffffff; font-size: 14px; margin-top: 20px; line-height: 1.8; max-width: 500px; margin-left: auto; margin-right: auto; }
+        .consult-header span { font-size: 10px; letter-spacing: 5px; color: #555; text-transform: uppercase; display: block; margin-bottom: 15px; }
+        .consult-header h1 { font-size: clamp(28px, 6vw, 36px); letter-spacing: 2px; margin: 0; font-weight: 400; text-transform: uppercase; color: #fff; }
+        .consult-header p { color: #888; font-size: 14px; margin-top: 20px; line-height: 1.8; max-width: 500px; margin-left: auto; margin-right: auto; }
 
         .form-card {
             background: #ffffff;
             padding: 40px;
             border: 1px solid #1a1a1a;
-            transition: border-color 0.3s ease;
         }
 
         .form-group { margin-bottom: 30px; position: relative; }
@@ -164,15 +168,23 @@
             text-transform: uppercase;
             letter-spacing: 3px;
             font-weight: 700;
-            font-size: 12px;
+            font-size: 11px;
             cursor: pointer;
             transition: all 0.3s;
         }
 
-        #submit-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        #submit-btn:hover { background: #333; transform: translateY(-2px); }
 
         @media (max-width: 600px) {
-            .form-card { padding: 30px 20px; border: none; }
+            .form-card { padding: 30px 20px; }
+        }
+
+        footer {
+            background-color: #000; 
+            color: #fff; 
+            padding: 80px 0; 
+            text-align: center; 
+            border-top: 1px solid #1a1a1a;
         }
     </style>
 </head>
@@ -180,7 +192,9 @@
 
     <header>
         <div class="nav-container">
-            <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA Logo" class="logo">
+            <a href="index.html">
+                <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA Logo" class="logo">
+            </a>
             <div class="nav-right-group">
                 <nav>
                     <ul>
@@ -191,7 +205,7 @@
                         <li><a href="process.html">Process</a></li>
                         <li><a href="locations.html">Locations</a></li>
                         <li><a href="team.html">About Us</a></li> 
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="contact.html" class="active">Contact</a></li>
                     </ul>
                 </nav>
                 <a href="estimate.html" class="nav-cta-btn">Free Estimate</a>
@@ -235,11 +249,16 @@
 
                 <div class="submit-area">
                     <button type="submit" id="submit-btn">Transmit Inquiry</button>
-                    <div id="form-status"></div>
+                    <div id="form-status" style="margin-top: 20px; text-align: center; font-size: 11px; letter-spacing: 1px; color: #000;"></div>
                 </div>
             </form>
         </div>
     </div>
+
+    <footer>
+        <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" style="width: 100px; filter: invert(1); margin-bottom: 20px;">
+        <p style="font-size: 10px; letter-spacing: 2px; opacity: 0.5;">© 2026 FORMA DESIGN CONSULTANTS</p>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script>
@@ -249,5 +268,4 @@
     </script>
     <script src="form-handler.js"></script>
 </body>
-
 </html>
