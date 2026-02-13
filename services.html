@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FORMA | Our Core Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/jpeg" href="logo1.jpg">
     <style>
-        /* ================= NAVIGATION SYNCED WITH INDEX.HTML ================= */
+        /* ================= NAVIGATION SYNC (CONSISTENT WITH SITE) ================= */
         header {
             background: #fff; 
             border-bottom: 1px solid #000;
             width: 100%;
             position: relative;
-            z-index: 1000;
+            z-index: 2000; 
             padding: 20px 0;
         }
 
@@ -28,7 +28,7 @@
         }
 
         .logo {
-            height: 90px !important; /* MATCHED BIG SIZE FROM INDEX */
+            height: 90px !important; 
             width: auto;
             display: block;
         }
@@ -57,6 +57,12 @@
             text-transform: uppercase;
         }
 
+        nav ul li a.active {
+            font-weight: 700;
+            border-bottom: 2px solid #000;
+            padding-bottom: 5px;
+        }
+
         .nav-cta-btn {
             background-color: #000;
             color: #fff !important;
@@ -76,13 +82,7 @@
             color: #000 !important;
         }
 
-        @media (max-width: 768px) {
-            .nav-container { flex-direction: column !important; padding: 20px; }
-            .nav-right-group { flex-direction: column; gap: 20px; margin-top: 20px; margin-left: 0; }
-            .logo { height: 70px !important; }
-        }
-
-        /* ================= YOUR ORIGINAL PAGE STYLES (UNTOUCHED) ================= */
+        /* ================= SERVICES CONTENT STYLING ================= */
         :root {
             --safe-top: env(safe-area-inset-top, 20px);
             --safe-bottom: env(safe-area-inset-bottom, 20px);
@@ -101,7 +101,6 @@
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1; overflow: hidden;
-            will-change: transform;
         }
 
         .services-video-bg2 {
@@ -127,7 +126,7 @@
         }
 
         .services-header h1 {
-            font-size: 28px; 
+            font-size: 28px;
             letter-spacing: 5px;
             font-weight: 300;
             text-transform: uppercase;
@@ -148,7 +147,6 @@
             overflow: hidden;
             background-color: #111;
             border: 1px solid rgba(255,255,255,0.05);
-            -webkit-tap-highlight-color: transparent;
         }
 
         .card-bg {
@@ -168,7 +166,6 @@
             align-items: center;
             padding: 30px;
             background: rgba(0, 0, 0, 0.4);
-            transition: background 0.5s ease;
             z-index: 2;
             text-align: center;
         }
@@ -187,7 +184,6 @@
             letter-spacing: 2px;
             text-transform: uppercase;
             margin: 0;
-            transition: transform 0.4s ease;
         }
 
         @media (hover: hover) {
@@ -198,28 +194,12 @@
             .service-card:hover .card-bg { transform: scale(1.1); opacity: 0.2; }
         }
 
-        @media (hover: none) {
-            .service-card-content {
-                background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-                justify-content: flex-end; 
-            }
-            .module-tag, .service-desc {
-                opacity: 1;
-                max-height: 200px;
-                transform: translateY(0);
-            }
-            .service-card h3 {
-                margin-bottom: 10px;
-            }
-        }
-
-        @media (max-width: 480px) {
+        @media (max-width: 768px) {
+            .nav-container { flex-direction: column !important; padding: 20px; }
+            .nav-right-group { flex-direction: column; gap: 20px; margin-top: 20px; margin-left: 0; }
+            .logo { height: 70px !important; }
             .service-card { flex: 0 1 100%; height: 380px; }
-            .services-header h1 { font-size: 22px; letter-spacing: 3px; }
         }
-
-        @media (max-width: 992px) { .service-card { flex: 0 1 calc(50% - 20px); } }
-        @media (max-width: 600px) { .service-card { flex: 0 1 100%; } }
     </style>
 </head>
 <body>
@@ -232,18 +212,18 @@
 
     <header>
         <div class="nav-container">
-            <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA" class="logo">
+            <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA Logo" class="logo">
             <div class="nav-right-group">
                 <nav>
                     <ul>
-                        <li><a href="index.html">HOME</a></li>
-                        <li><a href="services.html">SERVICES</a></li>
-                        <li><a href="gallery.html">GALLERY</a></li>
-                        <li><a href="packages.html">PACKAGES</a></li>
-                        <li><a href="process.html">PROCESS</a></li>
-                        <li><a href="locations.html">LOCATIONS</a></li>
-                        <li><a href="team.html">ABOUT US</a></li>
-                        <li><a href="contact.html">CONTACT</a></li>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="services.html" class="active">Services</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="packages.html">Packages</a></li>
+                        <li><a href="process.html">Process</a></li>
+                        <li><a href="locations.html">Locations</a></li>
+                        <li><a href="team.html">About Us</a></li> 
+                        <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </nav>
                 <a href="estimate.html" class="nav-cta-btn">Free Estimate</a>
@@ -276,7 +256,7 @@
             </div>
 
             <div class="service-card">
-                <img src="PICTURES/Contractor.png" class="card-bg">
+                <img src="https://images.pexels.com/photos/17174767/pexels-photo-17174767.jpeg?w=600&h=800&fit=crop" class="card-bg">
                 <div class="service-card-content">
                     <span class="module-tag">Module _03</span>
                     <h3>Contractor Sourcing</h3>
@@ -294,7 +274,7 @@
             </div>
 
             <div class="service-card">
-                <img src="PICTURES/Financing.png" class="card-bg">
+                <img src="https://images.unsplash.com/photo-1742415106160-594d07f6cc23?w=600&h=800&fit=crop" class="card-bg">
                 <div class="service-card-content">
                     <span class="module-tag">Module _05</span>
                     <h3>Financing Guidance</h3>
@@ -304,11 +284,10 @@
         </div>
     </div>
 
-    <footer style="background-color: rgba(0,0,0,0.9); color: #fff; padding: 80px 0; text-align: center; border-top: 1px solid #1a1a1a; position: relative; z-index: 2;">
+    <footer style="background-color: rgba(0,0,0,0.9); color: #fff; padding: 80px 0; text-align: center; border-top: 1px solid #1a1a1a;">
         <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" style="width: 100px; filter: invert(1); margin-bottom: 20px;">
         <p style="font-size: 12px; letter-spacing: 2px; opacity: 0.5;">© 2026 FORMA DESIGN CONSULTANTS</p>
     </footer>
 
 </body>
-
 </html>
