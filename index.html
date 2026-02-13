@@ -4,26 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FORMA | Home</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/jpeg" href="logo1.jpg">
     <style>
-        /* ================= NAVIGATION & LAYOUT FIXES ================= */
+        /* ================= MASTER NAVIGATION (CONSISTENT ACROSS ALL PAGES) ================= */
         :root {
             --safe-top: env(safe-area-inset-top, 20px);
             --header-height: 100px;
         }
 
-        html, body {
-            width: 100%;
-            overflow-x: hidden;
-            -webkit-text-size-adjust: 100%;
-            -webkit-font-smoothing: antialiased;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Fixed Header to prevent overlapping issues seen in videos */
         header {
             background: #fff;
             border-bottom: 1px solid #eee;
@@ -71,7 +61,6 @@
             text-transform: uppercase;
         }
 
-        /* FREE ESTIMATE BUTTON */
         .nav-cta-btn {
             background-color: #000;
             color: #fff !important;
@@ -83,7 +72,6 @@
             border: 1px solid #000;
             transition: all 0.3s ease;
             text-transform: uppercase;
-            white-space: nowrap;
         }
 
         .nav-cta-btn:hover {
@@ -91,63 +79,105 @@
             color: #000 !important;
         }
 
-        /* ================= SECTION STYLING ================= */
+        /* ================= HOME PAGE LAYOUT ================= */
+        body { 
+            margin: 0; 
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden; 
+            -webkit-font-smoothing: antialiased;
+            background: #fff;
+        }
+
+        /* Hero Adjustments for Fixed Header */
         .hero {
             position: relative;
-            margin-top: var(--header-height);
-            height: 85vh;
-            overflow: hidden;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #ffffff69;
+            color: #fff;
+            text-align: center;
+            background: #000;
+            margin-top: 0; 
         }
 
         .hero-video {
             position: absolute;
-            top: 50%; left: 50%;
-            min-width: 100%; min-height: 100%;
-            transform: translate(-50%, -50%);
-            z-index: -1;
-            color: #000000;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             object-fit: cover;
-            filter: brightness(0.6); /* Darkens the video */
+            opacity: 0.6;
         }
 
+        .hero-content { position: relative; z-index: 10; padding: 0 20px; }
+        .hero-content h1 { font-size: clamp(32px, 5vw, 64px); font-weight: 200; letter-spacing: 4px; margin-bottom: 20px; }
+        .hero-content p { font-size: 18px; max-width: 700px; margin: 0 auto 40px; opacity: 0.8; line-height: 1.6; }
+
+        .hero-btns { display: flex; gap: 20px; justify-content: center; }
+        .cta-button {
+            padding: 18px 35px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+        .cta-button.solid { background: #fff; color: #000; }
+        .cta-button.outline { border: 1px solid #fff; color: #fff; }
+
+        /* Full Bleed Grids */
         .blueprint-showcase { 
             display: grid;
-            grid-template-columns: repeat(3, 1fr); 
+            grid-template-columns: repeat(3, 1fr);
             width: 100%;
+            background: #fff;
         }
+        .blueprint-item { width: 100%; height: 500px; object-fit: cover; display: block; }
 
-        .blueprint-item {
-            width: 100%;
-            height: 500px;
-            object-fit: cover;
-            display: block;
+        .atelier-grid { 
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: #000;
+            min-height: 600px;
         }
+        .atelier-images img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .atelier-content { padding: 10% 15%; display: flex; flex-direction: column; justify-content: center; color: #fff; }
 
+        /* Tech Stats Bar */
+        .tech-stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 40px 20px;
+            background: #000;
+            border-top: 1px solid #222;
+        }
+        .stat-label { font-size: 11px; letter-spacing: 2px; color: #fff; text-transform: uppercase; }
+
+        /* Info Section */
         .info-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
             align-items: center;
-            padding: 80px 0;
+            padding: 100px 0;
         }
-
-        .info-text { padding: 0 10%; }
+        .info-text { padding: 0 15%; }
         .info-image img { width: 100%; height: 500px; object-fit: cover; }
 
-        .atelier-grid { display: grid; grid-template-columns: 1fr 1fr; background: #000; }
-        .atelier-images img { width: 100%; height: 500px; object-fit: cover; }
+        .module-tag { font-size: 10px; letter-spacing: 4px; color: #aaa; text-transform: uppercase; display: block; margin-bottom: 15px; }
 
-        /* ================= MOBILE MEDIA QUERY ================= */
+        /* Mobile */
         @media (max-width: 768px) {
             header { height: auto; padding: 10px 0; }
             .nav-container { flex-direction: column; }
             .nav-right-group { flex-direction: column; gap: 15px; margin-top: 15px; }
-            nav ul { flex-wrap: wrap; justify-content: center; }
-            .blueprint-showcase, .info-container, .atelier-grid { grid-template-columns: 1fr !important; }
-            .hero { margin-top: 180px; height: 60vh; }
+            
+            .hero-btns { flex-direction: column; width: 100%; align-items: center; }
+            .cta-button { width: 80%; }
+            
+            .blueprint-showcase, .atelier-grid, .info-container { grid-template-columns: 1fr; }
+            .blueprint-item, .info-image img { height: 350px; }
+            .tech-stats { flex-direction: column; gap: 20px; text-align: center; }
         }
     </style>
 </head>
@@ -177,67 +207,71 @@
     </header>
 
     <section class="hero">
-        <video autoplay muted loop playsinline poster="PICTURES/ADU.png" class="hero-video">
+        <video autoplay muted loop playsinline class="hero-video">
             <source src="VIDEO_BACKGROUND.mp4" type="video/mp4">
-            <source src="VIDEO_BACKGROUND.webm" type="video/webm">
-            Your browser does not support the video tag.
         </video>
-        <div class="hero-content" style="text-align: center; z-index: 1;">
-            <h1 style="font-size: 3rem; letter-spacing: 3px;">DESIGN. BUILD. FINANCE. SIMPLIFIED.</h1>
-            <p>We help California homeowners and investors plan, design, and execute construction projects...</p>
-            <div style="margin-top: 30px; display: flex; gap: 15px; justify-content: center;">
-                <a href="contact.html" class="nav-cta-btn" style="background:#fff; color:#000; border:none;">Get Started</a>
-                <a href="packages.html" class="nav-cta-btn">Explore Packages</a>
+        <div class="hero-content">
+            <h1>DESIGN. BUILD. FINANCE. SIMPLIFIED.</h1>
+            <p>We help California homeowners and investors plan, design, and execute construction projects from concept to completion.</p>
+            <div class="hero-btns">
+                <a href="contact.html" class="cta-button solid">Free Consultation</a>
+                <a href="packages.html" class="cta-button outline">Explore Packages</a>
             </div>
         </div>
     </section>
 
-    <section class="tech-stats" style="background: #000; padding: 25px 0; display: flex; justify-content: space-around; flex-wrap: wrap; color: #fff; font-size: 12px; font-weight: 600;">
-        <div class="stat-box">✔ Vetted Contractors</div>
-        <div class="stat-box">✔ Clear Pricing & Scope</div>
-        <div class="stat-box">✔ End-to-End Project Support</div>
-        <div class="stat-box">✔ ADUs, Remodels & New Builds</div>
+    <section class="tech-stats">
+        <div class="stat-box"><span class="stat-label">✔ Vetted Contractors</span></div>
+        <div class="stat-box"><span class="stat-label">✔ Clear Pricing</span></div>
+        <div class="stat-box"><span class="stat-label">✔ End-to-End Support</span></div>
+        <div class="stat-box"><span class="stat-label">✔ ADUs & New Builds</span></div>
     </section>
 
     <section class="info-details">
         <div class="info-container">
             <div class="info-text">
-                <span style="color: #888; letter-spacing: 2px; font-size: 10px;">ONE PARTNER. EVERY STEP.</span>
-                <h2 style="font-size: 2.5rem; margin: 20px 0; font-weight: 300;">Forma is your single point of contact.</h2>
-                <p style="color: #555; line-height: 1.8;">We bridge the gap between design, contractors, and financing so your project moves faster, smoother, and with fewer surprises.</p>
+                <span class="module-tag">ONE PARTNER. EVERY STEP.</span>
+                <h2 style="font-size: 2.5rem; font-weight: 300; margin: 20px 0;">Forma is your single point of contact.</h2>
+                <p style="color: #555; line-height: 1.8; font-size: 15px;">We bridge the gap between architectural design, contractor selection, and financing so your project moves faster and with fewer surprises.</p>
             </div>
             <div class="info-image">
-                <img src="PICTURES/ADU.png" alt="ADU Project">
+                <img src="ADU.png" alt="ADU Project">
             </div>
         </div>
     </section>
 
-    <section style="background: #fff; padding: 60px 0;">
-        <div style="text-align: center; margin-bottom: 40px;">
-            <span style="color: #aaa; letter-spacing: 2px; font-size: 10px;">WHY CLIENTS CHOOSE FORMA</span>
-            <h2 style="font-size: 2.2rem; font-weight: 300; margin-top: 10px;">WE DON'T JUST DRAW PLANS — WE BUILD.</h2>
+    <section style="padding: 100px 0 0 0;">
+        <div style="text-align: center; margin-bottom: 60px;">
+            <span class="module-tag">WHY CLIENTS CHOOSE FORMA</span>
+            <h2 style="font-size: 2.2rem; font-weight: 300; letter-spacing: 2px;">WE DON'T JUST DRAW PLANS — WE BUILD.</h2>
         </div>
         <div class="blueprint-showcase">
-            <img src="PICTURES/ADU1.png" class="blueprint-item">
-            <img src="PICTURES/ADU2.png" class="blueprint-item">
-            <img src="PICTURES/ADU3.png" class="blueprint-item">
+            <img src="ADU1.png" class="blueprint-item" alt="Construction Stage 1">
+            <img src="ADU2.png" class="blueprint-item" alt="Construction Stage 2">
+            <img src="ADU3.png" class="blueprint-item" alt="Completed Build">
         </div>
     </section>
 
     <section class="atelier-grid">
         <div class="atelier-images">
-            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600" alt="Studio">
+            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200" alt="Design Studio">
         </div>
-        <div class="atelier-content" style="padding: 80px; color: #fff; display: flex; flex-direction: column; justify-content: center;">
-            <span style="color: #666; letter-spacing: 2px; font-size: 10px;">VIRTUAL ATELIER</span>
-            <h2 style="font-size: 2.5rem; margin-top: 20px; font-weight: 300;">BUILT ON REAL-WORLD EXPERIENCE</h2>
-            <p style="opacity: 0.7; margin-top: 20px;">Our approach combines digital precision with on-site expertise.</p>
+        <div class="atelier-content">
+            <span class="module-tag">VIRTUAL ATELIER</span>
+            <h2 style="font-size: 2.5rem; margin-top: 20px; font-weight: 200; letter-spacing: 1px;">BUILT ON REAL-WORLD EXPERIENCE</h2>
+            <p style="color: #aaa; line-height: 1.8; margin-top: 30px;">Our process is digitized for efficiency but grounded in decades of physical job-site management.</p>
         </div>
+    </section>
+
+    <section style="padding: 120px 20px; text-align: center; background: #fff;">
+        <h2 style="font-size: 2.2rem; font-weight: 300; letter-spacing: 2px;">READY TO START YOUR PROJECT THE RIGHT WAY?</h2>
+        <p style="color: #666; margin: 20px 0 40px; font-size: 16px;">Avoid costly mistakes and delays. Let Forma guide your project from idea to execution.</p>
+        <a href="contact.html" class="cta-button solid" style="background: #000; color: #fff; padding: 20px 60px;">GET IN TOUCH</a>
     </section>
 
     <footer style="background-color: #000; color: #fff; padding: 80px 0; text-align: center; border-top: 1px solid #1a1a1a;">
         <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" style="width: 100px; filter: invert(1); margin-bottom: 20px;">
-        <p style="font-size: 11px; letter-spacing: 2px; opacity: 0.5;">© 2026 FORMA DESIGN CONSULTANTS</p>
+        <p style="font-size: 12px; letter-spacing: 2px; opacity: 0.5;">© 2026 FORMA DESIGN CONSULTANTS</p>
     </footer>
 
 </body>
