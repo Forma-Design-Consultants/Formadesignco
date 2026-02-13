@@ -42,16 +42,9 @@
             box-sizing: border-box;
         }
 
-        .logo {
-            height: 85px; 
-            width: auto;
-        }
+        .logo { height: 85px; width: auto; }
 
-        .nav-right-group {
-            display: flex;
-            align-items: center;
-            gap: 30px; 
-        }
+        .nav-right-group { display: flex; align-items: center; gap: 30px; }
 
         nav ul {
             display: flex;
@@ -68,10 +61,7 @@
             font-weight: 600;
             letter-spacing: 1px;
             text-transform: uppercase;
-            transition: opacity 0.3s ease;
         }
-
-        nav ul li a:hover { opacity: 0.6; }
 
         .nav-cta-btn {
             background-color: #000;
@@ -86,10 +76,7 @@
             text-transform: uppercase;
         }
 
-        .nav-cta-btn:hover {
-            background-color: #fff;
-            color: #000 !important;
-        }
+        .nav-cta-btn:hover { background-color: #fff; color: #000 !important; }
 
         /* ================= HERO SECTION ================= */
         .hero {
@@ -128,18 +115,8 @@
             text-align: left;
         }
 
-        .hero-desc-wrapper p {
-            font-size: 1.2rem;
-            line-height: 1.5;
-            color: #333;
-            margin: 0;
-        }
-
         /* ================= TEAM GRID ================= */
-        .team-section {
-            padding: 100px 20px;
-            background: #000;
-        }
+        .team-section { padding: 100px 20px; background: #000; }
 
         .team-container {
             max-width: 1200px;
@@ -152,13 +129,10 @@
         .team-card {
             background: #fff;
             border: 1px solid #222;
-            position: relative;
             transition: transform 0.4s cubic-bezier(0.2, 0, 0.2, 1);
         }
 
-        .team-card:hover {
-            transform: translateY(-10px);
-        }
+        .team-card:hover { transform: translateY(-10px); }
 
         .member-image-placeholder {
             width: 100%;
@@ -167,7 +141,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
             border-bottom: 1px solid #eee;
         }
 
@@ -180,10 +153,7 @@
             padding: 10px 20px;
         }
 
-        .member-info { 
-            padding: 40px; 
-            color: #000; 
-        }
+        .member-info { padding: 40px; color: #000; }
 
         .tech-header {
             display: flex;
@@ -192,12 +162,7 @@
             margin-bottom: 25px;
         }
 
-        .code {
-            font-family: monospace;
-            font-size: 9px;
-            color: #aaa;
-            letter-spacing: 1px;
-        }
+        .code { font-family: monospace; font-size: 9px; color: #aaa; }
 
         .status-dot {
             width: 8px;
@@ -216,50 +181,47 @@
         }
 
         .role {
-            font-size: 13px;
+            font-size: 13px; /* Fixed: was 25px in your snippet */
             color: #888;
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-bottom: 30px;
-            font-weight: 400;
         }
 
-        .contact-data {
-            border-top: 1px solid #eee;
-            padding-top: 25px;
-        }
+        .contact-data { border-top: 1px solid #eee; padding-top: 25px; }
 
-        .contact-data p {
+        .contact-data p { font-size: 11px; font-family: monospace; color: #666; margin: 8px 0; }
+
+        /* ================= JOIN SECTION ================= */
+        .info-details { padding: 120px 20px; background: #0a0a0a; border-top: 1px solid #222; }
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 45px;
+            background: #fff;
+            color: #000;
+            text-decoration: none;
             font-size: 11px;
-            font-family: monospace;
-            color: #666;
-            margin: 8px 0;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 40px;
+            transition: 0.3s;
+            border: 1px solid #fff;
         }
+
+        .cta-button:hover { background: transparent; color: #fff; }
 
         /* Reveal Logic */
-        .reveal { 
-            opacity: 0; 
-            transform: translateY(30px); 
-            transition: 1s cubic-bezier(0.2, 0, 0.2, 1); 
-        }
-        
-        .reveal.active { 
-            opacity: 1; 
-            transform: translateY(0); 
-        }
+        .reveal { opacity: 0; transform: translateY(30px); transition: 1s cubic-bezier(0.2, 0, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
-        footer {
-            background-color: #000; 
-            color: #fff; 
-            padding: 100px 0; 
-            text-align: center; 
-            border-top: 1px solid #222;
-        }
+        footer { background-color: #000; color: #fff; padding: 100px 0; text-align: center; border-top: 1px solid #222; }
 
         @media (max-width: 768px) {
             .nav-container { flex-direction: column; height: auto; padding: 20px; }
-            .nav-right-group { flex-direction: column; margin-top: 20px; gap: 15px; }
-            .hero { padding-top: 240px; }
+            .nav-right-group { flex-direction: column; margin-top: 20px; }
+            .hero { padding-top: 260px; }
         }
     </style>
 </head>
@@ -270,7 +232,6 @@
             <a href="index.html">
                 <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA Logo" class="logo">
             </a>
-            
             <div class="nav-right-group">
                 <nav>
                     <ul>
@@ -294,7 +255,7 @@
             <span class="module-tag reveal">Personnel Database</span>
             <h1 class="reveal">The Collective</h1>
             <div class="hero-desc-wrapper reveal">
-                <p>Our team brings together decades of experience across residential construction, real estate development, and high-end architectural design to deliver unrivaled precision.</p>
+                <p style="font-size: 1.2rem; line-height: 1.6; color: #333; margin: 0;">Our team has experience across residential construction, real estate development, and project coordination giving clients practical guidance, not theory.</p>
             </div>
         </div>
     </section>
@@ -303,59 +264,73 @@
         <div class="team-container">
             
             <div class="team-card reveal">
-                <div class="member-image-placeholder">
-                    <div class="placeholder-box">MEMBER_FILE_01</div> 
-                </div>
+                <div class="member-image-placeholder"><div class="placeholder-box">MEMBER_FILE_01</div></div>
                 <div class="member-info">
-                    <div class="tech-header">
-                        <span class="code">ID: ARCH_LEAD</span>
-                        <span class="status-dot"></span>
-                    </div>
+                    <div class="tech-header"><span class="code">ID: ARCH_LEAD</span><span class="status-dot"></span></div>
                     <h2>Alex Mercer</h2>
                     <p class="role">Principal Architect</p>
-                    <div class="contact-data">
-                        <p>E: alex@forma.build</p>
-                        <p>P: +1 (555) 123-4567</p>
-                    </div>
+                    <div class="contact-data"><p>E: alex@forma.build</p><p>P: +1 (555) 123-4567</p></div>
                 </div>
             </div>
 
             <div class="team-card reveal" style="transition-delay: 0.1s;">
-                <div class="member-image-placeholder">
-                    <div class="placeholder-box">MEMBER_FILE_02</div>
-                </div>
+                <div class="member-image-placeholder"><div class="placeholder-box">MEMBER_FILE_02</div></div>
                 <div class="member-info">
-                    <div class="tech-header">
-                        <span class="code">ID: PROJ_DIR</span>
-                        <span class="status-dot"></span>
-                    </div>
+                    <div class="tech-header"><span class="code">ID: PROJ_DIR</span><span class="status-dot"></span></div>
                     <h2>Sarah Chen</h2>
                     <p class="role">Head of Construction</p>
-                    <div class="contact-data">
-                        <p>E: sarah@forma.build</p>
-                        <p>P: +1 (555) 987-6543</p>
-                    </div>
+                    <div class="contact-data"><p>E: sarah@forma.build</p><p>P: +1 (555) 987-6543</p></div>
                 </div>
             </div>
 
             <div class="team-card reveal" style="transition-delay: 0.2s;">
-                <div class="member-image-placeholder">
-                    <div class="placeholder-box">MEMBER_FILE_03</div>
-                </div>
+                <div class="member-image-placeholder"><div class="placeholder-box">MEMBER_FILE_03</div></div>
                 <div class="member-info">
-                    <div class="tech-header">
-                        <span class="code">ID: FIN_STRAT</span>
-                        <span class="status-dot"></span>
-                    </div>
+                    <div class="tech-header"><span class="code">ID: FIN_STRAT</span><span class="status-dot"></span></div>
                     <h2>Marcus Thorne</h2>
                     <p class="role">Development Strategy</p>
-                    <div class="contact-data">
-                        <p>E: marcus@forma.build</p>
-                        <p>P: +1 (555) 456-7890</p>
-                    </div>
+                    <div class="contact-data"><p>E: marcus@forma.build</p><p>P: +1 (555) 456-7890</p></div>
                 </div>
             </div>
 
+            <div class="team-card reveal">
+                <div class="member-image-placeholder"><div class="placeholder-box">MEMBER_FILE_04</div></div>
+                <div class="member-info">
+                    <div class="tech-header"><span class="code">ID: OPS_COORD</span><span class="status-dot"></span></div>
+                    <h2>Elena Vance</h2>
+                    <p class="role">Operations Manager</p>
+                    <div class="contact-data"><p>E: elena@forma.build</p><p>P: +1 (555) 111-2222</p></div>
+                </div>
+            </div>
+
+            <div class="team-card reveal" style="transition-delay: 0.1s;">
+                <div class="member-image-placeholder"><div class="placeholder-box">MEMBER_FILE_05</div></div>
+                <div class="member-info">
+                    <div class="tech-header"><span class="code">ID: DES_SYNC</span><span class="status-dot"></span></div>
+                    <h2>Julian Ross</h2>
+                    <p class="role">Lead Designer</p>
+                    <div class="contact-data"><p>E: julian@forma.build</p><p>P: +1 (555) 333-4444</p></div>
+                </div>
+            </div>
+
+            <div class="team-card reveal" style="transition-delay: 0.2s;">
+                <div class="member-image-placeholder"><div class="placeholder-box">MEMBER_FILE_06</div></div>
+                <div class="member-info">
+                    <div class="tech-header"><span class="code">ID: FIELD_SUP</span><span class="status-dot"></span></div>
+                    <h2>David Miller</h2>
+                    <p class="role">Site Supervisor</p>
+                    <div class="contact-data"><p>E: david@forma.build</p><p>P: +1 (555) 555-6666</p></div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="info-details">
+        <div class="reveal" style="text-align: center; max-width: 700px; margin: auto;">
+            <h2 style="color: #fff; font-size: 32px; text-transform: uppercase; letter-spacing: -1px; font-weight: 400;">Join the Network</h2>
+            <p style="color: #666; margin-top: 20px; line-height: 1.6;">We are always looking for visionary architects and reliable contractors to expand our collective reach. Submit your credentials for review.</p>
+            <a href="contact.html" class="cta-button">Get in Touch</a>
         </div>
     </section>
 
@@ -368,20 +343,15 @@
         function reveal() {
             const reveals = document.querySelectorAll(".reveal");
             const windowHeight = window.innerHeight;
-            
             reveals.forEach(element => {
                 const elementTop = element.getBoundingClientRect().top;
-                const elementVisible = 100;
-                
-                if (elementTop < windowHeight - elementVisible) {
+                if (elementTop < windowHeight - 100) {
                     element.classList.add("active");
                 }
             });
         }
-        
         window.addEventListener("scroll", reveal);
         window.addEventListener("load", reveal);
-        // Initial trigger
         reveal();
     </script>
 </body>
