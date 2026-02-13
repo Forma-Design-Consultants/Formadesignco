@@ -4,19 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>FORMA | Our Core Services</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/jpeg" href="logo1.jpg">
     <style>
-        /* ================= 1. NAVIGATION LOCK-IN (MATCHING HOME) ================= */
-        html {
-            scrollbar-gutter: stable; /* Stops page jumping */
-            scroll-behavior: smooth;
-        }
-
+        /* ================= GLOBAL & SAFE AREAS ================= */
         :root {
             --safe-top: env(safe-area-inset-top, 20px);
             --safe-bottom: env(safe-area-inset-bottom, 20px);
+            --header-height: 100px;
         }
 
         body { 
@@ -26,84 +21,67 @@
             color: #fff; 
             overflow-x: hidden; 
             -webkit-text-size-adjust: 100%;
-            -webkit-font-smoothing: antialiased;
         }
 
-        /* FIXED HEADER STRUCTURE */
+        /* ================= NAVIGATION (STAYS ON TOP) ================= */
         header {
-            background: #fff; 
-            border-bottom: 2px solid #000;
+            background: #fff; /* Services header is white to match Home */
+            border-bottom: 1px solid #eee;
             width: 100%;
-            position: fixed; /* Locked to top */
+            position: fixed; 
             top: 0;
             left: 0;
-            z-index: 2000; 
-            padding: 15px 0;
-            padding-top: calc(10px + var(--safe-top));
+            z-index: 3000;
+            height: var(--header-height);
         }
 
         .nav-container {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-between; 
             align-items: center;
-            width: 95%;
-            max-width: 1400px;
-            margin: auto;
+            width: 100%;
             padding: 0 40px;
+            height: 100%;
+            box-sizing: border-box;
         }
 
-        .logo {
-            height: 80px; /* Standardized Premium Height */
-            width: auto;
-            transition: transform 0.3s ease;
-            display: block;
-        }
+        .logo { height: 85px; width: auto; }
 
         .nav-right-group {
             display: flex;
             align-items: center;
-            gap: 40px;
-            margin-left: auto; /* Ensures right alignment */
+            gap: 30px;
         }
 
         nav ul {
             display: flex;
             list-style: none;
-            gap: 25px;
             margin: 0;
             padding: 0;
+            gap: 20px;
+            align-items: center;
         }
 
         nav ul li a {
             text-decoration: none;
-            color: #000;
+            color: #000; /* Black text for white header */
             font-size: 11px;
-            font-weight: 500;
-            letter-spacing: 1.5px;
+            font-weight: 600;
+            letter-spacing: 1px;
             text-transform: uppercase;
-            position: relative;
-            padding-bottom: 5px;
-            border-bottom: 2px solid transparent;
-            transition: border-color 0.3s ease;
-        }
-
-        nav ul li a:hover, 
-        nav ul li a.active {
-            border-bottom: 2px solid #000;
         }
 
         .nav-cta-btn {
             background-color: #000;
             color: #fff !important;
             padding: 12px 24px;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 700;
             letter-spacing: 1.5px;
             text-decoration: none;
             border: 1px solid #000;
             transition: all 0.3s ease;
             text-transform: uppercase;
-            white-space: nowrap;
         }
 
         .nav-cta-btn:hover {
@@ -111,8 +89,7 @@
             color: #000 !important;
         }
 
-        /* ================= 2. YOUR SERVICES CONTENT STYLING (PRESERVED) ================= */
-        
+        /* ================= VIDEO BACKGROUND ================= */
         .video-bg-container {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -125,16 +102,16 @@
             position: absolute; top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             object-fit: cover;
-            opacity: 0.3; 
+            opacity: 0.3;
         }
 
+        /* ================= SERVICES CONTENT ================= */
         .services-wrapper {
             position: relative;
             z-index: 2;
             max-width: 1200px;
             margin: 0 auto;
-            /* Adjusted top padding to account for fixed header */
-            padding: calc(120px + var(--safe-top)) 20px 100px 20px;
+            padding: calc(var(--header-height) + 60px) 20px 100px 20px;
         }
 
         .services-header {
@@ -147,6 +124,7 @@
             letter-spacing: 5px;
             font-weight: 300;
             text-transform: uppercase;
+            color: #fff;
         }
 
         .service-grid {
@@ -192,37 +170,29 @@
             max-height: 0;
             transform: translateY(20px);
             transition: all 0.4s ease;
-            color: #fff;
         }
 
         .service-card-content h3 {
-            color: #fff;
             font-size: 18px;
             letter-spacing: 2px;
             text-transform: uppercase;
             margin: 0;
         }
 
-        @media (hover: hover) {
-            .service-card:hover .service-card-content { background: rgba(0, 0, 0, 0.8); }
-            .service-card:hover .module-tag, .service-card:hover .service-desc {
-                opacity: 1; max-height: 200px; transform: translateY(0);
-            }
-            .service-card:hover .card-bg { transform: scale(1.1); opacity: 0.2; }
+        /* Hover Interaction */
+        .service-card:hover .service-card-content { background: rgba(0, 0, 0, 0.8); }
+        .service-card:hover .module-tag, .service-card:hover .service-desc {
+            opacity: 1; max-height: 200px; transform: translateY(0);
         }
+        .service-card:hover .card-bg { transform: scale(1.1); opacity: 0.2; }
 
-        /* ================= 3. MOBILE PATCHES (MERGED) ================= */
+        /* Mobile */
         @media (max-width: 768px) {
-            /* Header Mobile Logic */
-            header { padding: 10px 0; }
-            .nav-container { flex-direction: column; gap: 15px; padding: 10px 20px; }
-            .logo { height: 60px; }
-            .nav-right-group { flex-direction: column; gap: 15px; width: 100%; margin-left: 0; }
-            nav ul { flex-wrap: wrap; justify-content: center; gap: 15px; }
-            
-            /* Services Grid Mobile Logic */
+            header { height: auto; padding: 10px 0; }
+            .nav-container { flex-direction: column; }
+            .nav-right-group { flex-direction: column; margin-top: 15px; }
+            .services-wrapper { padding-top: 200px; }
             .service-card { flex: 0 1 100%; height: 380px; }
-            .services-wrapper { padding-top: calc(180px + var(--safe-top)); } /* Push content down for taller mobile header */
         }
     </style>
 </head>
@@ -236,20 +206,18 @@
 
     <header>
         <div class="nav-container">
-            <a href="index.html">
-                <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA Logo" class="logo">
-            </a>
+            <a href="index.html"><img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA" class="logo"></a>
             <div class="nav-right-group">
                 <nav>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="services.html" class="active">Services</a></li>
-                        <li><a href="gallery.html">Gallery</a></li>
-                        <li><a href="packages.html">Packages</a></li>
-                        <li><a href="process.html">Process</a></li>
-                        <li><a href="locations.html">Locations</a></li>
-                        <li><a href="team.html">About Us</a></li> 
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="index.html">HOME</a></li>
+                        <li><a href="services.html">SERVICES</a></li>
+                        <li><a href="gallery.html">GALLERY</a></li>
+                        <li><a href="packages.html">PACKAGES</a></li>
+                        <li><a href="process.html">PROCESS</a></li>
+                        <li><a href="locations.html">LOCATIONS</a></li>
+                        <li><a href="team.html">ABOUT US</a></li>
+                        <li><a href="contact.html">CONTACT</a></li>
                     </ul>
                 </nav>
                 <a href="estimate.html" class="nav-cta-btn">Free Estimate</a>
@@ -266,7 +234,7 @@
             <div class="service-card">
                 <img src="https://images.unsplash.com/photo-1721244654394-36a7bc2da288?w=600&h=800&fit=crop" class="card-bg">
                 <div class="service-card-content">
-                    <span class="module-tag">Module _01</span>
+                    <span class="module-tag" style="color:#666; font-size:10px; margin-bottom:10px;">Module _01</span>
                     <h3>Architectural Design</h3>
                     <p class="service-desc">Conceptualizing futuristic structures through advanced spatial modeling and noir aesthetics.</p>
                 </div>
@@ -275,7 +243,7 @@
             <div class="service-card">
                 <img src="https://images.unsplash.com/photo-1627141234469-24711efb373c?w=600&h=800&fit=crop" class="card-bg">
                 <div class="service-card-content">
-                    <span class="module-tag">Module _02</span>
+                    <span class="module-tag" style="color:#666; font-size:10px; margin-bottom:10px;">Module _02</span>
                     <h3>ADU Development</h3>
                     <p class="service-desc">Smart accessory dwelling units designed for maximum utility and minimalist impact.</p>
                 </div>
@@ -284,7 +252,7 @@
             <div class="service-card">
                 <img src="https://images.pexels.com/photos/17174767/pexels-photo-17174767.jpeg?w=600&h=800&fit=crop" class="card-bg">
                 <div class="service-card-content">
-                    <span class="module-tag">Module _03</span>
+                    <span class="module-tag" style="color:#666; font-size:10px; margin-bottom:10px;">Module _03</span>
                     <h3>Contractor Sourcing</h3>
                     <p class="service-desc">Vetting elite execution teams to ensure your architectural vision is built to spec.</p>
                 </div>
@@ -293,7 +261,7 @@
             <div class="service-card">
                 <img src="https://images.unsplash.com/photo-1721244653757-b76cc4679dfb?w=600&h=800&fit=crop" class="card-bg">
                 <div class="service-card-content">
-                    <span class="module-tag">Module _04</span>
+                    <span class="module-tag" style="color:#666; font-size:10px; margin-bottom:10px;">Module _04</span>
                     <h3>Project Strategy</h3>
                     <p class="service-desc">End-to-end oversight ensuring precision, safety, and architectural integrity.</p>
                 </div>
@@ -302,7 +270,7 @@
             <div class="service-card">
                 <img src="https://images.unsplash.com/photo-1742415106160-594d07f6cc23?w=600&h=800&fit=crop" class="card-bg">
                 <div class="service-card-content">
-                    <span class="module-tag">Module _05</span>
+                    <span class="module-tag" style="color:#666; font-size:10px; margin-bottom:10px;">Module _05</span>
                     <h3>Financing Guidance</h3>
                     <p class="service-desc">Strategic financial planning and assistance to secure your project's future.</p>
                 </div>
