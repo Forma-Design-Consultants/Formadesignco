@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FORMA | Project Planner</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/jpeg" href="logo1.jpg">
+    <link rel="icon" type="image/jpeg" href="https://patrickremigio202011532-design.github.io/PICTURES//logo1.jpg">
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="form-handler.js" defer></script>
+
     <style>
         /* ================= NAVIGATION SYNC ================= */
         :root {
@@ -39,7 +42,7 @@
             box-sizing: border-box;
         }
 
-        .logo { height: 85px; width: auto; }
+        .logo { height: 65px; width: auto; }
 
         .nav-right-group {
             display: flex;
@@ -124,7 +127,7 @@
         .progress-bar {
             height: 100%;
             background: var(--accent);
-            width: 33%;
+            width: 33.33%;
             transition: width 0.6s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
@@ -159,7 +162,6 @@
         .option-card h3 { font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
         .option-card p { font-size: 12px; color: #666; margin: 0; }
 
-        /* Form Grid for Contact Info */
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -169,23 +171,24 @@
 
         .input-group { margin-bottom: 15px; }
         .input-group.full-width { grid-column: span 2; }
-        .input-group label { display: block; color: #ffffff; font-size: 10px; margin-bottom: 8px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+        .input-group label { display: block; color: #555; font-size: 10px; margin-bottom: 8px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
         .input-group input, .input-group select {
-            width: 100%; background: #000; border: 1px solid #ffffff; color: #fff; padding: 15px; font-family: inherit; font-size: 13px; outline: none; box-sizing: border-box;
-            border-radius: 4px;
+            width: 100%; background: #000; border: 1px solid #222; color: #fff; padding: 15px; font-family: inherit; font-size: 13px; outline: none; box-sizing: border-box;
+            border-radius: 4px; transition: border-color 0.3s;
         }
+        .input-group input:focus { border-color: #fff; }
 
         .analytics-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px; }
         .graph-box { background: #0a0a0a; border: 1px solid #1a1a1a; height: 200px; display: flex; align-items: flex-end; justify-content: space-around; padding: 20px; }
         .bar { width: 40px; background: #fff; position: relative; transition: height 1.2s cubic-bezier(0.19, 1, 0.22, 1); height: 0; }
-        .bar-label { position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%); font-size: 9px; color: #444; text-transform: uppercase; letter-spacing: 1px; }
+        .bar-label { position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%); font-size: 9px; color: #444; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; }
         
         .result-data { display: flex; flex-direction: column; justify-content: center; }
         .data-point { border-bottom: 1px solid #1a1a1a; padding: 15px 0; display: flex; justify-content: space-between; align-items: center; }
         .data-point span:first-child { color: #555; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; }
         .data-point span:last-child { font-size: 14px; font-weight: 400; }
 
-        .estimate-total { grid-column: span 2; background: #fff; color: #000; padding: 40px; text-align: center; }
+        .estimate-total { grid-column: span 2; background: #fff; color: #000; padding: 40px; text-align: center; margin-top: 20px; }
         .estimate-total small { font-size: 10px; font-weight: 800; text-transform: uppercase; display: block; margin-bottom: 10px; letter-spacing: 2px; }
         .estimate-total h3 { margin: 0; font-size: 32px; font-weight: 300; letter-spacing: -1px; }
 
@@ -193,6 +196,7 @@
         .btn-nav { padding: 16px 35px; background: transparent; color: #fff; border: 1px solid #333; cursor: pointer; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; transition: 0.3s; }
         .btn-nav:hover { background: #fff; color: #000; border-color: #fff; }
         .btn-nav.primary { background: #fff; color: #000; border: none; }
+        .btn-nav:disabled { opacity: 0.5; cursor: not-allowed; }
 
         footer { background: #000; padding: 80px 0; text-align: center; border-top: 1px solid #111; }
 
@@ -200,6 +204,8 @@
             .selection-grid, .analytics-wrap, .form-grid { grid-template-columns: 1fr; }
             .input-group.full-width { grid-column: span 1; }
             .wizard-card { padding: 40px 20px; }
+            .nav-container { padding: 0 20px; }
+            nav { display: none; } /* Simplified mobile header */
         }
     </style>
 </head>
@@ -208,17 +214,14 @@
     <header>
         <div class="nav-container">
             <a href="index.html">
-                <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA Logo" class="logo">
+                <img src="https://patrickremigio202011532-design.github.io/PICTURES//logo1.jpg" alt="FORMA Logo" class="logo">
             </a>
             <div class="nav-right-group">
                 <nav>
                     <ul>
                         <li><a href="index.html">Home</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="packages.html">Packages</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
                         <li><a href="process.html">Process</a></li>
-                        <li><a href="locations.html">Locations</a></li>
-                        <li><a href="team.html">About Us</a></li> 
                         <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </nav>
@@ -260,7 +263,7 @@
                             <p>Investment development.</p>
                         </div>
                     </div>
-                    <input type="hidden" id="selectedType">
+                    <input type="hidden" id="selectedType" name="project_type">
                     <input type="hidden" id="baseRate">
                 </div>
 
@@ -273,19 +276,19 @@
                     <div class="form-grid">
                         <div class="input-group">
                             <label>Full Name</label>
-                            <input type="text" id="fullName" placeholder="John Doe" required>
+                            <input type="text" id="fullName" placeholder="Full Name" required>
                         </div>
                         <div class="input-group">
                             <label>Email Address</label>
-                            <input type="email" id="userEmail" placeholder="michealjohnjohn@gmail.com" required>
+                            <input type="email" id="userEmail" placeholder="email@example.com" required>
                         </div>
                         <div class="input-group">
                             <label>Phone Number</label>
-                            <input type="tel" id="userPhone" placeholder="2094343321" required>
+                            <input type="tel" id="userPhone" placeholder="(555) 000-0000" required>
                         </div>
                         <div class="input-group">
-                            <label>Address</label>
-                            <input type="text" id="userAddress" placeholder="2039 Ohio Street, San Diego, CA" required>
+                            <label>Property Address</label>
+                            <input type="text" id="userAddress" placeholder="Street, City, State" required>
                         </div>
                         <div class="input-group">
                             <label>Target Sq Footage</label>
@@ -303,7 +306,7 @@
                             <label>How did you hear about us?</label>
                             <select id="discoverySource">
                                 <option value="Google">Google Search</option>
-                                <option value="Social">Social Media</option>
+                                <option value="Social Media">Social Media</option>
                                 <option value="Referral">Referral</option>
                                 <option value="Other">Other</option>
                             </select>
@@ -312,7 +315,7 @@
 
                     <div class="wizard-nav">
                         <button type="button" class="btn-nav" onclick="changeStep(-1)">BACK</button>
-                        <button type="button" class="btn-nav primary" onclick="validateAndRun()">GENERATE ESTIMATE</button>
+                        <button type="button" class="btn-nav primary" id="submitBtn" onclick="validateAndRun()">GENERATE ESTIMATE</button>
                     </div>
                 </div>
 
@@ -351,68 +354,9 @@
     </div>
 
     <footer>
-        <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" style="width: 100px; filter: invert(1); margin-bottom: 20px;">
+        <img src="https://patrickremigio202011532-design.github.io/PICTURES//logo1.jpg" style="width: 80px; filter: invert(1); margin-bottom: 20px;">
         <p style="font-size: 10px; letter-spacing: 2px; opacity: 0.5;">© 2026 FORMA DESIGN CONSULTANTS</p>
     </footer>
-
-    <script>
-        let currentStep = 1;
-
-        function selectOption(name, rate) {
-            document.getElementById('selectedType').value = name;
-            document.getElementById('baseRate').value = rate;
-            
-            document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
-            event.currentTarget.classList.add('selected');
-
-            setTimeout(() => changeStep(1), 300);
-        }
-
-        function changeStep(n) {
-            document.getElementById('step' + currentStep).classList.remove('active');
-            currentStep += n;
-            document.getElementById('step' + currentStep).classList.add('active');
-            
-            const progress = (currentStep / 3) * 100;
-            document.getElementById('progressBar').style.width = progress + '%';
-        }
-
-        function validateAndRun() {
-            // Basic validation for contact info
-            const name = document.getElementById('fullName').value;
-            const email = document.getElementById('userEmail').value;
-            const phone = document.getElementById('userPhone').value;
-            const address = document.getElementById('userAddress').value;
-
-            if (!name || !email.includes('@') || !phone || !address) {
-                alert("Please fill in all contact details to receive your estimate.");
-                return;
-            }
-            runAnalytics();
-        }
-
-        function runAnalytics() {
-            const type = document.getElementById('selectedType').value;
-            const rate = parseFloat(document.getElementById('baseRate').value);
-            const sqft = parseFloat(document.getElementById('sqft').value);
-            const multiplier = parseFloat(document.getElementById('finishTier').value);
-
-            const lowEstimate = sqft * rate * multiplier;
-            const highEstimate = lowEstimate * 1.15;
-
-            document.getElementById('res-type').innerText = type;
-            document.getElementById('res-time').innerText = (rate > 250) ? "9-14 Months" : "5-8 Months";
-            document.getElementById('res-price').innerText = `$${Math.round(lowEstimate).toLocaleString()} — $${Math.round(highEstimate).toLocaleString()}`;
-
-            changeStep(1);
-            
-            setTimeout(() => {
-                document.getElementById('bar1').style.height = "55%";
-                document.getElementById('bar2').style.height = "80%";
-                document.getElementById('bar3').style.height = "95%";
-            }, 400);
-        }
-    </script>
 
 </body>
 </html>
