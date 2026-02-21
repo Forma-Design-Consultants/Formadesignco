@@ -86,12 +86,30 @@
             color: #000 !important;
         }
 
-        /* ================= MOBILE NAVIGATION OVERRIDES ================= */
+        /* ================= CONSISTENT MOBILE OVERRIDES ================= */
         @media (max-width: 768px) {
-            header { height: auto; padding: 10px 0; }
-            .nav-container { flex-direction: column; }
-            .nav-right-group { flex-direction: column; gap: 15px; margin-top: 15px; }
-            nav ul { flex-wrap: wrap; justify-content: center; }
+            header { 
+                height: auto; 
+                padding: 20px 0; 
+            }
+            .nav-container { 
+                flex-direction: column; 
+                gap: 15px;
+            }
+            .nav-right-group { 
+                flex-direction: column; 
+                gap: 20px; 
+                width: 100%;
+            }
+            nav ul { 
+                flex-direction: column; 
+                gap: 12px; 
+                text-align: center;
+            }
+            /* Increased padding to ensure text clears the stacked mobile nav */
+            .packages-container { 
+                padding-top: 320px !important; 
+            }
         }
 
         /* ================= PACKAGES CONTENT ================= */
@@ -105,7 +123,6 @@
         .packages-container {
             max-width: 1200px;
             margin: 0 auto;
-            /* Default Desktop Padding */
             padding: calc(var(--header-height) + 60px) 20px 80px 20px;
             text-align: center;
         }
@@ -166,18 +183,10 @@
         .btn-black { background: #000; color: #fff; }
         .btn-white { background: #fff; color: #000; }
 
-        /* ================= MOBILE ONLY CONTENT ADJUSTMENTS ================= */
         @media (max-width: 992px) {
             .package-grid { grid-template-columns: 1fr; gap: 30px; padding: 0 10px; }
             .package-card { transform: none !important; padding: 40px 25px; }
             .package-header h1 { font-size: 26px; }
-        }
-
-        @media (max-width: 768px) {
-            /* This pushes the "INVESTMENT TIERS" and Title down ONLY on mobile */
-            .packages-container { 
-                padding-top: 280px !important; 
-            }
         }
     </style>
 </head>
