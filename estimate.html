@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>FORMA | Project Planner</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <link rel="icon" type="image/jpeg" href="https://patrickremigio202011532-design.github.io/PICTURES//logo1.jpg">
@@ -11,7 +11,7 @@
     <script src="form-handler.js" defer></script>
 
     <style>
-        /* ================= NAVIGATION SYNC (FIXED FOR MOBILE) ================= */
+        /* ================= MASTER NAVIGATION (SYNCED) ================= */
         :root {
             --safe-top: env(safe-area-inset-top, 20px);
             --header-height: 100px;
@@ -28,7 +28,7 @@
             position: fixed; 
             top: 0;
             left: 0;
-            z-index: 3000; /* Increased to stay above everything */
+            z-index: 3000;
             height: var(--header-height);
         }
 
@@ -40,10 +40,9 @@
             padding: 0 40px;
             height: 100%;
             box-sizing: border-box;
-            position: relative;
         }
 
-        .logo { height: 65px; width: auto; }
+        .logo { height: 85px; width: auto; transition: height 0.3s ease; }
 
         .nav-right-group {
             display: flex;
@@ -57,6 +56,7 @@
             margin: 0;
             padding: 0;
             gap: 20px;
+            align-items: center;
         }
 
         nav ul li a {
@@ -82,20 +82,6 @@
             white-space: nowrap;
         }
 
-        /* Mobile Menu Toggle Button (Hidden on Desktop) */
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            padding: 10px;
-        }
-        .menu-toggle span {
-            width: 25px;
-            height: 2px;
-            background: #000;
-        }
-
         /* ================= WIZARD STYLING (UNTOUCHED) ================= */
         body {
             background-color: var(--bg-dark);
@@ -106,6 +92,7 @@
             color: #fff;
             margin: 0;
             font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
         }
 
         .wizard-wrapper {
@@ -113,7 +100,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: calc(var(--header-height) + 40px) 20px 80px 20px;
+            padding: calc(var(--header-height) + 60px) 20px 80px 20px;
             box-sizing: border-box;
         }
 
@@ -127,12 +114,28 @@
             box-shadow: 0 40px 100px rgba(0,0,0,0.8);
         }
 
-        .progress-container { position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: #1a1a1a; }
-        .progress-bar { height: 100%; background: var(--accent); width: 33.33%; transition: width 0.6s cubic-bezier(0.19, 1, 0.22, 1); }
+        .progress-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #1a1a1a;
+        }
+        .progress-bar {
+            height: 100%;
+            background: var(--accent);
+            width: 33.33%;
+            transition: width 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
         .step { display: none; }
         .step.active { display: block; animation: fadeIn 0.8s ease forwards; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         .step-header { margin-bottom: 40px; text-align: center; }
         .step-header p { color: #555; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 10px; }
@@ -152,11 +155,18 @@
         .option-card:hover, .option-card.selected { background: #fff; border-color: #fff; }
         .option-card:hover h3, .option-card:hover p, .option-card.selected h3, .option-card.selected p { color: #000; }
         .option-card:hover svg, .option-card.selected svg { stroke: #000; }
+
         .option-card svg { width: 32px; height: 32px; stroke: #444; stroke-width: 1.2; fill: none; margin-bottom: 20px; transition: 0.3s; }
         .option-card h3 { font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
         .option-card p { font-size: 12px; color: #666; margin: 0; }
 
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
         .input-group { margin-bottom: 15px; }
         .input-group.full-width { grid-column: span 2; }
         .input-group label { display: block; color: #555; font-size: 10px; margin-bottom: 8px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
@@ -170,10 +180,12 @@
         .graph-box { background: #0a0a0a; border: 1px solid #1a1a1a; height: 200px; display: flex; align-items: flex-end; justify-content: space-around; padding: 20px; }
         .bar { width: 40px; background: #fff; position: relative; transition: height 1.2s cubic-bezier(0.19, 1, 0.22, 1); height: 0; }
         .bar-label { position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%); font-size: 9px; color: #444; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; }
+        
         .result-data { display: flex; flex-direction: column; justify-content: center; }
         .data-point { border-bottom: 1px solid #1a1a1a; padding: 15px 0; display: flex; justify-content: space-between; align-items: center; }
         .data-point span:first-child { color: #555; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; }
         .data-point span:last-child { font-size: 14px; font-weight: 400; }
+
         .estimate-total { grid-column: span 2; background: #fff; color: #000; padding: 40px; text-align: center; margin-top: 20px; }
         .estimate-total small { font-size: 10px; font-weight: 800; text-transform: uppercase; display: block; margin-bottom: 10px; letter-spacing: 2px; }
         .estimate-total h3 { margin: 0; font-size: 32px; font-weight: 300; letter-spacing: -1px; }
@@ -182,33 +194,23 @@
         .btn-nav { padding: 16px 35px; background: transparent; color: #fff; border: 1px solid #333; cursor: pointer; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; transition: 0.3s; }
         .btn-nav:hover { background: #fff; color: #000; border-color: #fff; }
         .btn-nav.primary { background: #fff; color: #000; border: none; }
+        .btn-nav:disabled { opacity: 0.5; cursor: not-allowed; }
 
         footer { background: #000; padding: 80px 0; text-align: center; border-top: 1px solid #111; }
 
-        /* ================= MOBILE ADAPTATION ================= */
-        @media(max-width: 850px) {
-            .menu-toggle { display: flex; order: 3; }
-            .nav-container { padding: 0 20px; }
-            
-            nav {
-                display: none; /* Controlled by JS toggle */
-                position: absolute;
-                top: var(--header-height);
-                left: 0;
-                width: 100%;
-                background: #fff;
-                border-bottom: 1px solid #eee;
-                padding: 20px;
-                box-sizing: border-box;
-            }
+        /* ================= MOBILE SYNC (SYNCED FROM SERVICES) ================= */
+        @media (max-width: 768px) {
+            header { height: auto; padding: 10px 0; position: fixed; }
+            .nav-container { flex-direction: column; gap: 10px; padding: 0 20px; }
+            .logo { height: 50px; }
+            .nav-right-group { flex-direction: column; gap: 10px; width: 100%; padding-bottom: 10px; }
+            nav ul { gap: 10px; flex-wrap: wrap; justify-content: center; display: flex; } /* Restored mobile nav visibility */
+            nav ul li a { font-size: 9px; }
+            .nav-cta-btn { padding: 8px 16px; font-size: 9px; width: 80%; text-align: center; }
 
-            nav.active { display: block; }
-
-            nav ul { flex-direction: column; gap: 15px; }
-            .nav-right-group { gap: 15px; }
-            .nav-cta-btn { font-size: 9px; padding: 10px 15px; }
+            /* Spacing to prevent content overlap */
+            .wizard-wrapper { padding-top: 280px !important; } 
             
-            /* Wizard Adjustments */
             .selection-grid, .analytics-wrap, .form-grid { grid-template-columns: 1fr; }
             .input-group.full-width { grid-column: span 1; }
             .wizard-card { padding: 40px 20px; }
@@ -220,28 +222,21 @@
     <header>
         <div class="nav-container">
             <a href="index.html">
-                <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA Logo" class="logo">
+                <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA" class="logo">
             </a>
-            
             <div class="nav-right-group">
-                <nav id="mainNav">
+                <nav>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="packages.html">Packages</a></li>
-                        <li><a href="process.html">Process</a></li>
-                        <li><a href="locations.html">Locations</a></li>
-                        <li><a href="team.html">About Us</a></li> 
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="index.html">HOME</a></li>
+                        <li><a href="services.html">SERVICES</a></li>
+                        <li><a href="packages.html">PACKAGES</a></li>
+                        <li><a href="process.html">PROCESS</a></li>
+                        <li><a href="locations.html">LOCATIONS</a></li>
+                        <li><a href="team.html">ABOUT US</a></li>
+                        <li><a href="contact.html">CONTACT</a></li>
                     </ul>
                 </nav>
                 <a href="estimate.html" class="nav-cta-btn">Free Estimate</a>
-                
-                <div class="menu-toggle" onclick="toggleMenu()">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
             </div>
         </div>
     </header>
@@ -284,27 +279,95 @@
                 </div>
 
                 <div class="step" id="step2">
-                    <div class="step-header"><p>Phase 02</p><h2>Details</h2></div>
+                    <div class="step-header">
+                        <p>Phase 02</p>
+                        <h2>Contact & Property Details</h2>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label>Full Name</label>
+                            <input type="text" id="fullName" placeholder="Full Name" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Email Address</label>
+                            <input type="email" id="userEmail" placeholder="email@example.com" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Phone Number</label>
+                            <input type="tel" id="userPhone" placeholder="(555) 000-0000" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Property Address</label>
+                            <input type="text" id="userAddress" placeholder="Street, City, State" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Target Sq Footage</label>
+                            <input type="number" id="sqft" placeholder="e.g. 500" value="450">
+                        </div>
+                        <div class="input-group">
+                            <label>Finish Level</label>
+                            <select id="finishTier">
+                                <option value="1.0">Modern Standard</option>
+                                <option value="1.3">Architectural Premium</option>
+                                <option value="1.6">Ultra-Luxury</option>
+                            </select>
+                        </div>
+                        <div class="input-group full-width">
+                            <label>How did you hear about us?</label>
+                            <select id="discoverySource">
+                                <option value="Google">Google Search</option>
+                                <option value="Social Media">Social Media</option>
+                                <option value="Referral">Referral</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="wizard-nav">
                         <button type="button" class="btn-nav" onclick="changeStep(-1)">BACK</button>
-                        <button type="button" class="btn-nav primary">GENERATE</button>
+                        <button type="button" class="btn-nav primary" id="submitBtn" onclick="validateAndRun()">GENERATE ESTIMATE</button>
                     </div>
                 </div>
+
+                <div class="step" id="step3">
+                    <div class="step-header">
+                        <p>Calculation Complete</p>
+                        <h2>Projected Analytics</h2>
+                    </div>
+                    
+                    <div class="analytics-wrap">
+                        <div class="result-data">
+                            <div class="data-point"><span>Project Type</span><span id="res-type">-</span></div>
+                            <div class="data-point"><span>Build Timeline</span><span id="res-time">-</span></div>
+                            <div class="data-point"><span>Equity Forecast</span><span>+24% Est.</span></div>
+                        </div>
+                        
+                        <div class="graph-box">
+                            <div class="bar" id="bar1"><span class="bar-label">Cost</span></div>
+                            <div class="bar" id="bar2" style="background: #333;"><span class="bar-label">Market</span></div>
+                            <div class="bar" id="bar3"><span class="bar-label">ROI</span></div>
+                        </div>
+
+                        <div class="estimate-total">
+                            <small>Investment Range</small>
+                            <h3 id="res-price">$0.00</h3>
+                        </div>
+                    </div>
+
+                    <div class="wizard-nav" style="justify-content: center;">
+                        <button type="button" class="btn-nav" onclick="location.reload()">RESTART PLANNER</button>
+                    </div>
+                </div>
+
             </form>
         </div>
     </div>
 
-    <footer>
-        <img src="https://patrickremigio202011532-design.github.io/PICTURES//logo1.jpg" style="width: 80px; filter: invert(1); margin-bottom: 20px;">
-        <p style="font-size: 10px; letter-spacing: 2px; opacity: 0.5;">© 2026 FORMA DESIGN CONSULTANTS</p>
+    <footer style="background-color: rgba(0,0,0,0.9); color: #fff; padding: 80px 0; text-align: center; border-top: 1px solid #1a1a1a;">
+        <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" style="width: 100px; filter: invert(1); margin-bottom: 20px;">
+        <p style="font-size: 12px; letter-spacing: 2px; opacity: 0.5;">© 2026 FORMA DESIGN CONSULTANTS</p>
     </footer>
 
-    <script>
-        // Simple toggle for mobile menu
-        function toggleMenu() {
-            const nav = document.getElementById('mainNav');
-            nav.classList.toggle('active');
-        }
-    </script>
 </body>
 </html>
