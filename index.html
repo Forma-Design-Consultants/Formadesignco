@@ -1,1 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>FORMA | Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="icon" type="image/jpeg" href="logo1.jpg">
+    <link rel="shortcut icon" href="logo1.jpg" type="image/x-icon">
+    <link rel="apple-touch-icon" href="logo1.jpg">
+    
+    <style>
+        /* ================= MASTER NAVIGATION (SYNCED) ================= */
+        :root {
+            --safe-top: env(safe-area-inset-top, 20px);
+            --header-height: 100px;
+        }
+
+        header {
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            width: 100%;
+            position: fixed; 
+            top: 0;
+            left: 0;
+            z-index: 3000; 
+            height: var(--header-height);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;
+            width: 100%;
+            padding: 0 40px;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        .logo { height: 85px; width: auto; transition: height 0.3s ease; }
+
+        .nav-right-group {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 20px;
+            align-items: center;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #000;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Active state for Home */
+        nav ul li a.active {
+            font-weight: 700;
+            border-bottom: 2px solid #000;
+            padding-bottom: 5px;
+        }
+
+        .nav-cta-btn {
+            background-color: #000;
+            color: #fff !important;
+            padding: 12px 24px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+            border: 1px solid #000;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .nav-cta-btn:hover {
+            background-color: #fff;
+            color: #000 !important;
+        }
+
+        /* ================= MOBILE NAVIGATION OVERRIDES (SYNCED) ================= */
+        @media (max-width: 768px) {
+            header { height: auto; padding: 10px 0; position: fixed; }
+            .nav-container { flex-direction: column; gap: 10px; }
+            .logo { height: 50px; }
+            .nav-right-group { flex-direction: column; gap: 10px; width: 100%; padding-bottom: 10px; }
+            nav ul { gap: 10px; flex-wrap: wrap; justify-content: center; }
+            nav ul li a { font-size: 9px; }
+            .nav-cta-btn { padding: 8px 16px; font-size: 9px; width: 80%; text-align: center; }
+
+            /* Pushing the Hero content down to account for the tall mobile menu */
+            .hero { padding-top: 280px !important; } 
+        }
+
+        /* ================= HOME PAGE LAYOUT (UNTOUCHED) ================= */
+        body { 
+            margin: 0; 
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden; 
+            -webkit-font-smoothing: antialiased;
+            background: #fff;
+        }
+
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-align: center;
+            background: #000;
+            margin-top: 0; 
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            animation: videoFadeIn 2s ease-out forwards;
+            transform: scale(1.1);
+        }
+
+        @keyframes videoFadeIn {
+            to { opacity: 0.6; transform: scale(1); }
+        }
+
+        .hero-content { 
+            position: relative; 
+            z-index: 10; 
+            padding: 0 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroContentFadeIn 1.2s ease-out 0.5s forwards;
+        }
+
+        @keyframes heroContentFadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-content h1 { font-size: clamp(28px, 5vw, 64px); font-weight: 200; letter-spacing: 4px; margin-bottom: 20px; }
+        .hero-content p { font-size: clamp(14px, 2vw, 18px); max-width: 700px; margin: 0 auto 40px; opacity: 0.8; line-height: 1.6; }
+
+        .hero-btns { display: flex; gap: 20px; justify-content: center; }
+        .cta-button {
+            padding: 18px 35px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+        
+        .cta-button:hover::before { width: 300px; height: 300px; }
+        .cta-button:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); }
+        .cta-button.solid { background: #fff; color: #000; }
+        .cta-button.outline { border: 1px solid #fff; color: #fff; }
+
+        .blueprint-showcase { 
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            width: 100%;
+            background: #fff;
+            gap: 0;
+        }
+        
+        .blueprint-item { 
+            width: 100%; 
+            height: 500px; 
+            object-fit: cover; 
+            display: block;
+            opacity: 0;
+            transform: scale(0.9) translateY(40px);
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.6s ease, filter 0.4s ease;
+            position: relative;
+            filter: grayscale(0.3) brightness(0.95);
+        }
+        
+        .blueprint-item.animate { opacity: 1; transform: scale(1) translateY(0); }
+        .blueprint-item:nth-child(1).animate { transition-delay: 0.1s; }
+        .blueprint-item:nth-child(2).animate { transition-delay: 0.3s; }
+        .blueprint-item:nth-child(3).animate { transition-delay: 0.5s; }
+        
+        .blueprint-item:hover { transform: scale(1.08); filter: grayscale(0) brightness(1.05); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4); z-index: 10; }
+
+        .atelier-grid { 
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: #000;
+            min-height: 600px;
+            overflow: hidden;
+        }
+        
+        .atelier-images { position: relative; overflow: hidden; }
+        .atelier-images::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(0, 150, 255, 0.2), rgba(255, 0, 150, 0.2));
+            opacity: 0; z-index: 2; transition: opacity 0.6s ease; pointer-events: none;
+        }
+        
+        .atelier-images:hover::before { opacity: 1; }
+        .atelier-images img { 
+            width: 100%; height: 100%; object-fit: cover; display: block;
+            opacity: 0; transform: scale(1.2) rotate(2deg);
+            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.8s ease;
+        }
+        
+        .atelier-images img.animate { opacity: 1; transform: scale(1) rotate(0deg); }
+        .atelier-images:hover img { transform: scale(1.1) rotate(-1deg); }
+        
+        .atelier-content { padding: 10%; display: flex; flex-direction: column; justify-content: center; color: #fff; opacity: 0; transform: translateX(50px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .atelier-content.animate { opacity: 1; transform: translateX(0); }
+
+        .tech-stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 40px 20px;
+            background: #000;
+            border-top: 1px solid #222;
+        }
+        .stat-label { font-size: 11px; letter-spacing: 2px; color: #fff; text-transform: uppercase; }
+
+        .info-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            padding: 100px 0;
+            gap: 60px;
+        }
+        
+        .info-text { padding: 0 15%; opacity: 0; transform: translateX(-40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .info-text.animate { opacity: 1; transform: translateX(0); }
+        .info-image { position: relative; overflow: hidden; }
+        
+        .info-image img { 
+            width: 100%; height: 500px; object-fit: cover; opacity: 0;
+            transform: scale(0.9) translateX(40px);
+            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.8s ease, filter 0.4s ease;
+            filter: brightness(0.95);
+        }
+        
+        .info-image img.animate { opacity: 1; transform: scale(1) translateX(0); }
+
+        .module-tag { font-size: 10px; letter-spacing: 4px; color: #aaa; text-transform: uppercase; display: block; margin-bottom: 15px; position: relative; padding-left: 20px; }
+        .module-tag::before { content: ''; position: absolute; left: 0; top: 50%; width: 12px; height: 2px; background: linear-gradient(90deg, #00d4ff, #0096ff); transform: translateY(-50%); }
+
+        @media (max-width: 1024px) {
+            .info-text { padding: 0 5%; }
+        }
+
+        @media (max-width: 768px) {
+            .hero-btns { flex-direction: column; width: 100%; align-items: center; }
+            .cta-button { width: 85%; box-sizing: border-box; text-align: center; }
+            .blueprint-showcase, .atelier-grid, .info-container { grid-template-columns: 1fr; }
+            .blueprint-item, .info-image img { height: 350px; }
+            .tech-stats { flex-direction: column; gap: 20px; text-align: center; }
+            .info-text { text-align: center; padding: 40px 20px; }
+            .info-container { padding: 40px 0; gap: 20px; }
+            .atelier-content { text-align: center; padding: 60px 20px; }
+            h2 { font-size: 1.8rem !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="index.html">
+                <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA Logo" class="logo">
+            </a>
+            <div class="nav-right-group">
+                <nav>
+                    <ul>
+                        <li><a href="index.html" class="active">HOME</a></li>
+                        <li><a href="services.html">SERVICES</a></li>
+                        <li><a href="packages.html">PACKAGES</a></li>
+                        <li><a href="process.html">PROCESS</a></li>
+                        <li><a href="locations.html">LOCATIONS</a></li>
+                        <li><a href="contact.html">CONTACT</a></li>
+                    </ul>
+                </nav>
+                <a href="estimate.html" class="nav-cta-btn">Free Estimate</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <video autoplay muted loop playsinline class="hero-video">
+            <source src="VIDEO_BACKGROUND.mp4" type="video/mp4">
+        </video>
+        <div class="hero-content">
+            <h1>DESIGN. BUILD. FINANCE. SIMPLIFIED.</h1>
+            <p>We help California homeowners and investors plan, design, and execute construction projects from concept to completion.</p>
+            <div class="hero-btns">
+                <a href="contact.html" class="cta-button solid">Free Consultation</a>
+                <a href="packages.html" class="cta-button outline">Explore Packages</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="tech-stats">
+        <div class="stat-box"><span class="stat-label">✔ Vetted Contractors</span></div>
+        <div class="stat-box"><span class="stat-label">✔ Clear Pricing</span></div>
+        <div class="stat-box"><span class="stat-label">✔ End-to-End Support</span></div>
+        <div class="stat-box"><span class="stat-label">✔ ADUs & New Builds</span></div>
+    </section>
+
+    <section class="info-details">
+        <div class="info-container">
+            <div class="info-text">
+                <span class="module-tag">ONE PARTNER. EVERY STEP.</span>
+                <h2 style="font-size: 2.5rem; font-weight: 300; margin: 20px 0;">Forma is your single point of contact.</h2>
+                <p style="color: #555; line-height: 1.8; font-size: 15px;">We bridge the gap between architectural design, contractor selection, and financing so your project moves faster and with fewer surprises.</p>
+            </div>
+            <div class="info-image">
+                <img src="PICTURES/ADU.png" alt="ADU Project">
+            </div>
+        </div>
+    </section>
+
+    <section style="padding: 100px 0 0 0;">
+        <div style="text-align: center; margin-bottom: 60px; padding: 0 20px;">
+            <span class="module-tag" style="display: inline-block;">WHY CLIENTS CHOOSE FORMA</span>
+            <h2 style="font-size: 2.2rem; font-weight: 300; letter-spacing: 2px;">WE DON'T JUST DRAW PLANS — WE BUILD.</h2>
+        </div>
+        <div class="blueprint-showcase">
+            <img src="PICTURES/ADU1.png" class="blueprint-item" alt="Construction Stage 1">
+            <img src="PICTURES/ADU2.png" class="blueprint-item" alt="Construction Stage 2">
+            <img src="PICTURES/ADU3.png" class="blueprint-item" alt="Completed Build">
+        </div>
+    </section>
+
+    <section class="atelier-grid">
+        <div class="atelier-images">
+            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200" alt="Design Studio">
+        </div>
+        <div class="atelier-content">
+            <span class="module-tag">VIRTUAL ATELIER</span>
+            <h2 style="font-size: 2.5rem; margin-top: 20px; font-weight: 200; letter-spacing: 1px;">BUILT ON REAL-WORLD EXPERIENCE</h2>
+            <p style="color: #aaa; line-height: 1.8; margin-top: 30px;">Our process is digitized for efficiency but grounded in decades of physical job-site management.</p>
+        </div>
+    </section>
+
+    <section style="padding: 120px 20px; text-align: center; background: #fff;">
+        <h2 style="font-size: 2.2rem; font-weight: 300; letter-spacing: 2px;">READY TO START YOUR PROJECT THE RIGHT WAY?</h2>
+        <p style="color: #666; margin: 20px 0 40px; font-size: 16px;">Avoid costly mistakes and delays. Let Forma guide your project from idea to execution.</p>
+        <a href="contact.html" class="cta-button solid" style="background: #000; color: #fff; padding: 20px 60px;">GET IN TOUCH</a>
+    </section>
+
+    <footer style="background-color: #000; color: #fff; padding: 80px 0; text-align: center; border-top: 1px solid #1a1a1a;">
+        <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" style="width: 100px; filter: invert(1); margin-bottom: 20px;">
+        <p style="font-size: 12px; letter-spacing: 2px; opacity: 0.5;">© 2026 FORMA DESIGN CONSULTANTS</p>
+    </footer>
+
+    <script>
+        const observerOptions = { threshold: 0.15, rootMargin: '0px 0px -100px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('animate'); });
+        }, observerOptions);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const elementsToObserve = ['.blueprint-item', '.atelier-images img', '.atelier-content', '.info-image img', '.info-text'];
+            elementsToObserve.forEach(selector => {
+                document.querySelectorAll(selector).forEach(item => observer.observe(item));
+            });
+        });
+    </script>
+</body>
+</html>
+
 
