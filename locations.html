@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>FORMA | Our Locations</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/jpeg" href="logo1.jpg">
     <style>
-        /* ================= NAVIGATION SYNC (EXACT MATCH) ================= */
+        /* ================= NAVIGATION SYNC (MASTER) ================= */
         :root {
             --safe-top: env(safe-area-inset-top, 20px);
             --header-height: 100px;
@@ -21,7 +21,7 @@
             position: fixed; 
             top: 0;
             left: 0;
-            z-index: 2000;
+            z-index: 3000;
             height: var(--header-height);
         }
 
@@ -35,7 +35,7 @@
             box-sizing: border-box;
         }
 
-        .logo { height: 85px; width: auto; }
+        .logo { height: 85px; width: auto; transition: height 0.3s ease; }
 
         .nav-right-group {
             display: flex;
@@ -86,14 +86,23 @@
             color: #000 !important;
         }
 
+        /* ================= MOBILE NAVIGATION OVERRIDES ================= */
         @media (max-width: 768px) {
             header { height: auto; padding: 10px 0; }
-            .nav-container { flex-direction: column; }
-            .nav-right-group { flex-direction: column; gap: 15px; margin-top: 15px; }
-            nav ul { flex-wrap: wrap; justify-content: center; }
+            .nav-container { flex-direction: column; gap: 10px; }
+            .logo { height: 50px; }
+            .nav-right-group { flex-direction: column; gap: 10px; width: 100%; padding-bottom: 10px; }
+            nav ul { gap: 10px; flex-wrap: wrap; justify-content: center; }
+            nav ul li a { font-size: 9px; }
+            .nav-cta-btn { padding: 8px 16px; font-size: 9px; width: 80%; text-align: center; }
+            
+            /* Unified spacing to clear mobile header */
+            .locations-container { 
+                padding-top: 280px !important; 
+            }
         }
 
-        /* ================= LOCATIONS CONTENT ================= */
+        /* ================= LOCATIONS CONTENT (UNTOUCHED) ================= */
         body { 
             background-color: #000000; 
             margin: 0; 
@@ -250,13 +259,13 @@
             <div class="nav-right-group">
                 <nav>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="packages.html">Packages</a></li>
-                        <li><a href="process.html">Process</a></li>
-                        <li><a href="locations.html" class="active">Locations</a></li>
-                        <li><a href="team.html">About Us</a></li> 
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="index.html">HOME</a></li>
+                        <li><a href="services.html">SERVICES</a></li>
+                        <li><a href="packages.html">PACKAGES</a></li>
+                        <li><a href="process.html">PROCESS</a></li>
+                        <li><a href="locations.html" class="active">LOCATIONS</a></li>
+                        <li><a href="team.html">ABOUT US</a></li> 
+                        <li><a href="contact.html">CONTACT</a></li>
                     </ul>
                 </nav>
                 <a href="estimate.html" class="nav-cta-btn">Free Estimate</a>
@@ -311,7 +320,6 @@
             const frame = document.getElementById('mapFrame');
             let url = "";
             
-            // Note: Placeholder URLs - replace with actual Google Maps Embed URLs
             if(state === 'california') url = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3305.733248043701!2d-118.2436849!3d34.0522342!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c648fa1d4803%3A0xdec2701867d0e16c!2sCalifornia!5e0!3m2!1sen!2sus!4v1710000000000";
             if(state === 'utah') url = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3021.841571217088!2d-111.8910474!3d40.7607793!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87523d9488d131ed%3A0x1aa03914949a626!2sUtah!5e0!3m2!1sen!2sus!4v1710000000000";
             
