@@ -1,1 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>FORMA | Our Core Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ================= GLOBAL & SAFE AREAS ================= */
+        :root {
+            --safe-top: env(safe-area-inset-top, 20px);
+            --safe-bottom: env(safe-area-inset-bottom, 20px);
+            --header-height: 100px;
+        }
+
+        body { 
+            background-color: #000; 
+            margin: 0; 
+            font-family: 'Inter', sans-serif; 
+            color: #fff; 
+            overflow-x: hidden; 
+            -webkit-text-size-adjust: 100%;
+        }
+
+        /* ================= MASTER NAVIGATION (SYNCED) ================= */
+        header {
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            width: 100%;
+            position: fixed; 
+            top: 0;
+            left: 0;
+            z-index: 3000;
+            height: var(--header-height);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;
+            width: 100%;
+            padding: 0 40px;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        .logo { height: 85px; width: auto; transition: height 0.3s ease; }
+
+        .nav-right-group {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 20px;
+            align-items: center;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #000;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Active state for Services */
+        nav ul li a.active {
+            font-weight: 700;
+            border-bottom: 2px solid #000;
+            padding-bottom: 5px;
+        }
+
+        .nav-cta-btn {
+            background-color: #000;
+            color: #fff !important;
+            padding: 12px 24px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+            border: 1px solid #000;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        /* ================= VIDEO BACKGROUND (UNTOUCHED) ================= */
+        .video-bg-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; overflow: hidden;
+        }
+
+        .services-video-bg2 {
+            min-width: 100%; min-height: 100%;
+            width: auto; height: auto;
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            opacity: 0.3;
+        }
+
+        /* ================= SERVICES CONTENT (UNTOUCHED) ================= */
+        .services-wrapper {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: calc(var(--header-height) + 60px) 20px 100px 20px;
+        }
+
+        .services-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .services-header h1 {
+            font-size: clamp(24px, 5vw, 32px);
+            letter-spacing: 5px;
+            font-weight: 300;
+            text-transform: uppercase;
+            color: #fff;
+            margin-top: 0;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .service-card {
+            position: relative;
+            height: 450px;
+            overflow: hidden;
+            background-color: #111;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .card-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1), opacity 0.6s ease;
+            opacity: 0.6;
+        }
+
+        .service-card-content {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 2;
+            text-align: center;
+            box-sizing: border-box;
+            transition: background 0.4s ease;
+        }
+
+        .module-tag, .service-desc {
+            opacity: 0;
+            max-height: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+            color: #ccc;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .service-card-content h3 {
+            font-size: 18px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin: 15px 0;
+            color: #fff;
+        }
+
+        .service-card:hover .service-card-content { background: rgba(0, 0, 0, 0.8); }
+        .service-card:hover .module-tag, .service-card:hover .service-desc {
+            opacity: 1; max-height: 200px; transform: translateY(0);
+        }
+        .service-card:hover .card-bg { transform: scale(1.1); opacity: 0.2; }
+
+        /* ================= MOBILE OPTIMIZATIONS (SYNCED) ================= */
+        @media (max-width: 1024px) {
+            .service-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            header { height: auto; padding: 10px 0; position: fixed; }
+            .nav-container { flex-direction: column; gap: 10px; }
+            .logo { height: 50px; }
+            .nav-right-group { flex-direction: column; gap: 10px; width: 100%; padding-bottom: 10px; }
+            nav ul { gap: 10px; flex-wrap: wrap; justify-content: center; }
+            nav ul li a { font-size: 9px; }
+            .nav-cta-btn { padding: 8px 16px; font-size: 9px; width: 80%; text-align: center; }
+
+            /* Sycned spacing to prevent content overlap */
+            .services-wrapper { padding-top: 280px !important; } 
+            
+            .service-grid { grid-template-columns: 1fr; }
+            .service-card { height: 350px; }
+
+            .module-tag, .service-desc {
+                opacity: 0.8;
+                max-height: 200px;
+                transform: translateY(0);
+                font-size: 12px;
+            }
+            .service-card-content { background: rgba(0, 0, 0, 0.6); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="video-bg-container">
+        <video autoplay muted loop playsinline class="services-video-bg2">
+            <source src="VIDEO_BACKGROUND3.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <header>
+        <div class="nav-container">
+            <a href="index.html">
+                <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA" class="logo">
+            </a>
+            <div class="nav-right-group">
+                <nav>
+                    <ul>
+                        <li><a href="index.html">HOME</a></li>
+                        <li><a href="services.html" class="active">SERVICES</a></li>
+                        <li><a href="packages.html">PACKAGES</a></li>
+                        <li><a href="process.html">PROCESS</a></li>
+                        <li><a href="locations.html">LOCATIONS</a></li>
+                        <li><a href="contact.html">CONTACT</a></li>
+                    </ul>
+                </nav>
+                <a href="estimate.html" class="nav-cta-btn">Free Estimate</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="services-wrapper">
+        <div class="services-header">
+            <h1>Core Services</h1>
+        </div>
+        
+        <div class="service-grid">
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1721244654394-36a7bc2da288?w=600&h=800&fit=crop" class="card-bg">
+                <div class="service-card-content">
+                    <span class="module-tag" style="color:#888; font-size:10px; letter-spacing: 2px;">MODULE _01</span>
+                    <h3>Architectural Design</h3>
+                    <p class="service-desc">Conceptualizing futuristic structures through advanced spatial modeling and noir aesthetics.</p>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1627141234469-24711efb373c?w=600&h=800&fit=crop" class="card-bg">
+                <div class="service-card-content">
+                    <span class="module-tag" style="color:#888; font-size:10px; letter-spacing: 2px;">MODULE _02</span>
+                    <h3>ADU Development</h3>
+                    <p class="service-desc">Smart accessory dwelling units designed for maximum utility and minimalist impact.</p>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <img src="https://images.pexels.com/photos/17174767/pexels-photo-17174767.jpeg?w=600&h=800&fit=crop" class="card-bg">
+                <div class="service-card-content">
+                    <span class="module-tag" style="color:#888; font-size:10px; letter-spacing: 2px;">MODULE _03</span>
+                    <h3>Contractor Sourcing</h3>
+                    <p class="service-desc">Vetting elite execution teams to ensure your architectural vision is built to spec.</p>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1721244653757-b76cc4679dfb?w=600&h=800&fit=crop" class="card-bg">
+                <div class="service-card-content">
+                    <span class="module-tag" style="color:#888; font-size:10px; letter-spacing: 2px;">MODULE _04</span>
+                    <h3>Project Strategy</h3>
+                    <p class="service-desc">End-to-end oversight ensuring precision, safety, and architectural integrity.</p>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1742415106160-594d07f6cc23?w=600&h=800&fit=crop" class="card-bg">
+                <div class="service-card-content">
+                    <span class="module-tag" style="color:#888; font-size:10px; letter-spacing: 2px;">MODULE _05</span>
+                    <h3>Financing Guidance</h3>
+                    <p class="service-desc">Strategic financial planning and assistance to secure your project's future.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer style="background-color: rgba(0,0,0,0.9); color: #fff; padding: 80px 0; text-align: center; border-top: 1px solid #1a1a1a;">
+        <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" style="width: 100px; filter: invert(1); margin-bottom: 20px;">
+        <p style="font-size: 12px; letter-spacing: 2px; opacity: 0.5;">© 2026 FORMA DESIGN CONSULTANTS</p>
+    </footer>
+
+</body>
+</html>
+
 
