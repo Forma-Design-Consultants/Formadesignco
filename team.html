@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>FORMA | The Collective</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/jpeg" href="logo1.jpg">
     <style>
-        /* ================= NAVIGATION SYNC (EXACT MATCH) ================= */
+        /* ================= NAVIGATION SYNC (MASTER) ================= */
         :root {
             --safe-top: env(safe-area-inset-top, 20px);
             --header-height: 100px;
@@ -21,7 +21,7 @@
             position: fixed; 
             top: 0;
             left: 0;
-            z-index: 2000;
+            z-index: 3000;
             height: var(--header-height);
         }
 
@@ -35,7 +35,7 @@
             box-sizing: border-box;
         }
 
-        .logo { height: 85px; width: auto; }
+        .logo { height: 85px; width: auto; transition: height 0.3s ease; }
 
         .nav-right-group {
             display: flex;
@@ -86,17 +86,23 @@
             color: #000 !important;
         }
 
+        /* ================= MOBILE NAVIGATION OVERRIDES ================= */
         @media (max-width: 768px) {
             header { height: auto; padding: 10px 0; }
-            .nav-container { flex-direction: column; }
-            .nav-right-group { flex-direction: column; gap: 15px; margin-top: 15px; }
-            nav ul { flex-wrap: wrap; justify-content: center; }
+            .nav-container { flex-direction: column; gap: 10px; }
+            .logo { height: 50px; }
+            .nav-right-group { flex-direction: column; gap: 10px; width: 100%; padding-bottom: 10px; }
+            nav ul { gap: 10px; flex-wrap: wrap; justify-content: center; }
+            nav ul li a { font-size: 9px; }
+            .nav-cta-btn { padding: 8px 16px; font-size: 9px; width: 80%; text-align: center; }
+            
+            /* Spacing to clear fixed mobile header */
+            .hero { padding-top: 280px !important; }
         }
 
         /* ================= THE COLLECTIVE STYLES (REST UNTOUCHED) ================= */
         body { background-color: #000; margin: 0; color: #fff; overflow-x: hidden; font-family: 'Inter', sans-serif;}
 
-        /* Hero Section Adjustments */
         .hero {
             display: flex;
             align-items: center;
@@ -105,12 +111,7 @@
             text-align: center;
         }
 
-        /* Grid Layout */
-        .team-section {
-            padding: 80px 20px;
-            background: #000;
-        }
-
+        .team-section { padding: 80px 20px; background: #000; }
         .team-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -119,7 +120,6 @@
             gap: 40px;
         }
 
-        /* Team Card: Personnel Database Look */
         .team-card {
             background: #ffffff;
             border: 1px solid #000000;
@@ -129,17 +129,9 @@
             transform: translateY(30px);
         }
 
-        .team-card.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .team-card.active { opacity: 1; transform: translateY(0); }
+        .team-card:hover { border-color: #000000; background: #ffffff; }
 
-        .team-card:hover {
-            border-color: #000000;
-            background: #ffffff;
-        }
-
-        /* Image Placeholder / Profile Pic */
         .member-image-placeholder {
             width: 100%;
             aspect-ratio: 1 / 1;
@@ -151,14 +143,7 @@
             overflow: hidden;
         }
 
-        .placeholder-box {
-            font-family: monospace;
-            font-size: 10px;
-            color: #000000;
-            letter-spacing: 2px;
-        }
-
-        /* Data Layout */
+        .placeholder-box { font-family: monospace; font-size: 10px; color: #000000; letter-spacing: 2px; }
         .member-info { padding: 30px; }
 
         .tech-header {
@@ -168,16 +153,10 @@
             margin-bottom: 20px;
         }
 
-        .code {
-            font-family: monospace;
-            font-size: 10px;
-            color: #000000;
-        }
-
+        .code { font-family: monospace; font-size: 10px; color: #000000; }
         .status-dot {
-            width: 6px;
-            height: 6px;
-            background: #00ff41; /* "Active" green for personnel */
+            width: 6px; height: 6px;
+            background: #00ff41;
             border-radius: 50%;
             box-shadow: 0 0 10px #00ff41;
         }
@@ -199,11 +178,7 @@
             margin-bottom: 25px;
         }
 
-        .contact-data {
-            border-top: 1px solid #000000;
-            padding-top: 20px;
-        }
-
+        .contact-data { border-top: 1px solid #000000; padding-top: 20px; }
         .contact-data p {
             font-size: 11px;
             font-family: monospace;
@@ -213,10 +188,7 @@
         }
 
         .team-card:hover .contact-data p { color: #888; }
-
-        /* Info Details Section */
         .info-details { padding: 100px 20px; }
-        
         .cta-button {
             display: inline-block;
             padding: 15px 40px;
@@ -228,10 +200,8 @@
             transition: 0.3s;
         }
 
-        /* Mobile Tweaks */
         @media (max-width: 600px) {
             .team-container { grid-template-columns: 1fr; }
-            .hero { height: auto; padding: 120px 20px 60px 20px; }
         }
     </style>
 </head>
@@ -245,13 +215,13 @@
             <div class="nav-right-group">
                 <nav>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="packages.html">Packages</a></li>
-                        <li><a href="process.html">Process</a></li>
-                        <li><a href="locations.html">Locations</a></li>
-                        <li><a href="team.html" class="active">About Us</a></li> 
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="index.html">HOME</a></li>
+                        <li><a href="services.html">SERVICES</a></li>
+                        <li><a href="packages.html">PACKAGES</a></li>
+                        <li><a href="process.html">PROCESS</a></li>
+                        <li><a href="locations.html">LOCATIONS</a></li>
+                        <li><a href="team.html" class="active">ABOUT US</a></li> 
+                        <li><a href="contact.html">CONTACT</a></li>
                     </ul>
                 </nav>
                 <a href="estimate.html" class="nav-cta-btn">Free Estimate</a>
@@ -326,61 +296,7 @@
                 </div>
             </div>
 
-            <div class="team-card reveal">
-                <div class="member-image-placeholder">
-                    <div class="placeholder-box">IMG_04</div> 
-                </div>
-                <div class="member-info">
-                    <div class="tech-header">
-                        <span class="code">ID: ARCH_LEAD</span>
-                        <span class="status-dot"></span>
-                    </div>
-                    <h2>Alex Mercer</h2>
-                    <p class="role">Principal Architect</p>
-                    <div class="contact-data">
-                        <p>E: alex@forma.build</p>
-                        <p>P: +1 (555) 123-4567</p>
-                    </div>
-                </div>
             </div>
-
-            <div class="team-card reveal" style="transition-delay: 0.1s;">
-                <div class="member-image-placeholder">
-                    <div class="placeholder-box">IMG_05</div>
-                </div>
-                <div class="member-info">
-                    <div class="tech-header">
-                        <span class="code">ID: PROJ_DIR</span>
-                        <span class="status-dot"></span>
-                    </div>
-                    <h2>Sarah Chen</h2>
-                    <p class="role">Head of Construction</p>
-                    <div class="contact-data">
-                        <p>E: sarah@forma.build</p>
-                        <p>P: +1 (555) 987-6543</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="team-card reveal" style="transition-delay: 0.2s;">
-                <div class="member-image-placeholder">
-                    <div class="placeholder-box">IMG_06</div>
-                </div>
-                <div class="member-info">
-                    <div class="tech-header">
-                        <span class="code">ID: FIN_STRAT</span>
-                        <span class="status-dot"></span>
-                    </div>
-                    <h2>Marcus Thorne</h2>
-                    <p class="role">Development Strategy</p>
-                    <div class="contact-data">
-                        <p>E: marcus@forma.build</p>
-                        <p>P: +1 (555) 456-7890</p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
     </section>
 
     <section class="info-details" style="background: #111; color: #fff; border-top: 1px solid #333;">
@@ -411,4 +327,3 @@
     </script>
 </body>
 </html>
-
