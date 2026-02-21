@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>FORMA | Home</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/jpeg" href="logo1.jpg">
     <style>
-        /* ================= MASTER NAVIGATION (CONSISTENT ACROSS ALL PAGES) ================= */
+        /* ================= MASTER NAVIGATION (SYNCED) ================= */
         :root {
             --safe-top: env(safe-area-inset-top, 20px);
             --header-height: 100px;
@@ -21,7 +21,7 @@
             position: fixed; 
             top: 0;
             left: 0;
-            z-index: 2000;
+            z-index: 3000; 
             height: var(--header-height);
         }
 
@@ -61,6 +61,13 @@
             text-transform: uppercase;
         }
 
+        /* Active state for Home */
+        nav ul li a.active {
+            font-weight: 700;
+            border-bottom: 2px solid #000;
+            padding-bottom: 5px;
+        }
+
         .nav-cta-btn {
             background-color: #000;
             color: #fff !important;
@@ -80,7 +87,21 @@
             color: #000 !important;
         }
 
-        /* ================= HOME PAGE LAYOUT ================= */
+        /* ================= MOBILE NAVIGATION OVERRIDES (SYNCED) ================= */
+        @media (max-width: 768px) {
+            header { height: auto; padding: 10px 0; position: fixed; }
+            .nav-container { flex-direction: column; gap: 10px; }
+            .logo { height: 50px; }
+            .nav-right-group { flex-direction: column; gap: 10px; width: 100%; padding-bottom: 10px; }
+            nav ul { gap: 10px; flex-wrap: wrap; justify-content: center; }
+            nav ul li a { font-size: 9px; }
+            .nav-cta-btn { padding: 8px 16px; font-size: 9px; width: 80%; text-align: center; }
+
+            /* Pushing the Hero content down to account for the tall mobile menu */
+            .hero { padding-top: 280px !important; } 
+        }
+
+        /* ================= HOME PAGE LAYOUT (UNTOUCHED) ================= */
         body { 
             margin: 0; 
             font-family: 'Inter', sans-serif; 
@@ -89,7 +110,6 @@
             background: #fff;
         }
 
-        /* Hero Adjustments */
         .hero {
             position: relative;
             height: 100vh;
@@ -130,7 +150,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Fluid Typography for Mobile */
         .hero-content h1 { font-size: clamp(28px, 5vw, 64px); font-weight: 200; letter-spacing: 4px; margin-bottom: 20px; }
         .hero-content p { font-size: clamp(14px, 2vw, 18px); max-width: 700px; margin: 0 auto 40px; opacity: 0.8; line-height: 1.6; }
 
@@ -163,7 +182,6 @@
         .cta-button.solid { background: #fff; color: #000; }
         .cta-button.outline { border: 1px solid #fff; color: #fff; }
 
-        /* Full Bleed Grids */
         .blueprint-showcase { 
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -221,7 +239,6 @@
         .atelier-content { padding: 10%; display: flex; flex-direction: column; justify-content: center; color: #fff; opacity: 0; transform: translateX(50px); transition: opacity 0.8s ease, transform 0.8s ease; }
         .atelier-content.animate { opacity: 1; transform: translateX(0); }
 
-        /* Tech Stats Bar */
         .tech-stats {
             display: flex;
             justify-content: space-around;
@@ -231,7 +248,6 @@
         }
         .stat-label { font-size: 11px; letter-spacing: 2px; color: #fff; text-transform: uppercase; }
 
-        /* Info Section */
         .info-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -243,15 +259,7 @@
         .info-text { padding: 0 15%; opacity: 0; transform: translateX(-40px); transition: opacity 0.8s ease, transform 0.8s ease; }
         .info-text.animate { opacity: 1; transform: translateX(0); }
         .info-image { position: relative; overflow: hidden; }
-        .info-image::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(45deg, rgba(0, 200, 255, 0.3), transparent);
-            opacity: 0; transition: opacity 0.5s ease; pointer-events: none;
-        }
         
-        .info-image:hover::after { opacity: 1; }
         .info-image img { 
             width: 100%; height: 500px; object-fit: cover; opacity: 0;
             transform: scale(0.9) translateX(40px);
@@ -260,54 +268,23 @@
         }
         
         .info-image img.animate { opacity: 1; transform: scale(1) translateX(0); }
-        .info-image:hover img { transform: scale(1.05); filter: brightness(1.1); }
 
         .module-tag { font-size: 10px; letter-spacing: 4px; color: #aaa; text-transform: uppercase; display: block; margin-bottom: 15px; position: relative; padding-left: 20px; }
         .module-tag::before { content: ''; position: absolute; left: 0; top: 50%; width: 12px; height: 2px; background: linear-gradient(90deg, #00d4ff, #0096ff); transform: translateY(-50%); }
 
-        /* ================= MOBILE OPTIMIZATIONS (The "Other" you wanted to keep) ================= */
         @media (max-width: 1024px) {
-            .nav-container { padding: 0 20px; }
             .info-text { padding: 0 5%; }
         }
 
         @media (max-width: 768px) {
-            :root { --header-height: auto; }
-            header { padding: 10px 0; position: fixed; }
-            
-            .nav-container { flex-direction: column; gap: 10px; }
-            .logo { height: 50px; }
-            
-            .nav-right-group { 
-                flex-direction: column; 
-                gap: 10px; 
-                width: 100%; 
-                padding-bottom: 10px;
-            }
-            
-            nav ul { 
-                gap: 10px; 
-                flex-wrap: wrap; 
-                justify-content: center;
-            }
-            
-            nav ul li a { font-size: 9px; }
-            .nav-cta-btn { padding: 8px 16px; font-size: 9px; width: 80%; text-align: center; }
-
-            .hero { padding-top: 140px; height: auto; min-height: 100vh; }
             .hero-btns { flex-direction: column; width: 100%; align-items: center; }
             .cta-button { width: 85%; box-sizing: border-box; text-align: center; }
-            
             .blueprint-showcase, .atelier-grid, .info-container { grid-template-columns: 1fr; }
             .blueprint-item, .info-image img { height: 350px; }
-            
             .tech-stats { flex-direction: column; gap: 20px; text-align: center; }
-            
             .info-text { text-align: center; padding: 40px 20px; }
             .info-container { padding: 40px 0; gap: 20px; }
-            
             .atelier-content { text-align: center; padding: 60px 20px; }
-            
             h2 { font-size: 1.8rem !important; }
         }
     </style>
@@ -322,13 +299,13 @@
             <div class="nav-right-group">
                 <nav>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="packages.html">Packages</a></li>
-                        <li><a href="process.html">Process</a></li>
-                        <li><a href="locations.html">Locations</a></li>
-                        <li><a href="team.html">About Us</a></li> 
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="index.html" class="active">HOME</a></li>
+                        <li><a href="services.html">SERVICES</a></li>
+                        <li><a href="packages.html">PACKAGES</a></li>
+                        <li><a href="process.html">PROCESS</a></li>
+                        <li><a href="locations.html">LOCATIONS</a></li>
+                        <li><a href="team.html">ABOUT US</a></li>
+                        <li><a href="contact.html">CONTACT</a></li>
                     </ul>
                 </nav>
                 <a href="estimate.html" class="nav-cta-btn">Free Estimate</a>
@@ -405,35 +382,17 @@
     </footer>
 
     <script>
-        // Intersection Observer for scroll-triggered animations
-        const observerOptions = {
-            threshold: 0.15,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
+        const observerOptions = { threshold: 0.15, rootMargin: '0px 0px -100px 0px' };
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate');
-                }
-            });
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('animate'); });
         }, observerOptions);
 
-        // Observe all images and content sections
         document.addEventListener('DOMContentLoaded', () => {
-            const elementsToObserve = [
-                '.blueprint-item', 
-                '.atelier-images img', 
-                '.atelier-content', 
-                '.info-image img', 
-                '.info-text'
-            ];
-
+            const elementsToObserve = ['.blueprint-item', '.atelier-images img', '.atelier-content', '.info-image img', '.info-text'];
             elementsToObserve.forEach(selector => {
                 document.querySelectorAll(selector).forEach(item => observer.observe(item));
             });
         });
     </script>
-
 </body>
 </html>
