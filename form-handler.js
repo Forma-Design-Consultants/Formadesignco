@@ -1,5 +1,5 @@
 /* ============================================================
-   FORMA ARCHITECTURE - GLOBAL HANDLER
+   FORMA ARCHITECTURE - GLOBAL HANDLER (FINAL SYNC 2026)
    ============================================================ */
 
 // --- CONFIGURATION ---
@@ -8,10 +8,11 @@
 })();
 
 const serviceID = 'service_d8l3yh6';
-const CLIENT_TEMPLATE_ID = 'template_f5ctunh';     // Homeowner Inquiry
-const CONTRACTOR_TEMPLATE_ID = 'template_o16az14'; // Partner Applications
-const ESTIMATE_TEMPLATE_ID = 'template_h323v4q';   // Project Planner (Admin Notification)
-const ESTIMATE_CLIENT_TEMPLATE_ID = 'template_kvdheth'; // Project Planner (Client Copy) - Update ID if different
+const CLIENT_TEMPLATE_ID = 'template_f5ctunh';         // Admin: Dark "Incoming Transmission"
+const CONTRACTOR_TEMPLATE_ID = 'template_o16az14';     // Admin: Partner Applications
+const PARTNER_REPLY_TEMPLATE_ID = 'template_sm2woll';  // NEW: Partner Auto-Reply
+const ESTIMATE_TEMPLATE_ID = 'template_h323v4q';       // Project Planner (Admin Notification)
+const ESTIMATE_CLIENT_TEMPLATE_ID = 'template_ebamer7'; // Auto-Reply to Homeowner Clients
 
 // --- SELECTORS ---
 const contactForm = document.getElementById('contact-form');
@@ -21,7 +22,7 @@ const estimateForm = document.getElementById('estimateForm');
 let currentStep = 1;
 
 /* ============================================================
-   1. HOMEOWNER CONTACT FORM
+   1. HOMEOWNER CONTACT FORM (SCHEDULE CONSULTATION)
    ============================================================ */
 if (contactForm) {
     contactForm.addEventListener('submit', function(event) {
@@ -32,57 +33,87 @@ if (contactForm) {
         submitBtn.disabled = true;
         submitBtn.innerText = "TRANSMITTING...";
 
-        emailjs.sendForm(serviceID, CLIENT_TEMPLATE_ID, this)
+        const formData = new FormData(this);
+        const templateParams = {
+            user_name: formData.get('user_name'),
+            user_email: formData.get('user_email'),
+            user_phone: formData.get('user_phone'), 
+            project_type: formData.get('project_type'),
+            message: formData.get('message')
+        };
+
+        const adminNotify = emailjs.send(serviceID, CLIENT_TEMPLATE_ID, templateParams);
+        const customerReply = emailjs.send(serviceID, ESTIMATE_CLIENT_TEMPLATE_ID, templateParams);
+
+        Promise.all([adminNotify, customerReply])
             .then(() => {
                 submitBtn.innerText = "MESSAGE SENT";
                 formStatus.style.display = "block";
-                formStatus.className = "status-success";
+                formStatus.style.color = "#27ae60"; 
                 formStatus.innerText = "FORMA Architecture: Building with intention. We’ve received your inquiry.";
                 contactForm.reset();
-            }, (err) => {
+            })
+            .catch((err) => {
                 submitBtn.disabled = false;
                 submitBtn.innerText = "TRY AGAIN";
                 formStatus.style.display = "block";
-                formStatus.className = "status-error";
+                formStatus.style.color = "#e74c3c";
                 formStatus.innerText = "Transmission Error: " + JSON.stringify(err);
             });
     });
 }
 
 /* ============================================================
-   2. CONTRACTOR PARTNER FORM
+   2. CONTRACTOR PARTNER FORM (DEDICATED AUTO-REPLY ID)
    ============================================================ */
 if (contractorForm) {
     contractorForm.addEventListener('submit', function(event) {
         event.preventDefault();
         const partnerBtn = this.querySelector('button');
-        let statusDiv = document.getElementById('contractor-status') || document.createElement('div');
+        let statusDiv = document.getElementById('contractor-status');
         
-        if (!statusDiv.id) {
+        if (!statusDiv) {
+            statusDiv = document.createElement('div');
             statusDiv.id = 'contractor-status';
             this.appendChild(statusDiv);
         }
 
         partnerBtn.disabled = true;
-        partnerBtn.innerText = "VERIFYING CSLB..."; 
+        partnerBtn.innerText = "TRANSMITTING..."; 
 
-        emailjs.sendForm(serviceID, CONTRACTOR_TEMPLATE_ID, this)
+        const formData = new FormData(this);
+        const templateParams = {
+            company_name: formData.get('company_name'),
+            contact_person: formData.get('contact_person'),
+            user_email: formData.get('user_email'),
+            user_phone: formData.get('user_phone')
+        };
+
+        // 1. Send to Admin (Original Template)
+        const adminNotify = emailjs.send(serviceID, CONTRACTOR_TEMPLATE_ID, templateParams);
+        
+        // 2. Send Mobile-Optimized Auto-Reply to Partner (New Template)
+        const partnerReply = emailjs.send(serviceID, PARTNER_REPLY_TEMPLATE_ID, templateParams);
+
+        Promise.all([adminNotify, partnerReply])
             .then(() => {
-                partnerBtn.innerText = "CREDENTIALS SENT";
-                statusDiv.style.cssText = "display:block; color:#27ae60; margin-top:15px; font-size:12px; text-transform:uppercase;";
-                statusDiv.innerText = "✓ Credentials received. Verification in progress.";
+                partnerBtn.innerText = "INQUIRY SENT";
+                statusDiv.style.cssText = "display:block; color:#27ae60; margin-top:15px; font-size:11px; text-transform:uppercase; letter-spacing:1px; font-weight:700;";
+                statusDiv.innerText = "✓ Partnership details received. We have sent a confirmation to your email.";
                 
                 setTimeout(() => { 
-                    closeContractor(); 
+                    if(typeof closeContractor === "function") closeContractor(); 
                     contractorForm.reset(); 
                     partnerBtn.disabled = false;
-                    partnerBtn.innerText = "Submit Credentials";
+                    partnerBtn.innerText = "Send Partnership Inquiry";
                     statusDiv.style.display = "none";
-                }, 3000);
-            }, (err) => {
+                }, 4000);
+            })
+            .catch((err) => {
                 partnerBtn.disabled = false;
                 partnerBtn.innerText = "RETRY TRANSMISSION";
-                statusDiv.innerText = "Error: Connection timed out.";
+                statusDiv.style.cssText = "display:block; color:#e74c3c; margin-top:15px;";
+                statusDiv.innerText = "Error: Transmission failed.";
             });
     });
 }
@@ -90,14 +121,11 @@ if (contractorForm) {
 /* ============================================================
    3. PROJECT PLANNER & ESTIMATE HANDLER
    ============================================================ */
-
 function selectOption(name, rate) {
     document.getElementById('selectedType').value = name;
     document.getElementById('baseRate').value = rate;
     
-    // UI Visual Selection
     document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
-    // Use target selection to ensure compatibility
     if (event && event.currentTarget) {
         event.currentTarget.classList.add('selected');
     }
@@ -107,14 +135,17 @@ function selectOption(name, rate) {
 
 function changeStep(n) {
     const nextStep = currentStep + n;
-    if(nextStep < 1 || nextStep > 3) return;
+    if(nextStep < 1 || nextStep > 4) return; 
 
-    document.getElementById('step' + currentStep).classList.remove('active');
-    document.getElementById('step' + nextStep).classList.add('active');
+    const currentStepEl = document.getElementById('step' + currentStep);
+    const nextStepEl = document.getElementById('step' + nextStep);
+
+    if(currentStepEl) currentStepEl.classList.remove('active');
+    if(nextStepEl) nextStepEl.classList.add('active');
     
     currentStep = nextStep;
     
-    const progress = (currentStep / 3) * 100;
+    const progress = (currentStep / 4) * 100;
     const bar = document.getElementById('progressBar');
     if(bar) bar.style.width = progress + '%';
 }
@@ -127,7 +158,7 @@ function validateAndRun() {
     fields.forEach(id => {
         const el = document.getElementById(id);
         if (!el || !el.value) {
-            el.style.borderColor = "red";
+            if(el) el.style.borderColor = "red";
             valid = false;
         } else {
             el.style.borderColor = "#222";
@@ -150,12 +181,10 @@ function runAnalytics() {
     const sqft = parseFloat(document.getElementById('sqft').value);
     const multiplier = parseFloat(document.getElementById('finishTier').value);
 
-    // Calculation Logic
     const lowEstimate = sqft * rate * multiplier;
     const highEstimate = lowEstimate * 1.15;
     const range = `$${Math.round(lowEstimate).toLocaleString()} — $${Math.round(highEstimate).toLocaleString()}`;
 
-    // Update Result UI
     document.getElementById('res-type').innerText = type;
     document.getElementById('res-time').innerText = (rate > 250) ? "9-14 Months" : "5-8 Months";
     document.getElementById('res-price').innerText = range;
@@ -171,19 +200,16 @@ function runAnalytics() {
         source: document.getElementById('discoverySource').value
     };
 
-    // DOUBLE-TAP TRANSMISSION: 1 to Admin, 1 to Client
     const adminEmail = emailjs.send(serviceID, ESTIMATE_TEMPLATE_ID, templateParams);
     const clientEmail = emailjs.send(serviceID, ESTIMATE_CLIENT_TEMPLATE_ID, templateParams);
 
     Promise.all([adminEmail, clientEmail])
         .then(() => {
-            console.log('Project data synced successfully.');
             changeStep(1); 
             animateBars();
         })
         .catch((err) => {
             console.error('Transmission Error:', err);
-            // Still move forward so user experience isn't broken
             changeStep(1);
             animateBars();
         });
@@ -191,22 +217,27 @@ function runAnalytics() {
 
 function animateBars() {
     setTimeout(() => {
-        document.getElementById('bar1').style.height = "55%";
-        document.getElementById('bar2').style.height = "80%";
-        document.getElementById('bar3').style.height = "95%";
+        if(document.getElementById('bar1')) document.getElementById('bar1').style.height = "55%";
+        if(document.getElementById('bar2')) document.getElementById('bar2').style.height = "80%";
+        if(document.getElementById('bar3')) document.getElementById('bar3').style.height = "95%";
     }, 400);
 }
 
 /* ============================================================
    4. UI & MODAL LOGIC
    ============================================================ */
-
-function openContractor() { document.getElementById("contractorModal").style.display = "block"; }
-function closeContractor() { document.getElementById("contractorModal").style.display = "none"; }
+function openContractor() { 
+    const modal = document.getElementById("contractorModal");
+    if(modal) modal.style.display = "block"; 
+}
+function closeContractor() { 
+    const modal = document.getElementById("contractorModal");
+    if(modal) modal.style.display = "none"; 
+}
 
 window.onclick = function(event) {
-    if (event.target === document.getElementById("mapModal")) closeMap();
-    if (event.target === document.getElementById("contractorModal")) closeContractor();
+    const contractModal = document.getElementById("contractorModal");
+    if (event.target === contractModal) closeContractor();
 }
 
 /* ============================================================
