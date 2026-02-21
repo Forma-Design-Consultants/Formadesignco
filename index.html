@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/jpeg" href="logo1.jpg">
     <style>
-        /* ================= MASTER NAVIGATION (CONSISTENT ACROSS ALL PAGES) ================= */
+        /* ================= MASTER NAVIGATION ================= */
         :root {
             --safe-top: env(safe-area-inset-top, 20px);
             --header-height: 100px;
@@ -72,6 +72,7 @@
             border: 1px solid #000;
             transition: all 0.3s ease;
             text-transform: uppercase;
+            white-space: nowrap;
         }
 
         .nav-cta-btn:hover {
@@ -88,7 +89,6 @@
             background: #fff;
         }
 
-        /* Hero Adjustments for Fixed Header */
         .hero {
             position: relative;
             height: 100vh;
@@ -135,7 +135,7 @@
             }
         }
 
-        .hero-content h1 { font-size: clamp(32px, 5vw, 64px); font-weight: 200; letter-spacing: 4px; margin-bottom: 20px; }
+        .hero-content h1 { font-size: clamp(28px, 5vw, 64px); font-weight: 200; letter-spacing: 4px; margin-bottom: 20px; }
         .hero-content p { font-size: 18px; max-width: 700px; margin: 0 auto 40px; opacity: 0.8; line-height: 1.6; }
 
         .hero-btns { display: flex; gap: 20px; justify-content: center; }
@@ -154,20 +154,15 @@
         .cta-button::before {
             content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.2);
             transform: translate(-50%, -50%);
             transition: width 0.6s ease, height 0.6s ease;
         }
         
-        .cta-button:hover::before {
-            width: 300px;
-            height: 300px;
-        }
+        .cta-button:hover::before { width: 300px; height: 300px; }
         
         .cta-button:hover {
             transform: translateY(-5px);
@@ -198,21 +193,8 @@
             filter: grayscale(0.3) brightness(0.95);
         }
         
-        .blueprint-item.animate {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-        }
-        
-        .blueprint-item:nth-child(1).animate { transition-delay: 0.1s; }
-        .blueprint-item:nth-child(2).animate { transition-delay: 0.3s; }
-        .blueprint-item:nth-child(3).animate { transition-delay: 0.5s; }
-        
-        .blueprint-item:hover {
-            transform: scale(1.08);
-            filter: grayscale(0) brightness(1.05);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-            z-index: 10;
-        }
+        .blueprint-item.animate { opacity: 1; transform: scale(1) translateY(0); }
+        .blueprint-item:hover { transform: scale(1.08); filter: grayscale(0) brightness(1.05); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4); z-index: 10; }
 
         .atelier-grid { 
             display: grid;
@@ -222,63 +204,15 @@
             overflow: hidden;
         }
         
-        .atelier-images {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .atelier-images::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(0, 150, 255, 0.2), rgba(255, 0, 150, 0.2));
-            opacity: 0;
-            z-index: 2;
-            transition: opacity 0.6s ease;
-            pointer-events: none;
-        }
-        
-        .atelier-images:hover::before {
-            opacity: 1;
-        }
-        
         .atelier-images img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            display: block;
-            opacity: 0;
-            transform: scale(1.2) rotate(2deg);
+            width: 100%; height: 100%; object-fit: cover; display: block;
+            opacity: 0; transform: scale(1.2) rotate(2deg);
             transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.8s ease;
         }
         
-        .atelier-images img.animate {
-            opacity: 1;
-            transform: scale(1) rotate(0deg);
-        }
-        
-        .atelier-images:hover img {
-            transform: scale(1.1) rotate(-1deg);
-        }
-        
-        .atelier-content { 
-            padding: 10%; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            color: #fff;
-            opacity: 0;
-            transform: translateX(50px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-        
-        .atelier-content.animate {
-            opacity: 1;
-            transform: translateX(0);
-        }
+        .atelier-images img.animate { opacity: 1; transform: scale(1) rotate(0deg); }
+        .atelier-content { padding: 10%; display: flex; flex-direction: column; justify-content: center; color: #fff; opacity: 0; transform: translateX(50px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .atelier-content.animate { opacity: 1; transform: translateX(0); }
 
         /* Tech Stats Bar */
         .tech-stats {
@@ -299,94 +233,37 @@
             gap: 60px;
         }
         
-        .info-text { 
-            padding: 0 15%;
-            opacity: 0;
-            transform: translateX(-40px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-        
-        .info-text.animate {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        
-        .info-image {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .info-image::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, rgba(0, 200, 255, 0.3), transparent);
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            pointer-events: none;
-        }
-        
-        .info-image:hover::after {
-            opacity: 1;
-        }
-        
-        .info-image img { 
-            width: 100%; 
-            height: 500px; 
-            object-fit: cover;
-            opacity: 0;
-            transform: scale(0.9) translateX(40px);
-            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.8s ease, filter 0.4s ease;
-            filter: brightness(0.95);
-        }
-        
-        .info-image img.animate {
-            opacity: 1;
-            transform: scale(1) translateX(0);
-        }
-        
-        .info-image:hover img {
-            transform: scale(1.05);
-            filter: brightness(1.1);
+        .info-text { padding: 0 15%; opacity: 0; transform: translateX(-40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .info-text.animate { opacity: 1; transform: translateX(0); }
+        .info-image img { width: 100%; height: 500px; object-fit: cover; opacity: 0; transform: scale(0.9) translateX(40px); transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.8s ease; }
+        .info-image img.animate { opacity: 1; transform: scale(1) translateX(0); }
+
+        .module-tag { font-size: 10px; letter-spacing: 4px; color: #aaa; text-transform: uppercase; display: block; margin-bottom: 15px; position: relative; padding-left: 20px; }
+        .module-tag::before { content: ''; position: absolute; left: 0; top: 50%; width: 12px; height: 2px; background: linear-gradient(90deg, #00d4ff, #0096ff); transform: translateY(-50%); }
+
+        /* ================= MOBILE OPTIMIZATION (THE FIX) ================= */
+        @media (max-width: 1024px) {
+            .nav-container { padding: 0 20px; }
+            nav ul { gap: 10px; }
+            nav ul li a { font-size: 9px; }
         }
 
-        .module-tag { 
-            font-size: 10px; 
-            letter-spacing: 4px; 
-            color: #aaa; 
-            text-transform: uppercase; 
-            display: block; 
-            margin-bottom: 15px;
-            position: relative;
-            padding-left: 20px;
-        }
-        
-        .module-tag::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            width: 12px;
-            height: 2px;
-            background: linear-gradient(90deg, #00d4ff, #0096ff);
-            transform: translateY(-50%);
-        }
-
-        /* Mobile */
         @media (max-width: 768px) {
-            header { height: auto; padding: 10px 0; }
-            .nav-container { flex-direction: column; }
-            .nav-right-group { flex-direction: column; gap: 15px; margin-top: 15px; }
-            
-            .hero-btns { flex-direction: column; width: 100%; align-items: center; }
-            .cta-button { width: 80%; }
-            
+            header { height: auto; padding: 15px 0; position: absolute; } /* Allow hero to breathe */
+            .nav-container { flex-direction: column; gap: 15px; }
+            .nav-right-group { flex-direction: column; gap: 15px; width: 100%; }
+            nav ul { flex-wrap: wrap; justify-content: center; gap: 10px 15px; }
+            .nav-cta-btn { width: 80%; text-align: center; }
+
+            .hero { height: auto; min-height: 100vh; padding: 120px 0 60px; }
+            .hero-btns { flex-direction: column; width: 80%; margin: 0 auto; }
+            .cta-button { width: 100%; box-sizing: border-box; }
+
             .blueprint-showcase, .atelier-grid, .info-container { grid-template-columns: 1fr; }
             .blueprint-item, .info-image img { height: 350px; }
+            .info-text { padding: 40px 20px; text-align: center; }
             .tech-stats { flex-direction: column; gap: 20px; text-align: center; }
+            .atelier-content { text-align: center; padding: 60px 20px; }
         }
     </style>
 </head>
@@ -449,7 +326,7 @@
     </section>
 
     <section style="padding: 100px 0 0 0;">
-        <div style="text-align: center; margin-bottom: 60px;">
+        <div style="text-align: center; margin-bottom: 60px; padding: 0 20px;">
             <span class="module-tag" style="display: inline-block; padding-left: 20px;">WHY CLIENTS CHOOSE FORMA</span>
             <h2 style="font-size: 2.2rem; font-weight: 300; letter-spacing: 2px;">WE DON'T JUST DRAW PLANS — WE BUILD.</h2>
         </div>
@@ -483,35 +360,14 @@
     </footer>
 
     <script>
-        // Intersection Observer for scroll-triggered animations
-        const observerOptions = {
-            threshold: 0.15,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
+        const observerOptions = { threshold: 0.15, rootMargin: '0px 0px -100px 0px' };
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate');
-                }
-            });
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('animate'); });
         }, observerOptions);
 
-        // Observe all images and content sections
         document.addEventListener('DOMContentLoaded', () => {
-            const blueprintItems = document.querySelectorAll('.blueprint-item');
-            const atelierImages = document.querySelectorAll('.atelier-images img');
-            const atelierContent = document.querySelectorAll('.atelier-content');
-            const infoImages = document.querySelectorAll('.info-image img');
-            const infoText = document.querySelectorAll('.info-text');
-
-            blueprintItems.forEach(item => observer.observe(item));
-            atelierImages.forEach(item => observer.observe(item));
-            atelierContent.forEach(item => observer.observe(item));
-            infoImages.forEach(item => observer.observe(item));
-            infoText.forEach(item => observer.observe(item));
+            document.querySelectorAll('.blueprint-item, .atelier-images img, .atelier-content, .info-image img, .info-text').forEach(item => observer.observe(item));
         });
     </script>
-
 </body>
 </html>
