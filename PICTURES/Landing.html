@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
 <title>FORMA | Custom ADU Builds</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
@@ -20,23 +20,28 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        /* Improve touch handling for mobile */
+        -webkit-tap-highlight-color: transparent;
     }
 
     html, body {
         height: 100%;
+        width: 100%;
         overflow-x: hidden;
         font-family: 'Inter', sans-serif;
         background: #000;
         color: #fff;
+        /* Prevent font scaling issues on orientation change */
+        -webkit-text-size-adjust: 100%;
     }
 
-    /* Video Background */
+    /* Video Background - Changed to fixed for better mobile performance */
     .video-background {
-        position: absolute;
+        position: fixed;
         top: 0;
         right: 0;
         width: 100%;
-        height: 100vh;
+        height: 100%;
         object-fit: cover;
         z-index: 0;
         opacity: 0.8;
@@ -88,7 +93,7 @@
         letter-spacing: 2px;
     }
 
-    /* Video Section Button - RESTORED TO RIGHT */
+    /* Video Section Button */
     .video-overlay-action {
         position: absolute;
         bottom: 50px;
@@ -99,6 +104,7 @@
     .btn-video {
         background: rgba(0, 0, 0, 0.6);
         backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
         border: 1px solid #fff;
         color: #fff;
         padding: 18px 36px;
@@ -117,7 +123,7 @@
         color: #000;
     }
 
-    /* Content Wrapper - SCROLLBAR HIDDEN */
+    /* Content Wrapper - Smooth Mobile Scrolling */
     .content-wrapper {
         position: relative;
         z-index: 3;
@@ -128,12 +134,14 @@
         flex-direction: column;
         justify-content: space-between;
         overflow-y: auto;
-        scrollbar-width: none; /* Firefox */
-        -ms-overflow-style: none; /* IE/Edge */
+        /* Momentum scrolling for iOS */
+        -webkit-overflow-scrolling: touch; 
+        scrollbar-width: none; 
+        -ms-overflow-style: none;
     }
 
     .content-wrapper::-webkit-scrollbar {
-        display: none; /* Chrome/Safari */
+        display: none;
     }
 
     /* Logo */
@@ -233,11 +241,15 @@
         align-items: flex-end;
         gap: 25px;
         margin-top: 20px;
+        padding-bottom: 40px; /* Space for mobile navigation bars */
     }
 
     .mini-gallery {
         display: flex;
         gap: 10px;
+        /* Allow gallery to scroll horizontally on small phones */
+        overflow-x: auto;
+        padding-bottom: 10px;
     }
 
     .mini-gallery img {
@@ -246,11 +258,7 @@
         object-fit: cover;
         border: 1px solid #444;
         transition: 0.3s;
-    }
-
-    .mini-gallery img:hover {
-        border-color: #fff;
-        transform: translateY(-5px);
+        flex-shrink: 0;
     }
 
     /* Contact Block */
@@ -287,26 +295,48 @@
         border-bottom: 1px solid #444;
     }
 
+    /* MOBILE & TABLET OPTIMIZATIONS */
     @media(max-width: 1100px) {
-        .content-wrapper { width: 100%; }
+        .content-wrapper { 
+            width: 100%; 
+            padding: 40px 25px;
+        }
+        .shape-accent, .shape-main {
+            width: 100%;
+            /* Solid background for better text readability on mobile */
+            background: rgba(0,0,0,0.8);
+            clip-path: none;
+        }
         .info-grid { grid-template-columns: 1fr; }
         .top-right-header { display: none; }
-        .video-overlay-action { bottom: 20px; right: 5%; }
+        .video-overlay-action { 
+            position: relative;
+            bottom: 0;
+            right: 0;
+            margin-top: 30px;
+            text-align: center;
+        }
+        .btn-video { width: 100%; }
+        .hero-text h1 { font-size: 32px; }
+        .bottom-section {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .contact-block {
+            text-align: left;
+            width: 100%;
+        }
     }
 </style>
 </head>
 <body>
 
-<video class="video-background" autoplay loop muted playsinline>
+<video class="video-background" autoplay loop muted playsinline poster="fallback-image.jpg">
     <source src="VIDEO_BACKGROUNDS.mp4" type="video/mp4">
 </video>
 
 <div class="top-right-header">
     <h2>DESIGN. BUILD. FINANCE. SIMPLIFIED.</h2>
-</div>
-
-<div class="video-overlay-action">
-    <a href="https://www.formadesignconsultants.com/index.html" target="_blank" class="btn-video">Official Website</a>
 </div>
 
 <div class="shape-accent"></div>
@@ -421,6 +451,9 @@
                 <p>Contact Us :</p>
                 <h3>+1-800-555-0198</h3>
                 <a href="https://www.formadesignconsultants.com/index.html" target="_blank" class="website-link">www.formadesignconsultants.com</a>
+            </div>
+            <div class="video-overlay-action">
+                <a href="https://www.formadesignconsultants.com/index.html" target="_blank" class="btn-video">Official Website</a>
             </div>
         </div>
     </div>
