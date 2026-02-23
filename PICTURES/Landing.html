@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FORMA | Custom ADU Builds</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+        --bg-dark: #000000;
+        --bg-darker: #111111;
+        --accent: #ffffff;
+        --accent-gray: #dddddd;
+        --text-muted: #aaaaaa;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html, body {
+        height: 100%;
+        overflow-x: hidden;
+        font-family: 'Inter', sans-serif;
+        background: #000;
+        color: #fff;
+    }
+
+    /* Video Background */
+    .video-background {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100vh;
+        object-fit: cover;
+        z-index: 0;
+        opacity: 0.8;
+    }
+
+    /* Diagonal Shapes */
+    .shape-accent {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 65%;
+        height: 100vh;
+        background: var(--accent-gray);
+        clip-path: polygon(0 0, 78% 0, 100% 100%, 0% 100%);
+        z-index: 1;
+    }
+
+    .shape-main {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 65%;
+        height: 100vh;
+        background: var(--bg-dark);
+        clip-path: polygon(0 0, 75% 0, 97% 100%, 0% 100%);
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    /* Top Right Text Header - BIGGER */
+    .top-right-header {
+        position: absolute;
+        top: 60px;
+        right: 5%;
+        z-index: 5;
+        text-align: right;
+        max-width: 550px;
+    }
+
+    .top-right-header h2 {
+        color: var(--accent);
+        font-size: 34px; /* Increased */
+        font-family: 'Syncopate', sans-serif;
+        font-weight: 700;
+        line-height: 1.2;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    /* Video Section Button */
+    .video-overlay-action {
+        position: absolute;
+        bottom: 50px;
+        right: 8%;
+        z-index: 5;
+    }
+
+    .btn-video {
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+        border: 1px solid #fff;
+        color: #fff;
+        padding: 18px 36px;
+        text-transform: uppercase;
+        font-size: 13px; /* Increased */
+        letter-spacing: 2px;
+        text-decoration: none;
+        text-align: center;
+        transition: 0.3s;
+        font-weight: 600;
+        display: inline-block;
+    }
+
+    .btn-video:hover {
+        background: #fff;
+        color: #000;
+    }
+
+    /* Content Wrapper */
+    .content-wrapper {
+        position: relative;
+        z-index: 3;
+        width: 58%; /* Slightly wider to accommodate larger text */
+        height: 100vh;
+        padding: 40px 5%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow-y: auto;
+    }
+
+    /* Logo - BIGGER */
+    .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+
+    .nav-logo {
+        height: 60px; /* Increased */
+        object-fit: contain;
+    }
+
+    .logo-text {
+        font-family: 'Syncopate', sans-serif;
+        letter-spacing: 3px;
+        font-size: 28px; /* Increased */
+        font-weight: 700;
+    }
+
+    /* Typography - BIGGER */
+    .hero-text h1 {
+        font-family: 'Syncopate', sans-serif;
+        font-size: 48px; /* Increased */
+        line-height: 1.1;
+        margin-bottom: 15px;
+        color: var(--accent);
+    }
+
+    .description {
+        font-size: 15px; /* Increased */
+        color: var(--text-muted);
+        line-height: 1.6;
+        max-width: 500px;
+        margin-bottom: 30px;
+    }
+
+    /* Grid Sections - BIGGER */
+    .section-label {
+        font-size: 16px; /* Increased */
+        margin-bottom: 15px;
+        font-weight: 600;
+        color: var(--accent-gray);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        max-width: 600px;
+        margin-bottom: 30px;
+    }
+
+    .info-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .check-icon {
+        background: #fff;
+        color: #000;
+        width: 20px; /* Increased */
+        height: 20px; /* Increased */
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 11px; /* Increased */
+        font-weight: bold;
+        flex-shrink: 0;
+        margin-top: 2px;
+    }
+
+    .info-content strong {
+        display: block;
+        font-size: 14px; /* Increased */
+        margin-bottom: 4px;
+        text-transform: uppercase;
+    }
+
+    .info-content span {
+        font-size: 12px; /* Increased */
+        color: var(--text-muted);
+        line-height: 1.4;
+        display: block;
+    }
+
+    /* Bottom Gallery Section */
+    .bottom-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 25px;
+        margin-top: 20px;
+    }
+
+    .mini-gallery {
+        display: flex;
+        gap: 10px;
+    }
+
+    .mini-gallery img {
+        width: 100px; /* Increased */
+        height: 100px; /* Increased */
+        object-fit: cover;
+        border: 1px solid #444;
+        transition: 0.3s;
+    }
+
+    .mini-gallery img:hover {
+        border-color: #fff;
+        transform: translateY(-5px);
+    }
+
+    /* Contact Block - BIGGER */
+    .contact-block {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        text-align: right;
+    }
+
+    .contact-info p {
+        font-size: 12px; /* Increased */
+        color: var(--text-muted);
+        text-transform: uppercase;
+        margin-bottom: 3px;
+    }
+
+    .contact-info h4 {
+        font-size: 15px; /* Increased */
+        color: var(--accent-gray);
+        font-weight: 400;
+    }
+
+    .contact-info h3 {
+        font-size: 22px; /* Increased */
+        letter-spacing: 1px;
+        margin-top: 5px;
+    }
+
+    .website-link {
+        color: var(--accent-gray);
+        font-size: 13px; /* Increased */
+        text-decoration: none;
+        border-bottom: 1px solid #444;
+    }
+
+    @media(max-width: 1100px) {
+        .content-wrapper { width: 100%; }
+        .info-grid { grid-template-columns: 1fr; }
+        .top-right-header { display: none; }
+    }
+</style>
+</head>
+<body>
+
+<video class="video-background" autoplay loop muted playsinline>
+    <source src="VIDEO_BACKGROUNDS.mp4" type="video/mp4">
+</video>
+
+<div class="top-right-header">
+    <h2>DESIGN. BUILD. FINANCE. SIMPLIFIED.</h2>
+</div>
+
+<div class="video-overlay-action">
+    <a href="https://www.formadesignconsultants.com/index.html" target="_blank" class="btn-video">Official Website</a>
+</div>
+
+<div class="shape-accent"></div>
+<div class="shape-main"></div>
+
+<div class="content-wrapper">
+    
+    <header>
+        <div class="logo-container">
+            <img src="https://patrickremigio202011532-design.github.io/PICTURES//logo1.jpg" class="nav-logo" alt="FORMA Logo">
+            <div class="logo-text">FORMA</div>
+        </div>
+    </header>
+
+    <div class="hero-text">
+        <h1>CUSTOM ADU BUILDS</h1>
+        <p class="description">
+            Discover architectural excellence with FORMA Design Consultants. We provide expert engineering, strategic financing, and precision building for your perfect Accessory Dwelling Unit.
+        </p>
+    </div>
+
+    <div class="section-container">
+        <h4 class="section-label">Our Services :</h4>
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="check-icon">✓</div>
+                <div class="info-content">
+                    <strong>Architectural Design</strong>
+                    <span>Futuristic structures through advanced spatial modeling.</span>
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="check-icon">✓</div>
+                <div class="info-content">
+                    <strong>ADU Development</strong>
+                    <span>Smart units designed for maximum utility.</span>
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="check-icon">✓</div>
+                <div class="info-content">
+                    <strong>Contractor Sourcing</strong>
+                    <span>Vetting elite teams to ensure vision is built to spec.</span>
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="check-icon">✓</div>
+                <div class="info-content">
+                    <strong>Project Strategy</strong>
+                    <span>End-to-end oversight ensuring precision and integrity.</span>
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="check-icon">✓</div>
+                <div class="info-content">
+                    <strong>Financing Guidance</strong>
+                    <span>Strategic planning to secure your project's future.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <h4 class="section-label">Free Estimate :</h4>
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="check-icon">✓</div>
+                <div class="info-content">
+                    <strong>Garage Conversion</strong>
+                    <span>Maximize your property's existing footprint.</span>
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="check-icon">✓</div>
+                <div class="info-content">
+                    <strong>Ground Up ADU</strong>
+                    <span>Premium new detached living structures.</span>
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="check-icon">✓</div>
+                <div class="info-content">
+                    <strong>Room Addition</strong>
+                    <span>Seamlessly expand your current living space.</span>
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="check-icon">✓</div>
+                <div class="info-content">
+                    <strong>Multi-Unit</strong>
+                    <span>Strategic multi-unit investment development.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-section">
+        <div class="mini-gallery">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=400&q=80">
+            <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=400&q=80">
+            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=400&q=80">
+            <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=400&q=80">
+            <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=400&q=80">
+        </div>
+
+        <div class="contact-block">
+            <div class="contact-info">
+                <p>Location :</p>
+                <h4>California & Utah</h4>
+            </div>
+            <div class="contact-info">
+                <p>Contact Us :</p>
+                <h3>+1-800-555-0198</h3>
+                <a href="https://www.formadesignconsultants.com/index.html" target="_blank" class="website-link">www.formadesignconsultants.com</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
