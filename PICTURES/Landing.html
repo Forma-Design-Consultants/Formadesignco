@@ -68,7 +68,7 @@
         justify-content: center;
     }
 
-    /* Top Right Text Header - BIGGER */
+    /* Top Right Text Header */
     .top-right-header {
         position: absolute;
         top: 60px;
@@ -80,7 +80,7 @@
 
     .top-right-header h2 {
         color: var(--accent);
-        font-size: 34px; /* Increased */
+        font-size: 34px;
         font-family: 'Syncopate', sans-serif;
         font-weight: 700;
         line-height: 1.2;
@@ -88,12 +88,12 @@
         letter-spacing: 2px;
     }
 
-    /* Video Section Button */
+    /* Video Section Button - RESTORED TO RIGHT */
     .video-overlay-action {
         position: absolute;
         bottom: 50px;
         right: 8%;
-        z-index: 5;
+        z-index: 10;
     }
 
     .btn-video {
@@ -103,7 +103,7 @@
         color: #fff;
         padding: 18px 36px;
         text-transform: uppercase;
-        font-size: 13px; /* Increased */
+        font-size: 13px;
         letter-spacing: 2px;
         text-decoration: none;
         text-align: center;
@@ -117,20 +117,26 @@
         color: #000;
     }
 
-    /* Content Wrapper */
+    /* Content Wrapper - SCROLLBAR HIDDEN */
     .content-wrapper {
         position: relative;
         z-index: 3;
-        width: 58%; /* Slightly wider to accommodate larger text */
+        width: 58%;
         height: 100vh;
         padding: 40px 5%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         overflow-y: auto;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE/Edge */
     }
 
-    /* Logo - BIGGER */
+    .content-wrapper::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+    }
+
+    /* Logo */
     .logo-container {
         display: flex;
         align-items: center;
@@ -139,37 +145,37 @@
     }
 
     .nav-logo {
-        height: 60px; /* Increased */
+        height: 60px;
         object-fit: contain;
     }
 
     .logo-text {
         font-family: 'Syncopate', sans-serif;
         letter-spacing: 3px;
-        font-size: 28px; /* Increased */
+        font-size: 28px;
         font-weight: 700;
     }
 
-    /* Typography - BIGGER */
+    /* Typography */
     .hero-text h1 {
         font-family: 'Syncopate', sans-serif;
-        font-size: 48px; /* Increased */
+        font-size: 48px;
         line-height: 1.1;
         margin-bottom: 15px;
         color: var(--accent);
     }
 
     .description {
-        font-size: 15px; /* Increased */
+        font-size: 15px;
         color: var(--text-muted);
         line-height: 1.6;
         max-width: 500px;
         margin-bottom: 30px;
     }
 
-    /* Grid Sections - BIGGER */
+    /* Grid Sections */
     .section-label {
-        font-size: 16px; /* Increased */
+        font-size: 16px;
         margin-bottom: 15px;
         font-weight: 600;
         color: var(--accent-gray);
@@ -194,13 +200,13 @@
     .check-icon {
         background: #fff;
         color: #000;
-        width: 20px; /* Increased */
-        height: 20px; /* Increased */
+        width: 20px;
+        height: 20px;
         border-radius: 50%;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 11px; /* Increased */
+        font-size: 11px;
         font-weight: bold;
         flex-shrink: 0;
         margin-top: 2px;
@@ -208,13 +214,13 @@
 
     .info-content strong {
         display: block;
-        font-size: 14px; /* Increased */
+        font-size: 14px;
         margin-bottom: 4px;
         text-transform: uppercase;
     }
 
     .info-content span {
-        font-size: 12px; /* Increased */
+        font-size: 12px;
         color: var(--text-muted);
         line-height: 1.4;
         display: block;
@@ -235,8 +241,8 @@
     }
 
     .mini-gallery img {
-        width: 100px; /* Increased */
-        height: 100px; /* Increased */
+        width: 100px;
+        height: 100px;
         object-fit: cover;
         border: 1px solid #444;
         transition: 0.3s;
@@ -247,7 +253,7 @@
         transform: translateY(-5px);
     }
 
-    /* Contact Block - BIGGER */
+    /* Contact Block */
     .contact-block {
         display: flex;
         flex-direction: column;
@@ -256,27 +262,27 @@
     }
 
     .contact-info p {
-        font-size: 12px; /* Increased */
+        font-size: 12px;
         color: var(--text-muted);
         text-transform: uppercase;
         margin-bottom: 3px;
     }
 
     .contact-info h4 {
-        font-size: 15px; /* Increased */
+        font-size: 15px;
         color: var(--accent-gray);
         font-weight: 400;
     }
 
     .contact-info h3 {
-        font-size: 22px; /* Increased */
+        font-size: 22px;
         letter-spacing: 1px;
         margin-top: 5px;
     }
 
     .website-link {
         color: var(--accent-gray);
-        font-size: 13px; /* Increased */
+        font-size: 13px;
         text-decoration: none;
         border-bottom: 1px solid #444;
     }
@@ -285,6 +291,7 @@
         .content-wrapper { width: 100%; }
         .info-grid { grid-template-columns: 1fr; }
         .top-right-header { display: none; }
+        .video-overlay-action { bottom: 20px; right: 5%; }
     }
 </style>
 </head>
