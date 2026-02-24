@@ -24,7 +24,7 @@
 
     html, body {
         height: 100%;
-        overflow-x: hidden;
+        overflow: hidden;
         font-family: 'Inter', sans-serif;
         background: #000;
         color: #fff;
@@ -35,14 +35,14 @@
         position: absolute;
         top: 0;
         right: 0;
-        width: 55%; 
+        width: 100%; 
         height: 100vh;
         object-fit: cover;
         z-index: 0;
         opacity: 0.8;
     }
 
-    /* Diagonal Shapes */
+    /* Diagonal Shapes - Desktop */
     .shape-accent {
         position: absolute;
         top: 0;
@@ -113,11 +113,6 @@
         display: inline-block;
     }
 
-    .btn-video:hover {
-        background: #fff;
-        color: #000;
-    }
-
     /* Content Wrapper */
     .content-wrapper {
         position: relative;
@@ -129,7 +124,6 @@
         flex-direction: column;
         justify-content: space-between;
         overflow-y: auto;
-        scrollbar-width: none;
     }
 
     .content-wrapper::-webkit-scrollbar { display: none; }
@@ -151,63 +145,65 @@
 
     .bottom-section { display: flex; justify-content: space-between; align-items: flex-end; gap: 25px; margin-top: 20px; }
     .mini-gallery { display: flex; gap: 10px; }
-    .mini-gallery img { width: 100px; height: 100px; object-fit: cover; border: 1px solid #444; transition: 0.3s; }
+    .mini-gallery img { width: 100px; height: 100px; object-fit: cover; border: 1px solid #444; }
 
     .contact-block { display: flex; flex-direction: column; gap: 12px; text-align: right; }
-    .contact-info p { font-size: 12px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 3px; }
+    .contact-info p { font-size: 12px; color: var(--text-muted); text-transform: uppercase; }
     .contact-info h4 { font-size: 15px; color: var(--accent-gray); font-weight: 400; }
-    .contact-info h3 { font-size: 22px; letter-spacing: 1px; margin-top: 5px; }
+    .contact-info h3 { font-size: 22px; letter-spacing: 1px; }
     .website-link { color: var(--accent-gray); font-size: 13px; text-decoration: none; border-bottom: 1px solid #444; }
 
-    /* MOBILE SPECIFIC OVERRIDES */
+    /* MOBILE FIX */
     @media(max-width: 1100px) {
-        html, body { overflow: hidden; height: 100%; position: fixed; }
-        .video-background { width: 100%; opacity: 0.6; }
+        .video-background { width: 100%; z-index: 0; opacity: 1; }
         
-        /* Extend shapes to cover background area */
-        .shape-accent, .shape-main { width: 100%; clip-path: none; background: rgba(0,0,0,0.85); }
+        /* Make the black shapes only occupy the LEFT half on mobile so video shows on right */
+        .shape-accent { width: 65%; clip-path: polygon(0 0, 85% 0, 100% 100%, 0% 100%); z-index: 1; background: #333; }
+        .shape-main { width: 62%; clip-path: polygon(0 0, 85% 0, 100% 100%, 0% 100%); z-index: 2; background: #000; }
 
         .content-wrapper {
-            width: 70%; /* Keep info on the "Left" black side */
-            height: 100vh;
-            padding: 20px 15px;
-            justify-content: flex-start;
-            gap: 10px;
-            overflow: hidden; /* Prevent scroll */
+            width: 60%; /* Everything stays on the black left side */
+            padding: 15px;
+            gap: 5px;
+            z-index: 3;
         }
 
-        /* Smaller Logo & Text to fit */
-        .nav-logo { height: 35px; }
-        .logo-text { font-size: 18px; }
-        .hero-text h1 { font-size: 18px; margin-bottom: 5px; }
-        .description { font-size: 10px; margin-bottom: 10px; line-height: 1.3; }
+        /* Scale everything down to fit one screen */
+        .nav-logo { height: 30px; }
+        .logo-text { font-size: 16px; }
+        .hero-text h1 { font-size: 14px; margin-bottom: 2px; }
+        .description { font-size: 9px; line-height: 1.2; margin-bottom: 5px; max-width: 90%; }
 
-        .section-label { font-size: 11px; margin-bottom: 8px; }
-        .info-grid { grid-template-columns: 1fr; gap: 6px; margin-bottom: 10px; }
-        .info-item { gap: 8px; }
-        .check-icon { width: 14px; height: 14px; font-size: 8px; }
-        .info-content strong { font-size: 10px; margin-bottom: 1px; }
-        .info-content span { font-size: 8.5px; }
+        .section-label { font-size: 10px; margin-bottom: 5px; }
+        .info-grid { grid-template-columns: 1fr; gap: 4px; margin-bottom: 5px; }
+        .info-content strong { font-size: 9px; }
+        .info-content span { font-size: 7.5px; }
+        .check-icon { width: 12px; height: 12px; font-size: 7px; }
 
-        /* Gallery & Contact at the bottom */
-        .bottom-section { flex-direction: column; align-items: flex-start; gap: 10px; }
-        .mini-gallery img { width: 45px; height: 45px; }
-        .contact-block { text-align: left; gap: 4px; }
-        .contact-info p { font-size: 8px; }
-        .contact-info h4, .contact-info h3 { font-size: 11px; margin-top: 0; }
-        .website-link { font-size: 9px; }
+        .bottom-section { flex-direction: column; align-items: flex-start; gap: 8px; margin-top: 5px; }
+        .mini-gallery img { width: 35px; height: 35px; }
+        .contact-block { text-align: left; gap: 2px; }
+        .contact-info h3 { font-size: 11px; }
+        .contact-info h4, .contact-info p, .website-link { font-size: 8px; }
 
-        /* Ensure right side elements stay over video */
+        /* HEADER TEXT ON THE RIGHT VIDEO SIDE */
         .top-right-header { 
             display: block; 
             top: 20%; 
-            right: 5%; 
-            width: 25%; /* Limit width so it doesn't overlap text */
+            right: 2%; 
+            width: 35%; 
+            z-index: 5;
         }
-        .top-right-header h2 { font-size: 12px; letter-spacing: 1px; }
+        .top-right-header h2 { 
+            font-size: 10px; 
+            letter-spacing: 0.5px; 
+            text-align: right;
+            text-shadow: 2px 2px 4px #000;
+        }
 
-        .video-overlay-action { bottom: 30px; right: 5%; }
-        .btn-video { padding: 10px 15px; font-size: 9px; }
+        /* BUTTON ON THE RIGHT VIDEO SIDE */
+        .video-overlay-action { bottom: 20px; right: 5%; width: auto; }
+        .btn-video { padding: 10px 12px; font-size: 8px; background: #fff; color: #000; }
     }
 </style>
 </head>
@@ -229,7 +225,6 @@
 <div class="shape-main"></div>
 
 <div class="content-wrapper">
-    
     <header>
         <div class="logo-container">
             <img src="https://patrickremigio202011532-design.github.io/PICTURES//logo1.jpg" class="nav-logo" alt="FORMA Logo">
@@ -340,7 +335,6 @@
             </div>
         </div>
     </div>
-
 </div>
 
 </body>
