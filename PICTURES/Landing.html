@@ -157,18 +157,17 @@
     @media(max-width: 1100px) {
         .video-background { width: 100%; z-index: 0; opacity: 1; }
         
-        /* Make the black shapes only occupy the LEFT half on mobile so video shows on right */
         .shape-accent { width: 65%; clip-path: polygon(0 0, 85% 0, 100% 100%, 0% 100%); z-index: 1; background: #333; }
         .shape-main { width: 62%; clip-path: polygon(0 0, 85% 0, 100% 100%, 0% 100%); z-index: 2; background: #000; }
 
         .content-wrapper {
-            width: 60%; /* Everything stays on the black left side */
+            width: 60%;
             padding: 15px;
             gap: 5px;
             z-index: 3;
+            justify-content: flex-start;
         }
 
-        /* Scale everything down to fit one screen */
         .nav-logo { height: 30px; }
         .logo-text { font-size: 16px; }
         .hero-text h1 { font-size: 14px; margin-bottom: 2px; }
@@ -180,29 +179,38 @@
         .info-content span { font-size: 7.5px; }
         .check-icon { width: 12px; height: 12px; font-size: 7px; }
 
-        .bottom-section { flex-direction: column; align-items: flex-start; gap: 8px; margin-top: 5px; }
+        /* CONTACT SECTION MOVED UP */
+        .bottom-section { 
+            flex-direction: column; 
+            align-items: flex-start; 
+            gap: 12px; 
+            margin-top: auto; 
+            padding-bottom: 20px; /* Moves numbers up from bottom screen edge */
+        }
         .mini-gallery img { width: 35px; height: 35px; }
-        .contact-block { text-align: left; gap: 2px; }
-        .contact-info h3 { font-size: 11px; }
+        .contact-block { text-align: left; gap: 4px; }
+        .contact-info h3 { font-size: 13px; color: #fff; } /* Bigger/Brighter number */
         .contact-info h4, .contact-info p, .website-link { font-size: 8px; }
 
-        /* HEADER TEXT ON THE RIGHT VIDEO SIDE */
+        /* UPDATED HEADER TEXT ON RIGHT SIDE */
         .top-right-header { 
-            display: block; 
-            top: 20%; 
-            right: 2%; 
-            width: 35%; 
+            display: flex; 
+            align-items: center; /* Center vertically in the space */
+            top: 25%; 
+            right: 4%; 
+            width: 32%; 
             z-index: 5;
+            height: auto;
         }
         .top-right-header h2 { 
-            font-size: 10px; 
-            letter-spacing: 0.5px; 
+            font-size: 14px; /* Made Bigger */
+            letter-spacing: 0.8px; 
             text-align: right;
-            text-shadow: 2px 2px 4px #000;
+            line-height: 1.4;
+            text-shadow: 3px 3px 6px #000;
         }
 
-        /* BUTTON ON THE RIGHT VIDEO SIDE */
-        .video-overlay-action { bottom: 20px; right: 5%; width: auto; }
+        .video-overlay-action { bottom: 25px; right: 5%; width: auto; }
         .btn-video { padding: 10px 12px; font-size: 8px; background: #fff; color: #000; }
     }
 </style>
