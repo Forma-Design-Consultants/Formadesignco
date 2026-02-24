@@ -24,7 +24,7 @@
 
     html, body {
         height: 100%;
-        overflow: hidden; /* Prevent scrolling globally */
+        overflow-x: hidden;
         font-family: 'Inter', sans-serif;
         background: #000;
         color: #fff;
@@ -291,44 +291,60 @@
         border-bottom: 1px solid #444;
     }
 
-    /* MOBILE ADJUSTMENTS - FIT TO LEFT SECTION, NO SCROLL */
+    /* MOBILE REDESIGN - FITTED ON THE LEFT, NO SCROLL */
     @media(max-width: 1100px) {
-        body { overflow: hidden; position: fixed; width: 100%; height: 100%; }
+        body, html { overflow: hidden; height: 100%; position: fixed; }
+        
+        /* Layout Structure */
         .content-wrapper { 
-            width: 70%; /* Fitted on the left section */
-            padding: 15px 15px;
-            overflow: hidden; /* No scroll */
-            justify-content: space-around; /* Distributes items to fit height */
+            width: 72%; 
+            padding: 20px 15px; 
+            background: linear-gradient(to right, rgba(0,0,0,0.95) 70%, rgba(0,0,0,0) 100%);
+            justify-content: flex-start;
+            gap: 15px;
         }
-        .info-grid { grid-template-columns: 1fr; gap: 8px; margin-bottom: 10px; }
-        .top-right-header { display: none; }
-        .video-overlay-action { bottom: 20px; right: 5%; position: absolute; }
-        .video-background { width: 100%; height: 100vh; }
-        
-        /* Font Scaling to fit screen without scroll */
-        .nav-logo { height: 40px; }
-        .logo-text { font-size: 18px; }
-        .hero-text h1 { font-size: 20px; margin-bottom: 5px; }
-        .description { font-size: 11px; margin-bottom: 10px; max-width: 90%; }
-        .section-label { font-size: 12px; margin-bottom: 8px; }
-        .info-content strong { font-size: 11px; }
-        .info-content span { font-size: 10px; }
-        .check-icon { width: 15px; height: 15px; font-size: 9px; }
-        
-        .bottom-section { flex-direction: column; align-items: flex-start; gap: 10px; margin-top: 10px; }
-        .mini-gallery img { width: 45px; height: 45px; }
-        .contact-block { text-align: left; gap: 5px; }
-        .contact-info h3 { font-size: 16px; }
-        .contact-info h4 { font-size: 13px; }
-        .website-link { font-size: 11px; }
-        .btn-video { padding: 10px 20px; font-size: 11px; }
 
-        /* Shape adjustments for mobile background blending */
-        .shape-main, .shape-accent {
-            width: 100%;
-            clip-path: none;
-            background: linear-gradient(to right, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+        .shape-accent, .shape-main { display: none; } /* Clean up mobile layers */
+        .video-background { width: 100%; height: 100vh; opacity: 0.6; }
+
+        /* Fitted Branding */
+        .nav-logo { height: 35px; }
+        .logo-text { font-size: 16px; }
+        .hero-text h1 { font-size: 18px; margin-bottom: 5px; }
+        .description { font-size: 11px; margin-bottom: 10px; line-height: 1.4; opacity: 0.8; }
+
+        /* Services Grid - Ultra Compact */
+        .info-grid { grid-template-columns: 1fr; gap: 6px; margin-bottom: 5px; }
+        .info-item { gap: 8px; }
+        .check-icon { width: 14px; height: 14px; font-size: 8px; }
+        .info-content strong { font-size: 10px; margin-bottom: 0; }
+        .info-content span { font-size: 9px; }
+        .section-label { font-size: 10px; margin-bottom: 5px; border-left: 2px solid #fff; padding-left: 5px; }
+
+        /* Bottom Section Adjustments */
+        .bottom-section { 
+            flex-direction: column; 
+            align-items: flex-start; 
+            margin-top: auto; /* Pushes to bottom */
+            gap: 10px;
         }
+        .mini-gallery img { width: 40px; height: 40px; }
+        .contact-block { text-align: left; gap: 4px; }
+        .contact-info p { font-size: 9px; }
+        .contact-info h3 { font-size: 15px; margin-top: 0; }
+        .contact-info h4 { font-size: 11px; }
+        .website-link { font-size: 10px; }
+
+        /* Video Action Button */
+        .top-right-header { display: none; }
+        .video-overlay-action { 
+            bottom: 20px; 
+            right: 4%; 
+            position: absolute; 
+            transform: rotate(-90deg); /* Modern side-tab style */
+            transform-origin: right bottom;
+        }
+        .btn-video { padding: 8px 15px; font-size: 9px; border-radius: 0; }
     }
 </style>
 </head>
@@ -361,80 +377,52 @@
     <div class="hero-text">
         <h1>CUSTOM ADU BUILDS</h1>
         <p class="description">
-            Discover architectural excellence with FORMA Design Consultants. We provide expert engineering, strategic financing, and precision building for your perfect Accessory Dwelling Unit.
+            Discover architectural excellence with FORMA Design Consultants. expert engineering, strategic financing, and precision building.
         </p>
     </div>
 
     <div class="section-container">
-        <h4 class="section-label">Our Services :</h4>
+        <h4 class="section-label">Our Services</h4>
         <div class="info-grid">
             <div class="info-item">
                 <div class="check-icon">✓</div>
                 <div class="info-content">
                     <strong>Architectural Design</strong>
-                    <span>Futuristic structures through advanced spatial modeling.</span>
+                    <span>Futuristic structures & modeling.</span>
                 </div>
             </div>
             <div class="info-item">
                 <div class="check-icon">✓</div>
                 <div class="info-content">
                     <strong>ADU Development</strong>
-                    <span>Smart units designed for maximum utility.</span>
-                </div>
-            </div>
-            <div class="info-item">
-                <div class="check-icon">✓</div>
-                <div class="info-content">
-                    <strong>Contractor Sourcing</strong>
-                    <span>Vetting elite teams to ensure vision is built to spec.</span>
+                    <span>Smart units for maximum utility.</span>
                 </div>
             </div>
             <div class="info-item">
                 <div class="check-icon">✓</div>
                 <div class="info-content">
                     <strong>Project Strategy</strong>
-                    <span>End-to-end oversight ensuring precision and integrity.</span>
-                </div>
-            </div>
-            <div class="info-item">
-                <div class="check-icon">✓</div>
-                <div class="info-content">
-                    <strong>Financing Guidance</strong>
-                    <span>Strategic planning to secure your project's future.</span>
+                    <span>End-to-end oversight.</span>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="section-container">
-        <h4 class="section-label">Free Estimate :</h4>
+        <h4 class="section-label">Free Estimate</h4>
         <div class="info-grid">
             <div class="info-item">
                 <div class="check-icon">✓</div>
                 <div class="info-content">
                     <strong>Garage Conversion</strong>
-                    <span>Maximize your property's existing footprint.</span>
+                    <span>Maximize your footprint.</span>
                 </div>
             </div>
             <div class="info-item">
                 <div class="check-icon">✓</div>
                 <div class="info-content">
                     <strong>Ground Up ADU</strong>
-                    <span>Premium new detached living structures.</span>
-                </div>
-            </div>
-            <div class="info-item">
-                <div class="check-icon">✓</div>
-                <div class="info-content">
-                    <strong>Room Addition</strong>
-                    <span>Seamlessly expand your current living space.</span>
-                </div>
-            </div>
-            <div class="info-item">
-                <div class="check-icon">✓</div>
-                <div class="info-content">
-                    <strong>Multi-Unit</strong>
-                    <span>Strategic multi-unit investment development.</span>
+                    <span>New detached structures.</span>
                 </div>
             </div>
         </div>
@@ -445,8 +433,6 @@
             <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=400&q=80">
             <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=400&q=80">
             <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=400&q=80">
-            <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=400&q=80">
-            <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=400&q=80">
         </div>
 
         <div class="contact-block">
@@ -457,7 +443,7 @@
             <div class="contact-info">
                 <p>Contact Us :</p>
                 <h3>+1-800-555-0198</h3>
-                <a href="https://www.formadesignconsultants.com/index.html" target="_blank" class="website-link">www.formadesignconsultants.com</a>
+                <a href="https://www.formadesignconsultants.com/index.html" target="_blank" class="website-link">Visit Website</a>
             </div>
         </div>
     </div>
