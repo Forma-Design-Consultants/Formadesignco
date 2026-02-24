@@ -68,7 +68,7 @@
         justify-content: center;
     }
 
-    /* Top Right Text Header */
+    /* Top Right Text Header - Desktop default */
     .top-right-header {
         position: absolute;
         top: 60px;
@@ -185,32 +185,30 @@
             align-items: flex-start; 
             gap: 12px; 
             margin-top: auto; 
-            padding-bottom: 20px; /* Moves numbers up from bottom screen edge */
+            padding-bottom: 35px; /* Pushed up further from bottom */
         }
         .mini-gallery img { width: 35px; height: 35px; }
         .contact-block { text-align: left; gap: 4px; }
-        .contact-info h3 { font-size: 13px; color: #fff; } /* Bigger/Brighter number */
+        .contact-info h3 { font-size: 14px; color: #fff; font-weight: 700; } 
         .contact-info h4, .contact-info p, .website-link { font-size: 8px; }
 
-        /* UPDATED HEADER TEXT ON RIGHT SIDE */
+        /* HEADER TEXT POSITIONED RIGHT TOP */
         .top-right-header { 
-            display: flex; 
-            align-items: center; /* Center vertically in the space */
-            top: 25%; 
+            top: 20px; /* Snapped to the very top */
             right: 4%; 
             width: 32%; 
             z-index: 5;
             height: auto;
         }
         .top-right-header h2 { 
-            font-size: 14px; /* Made Bigger */
+            font-size: 13px; /* Slightly bigger/clearer */
             letter-spacing: 0.8px; 
             text-align: right;
-            line-height: 1.4;
-            text-shadow: 3px 3px 6px #000;
+            line-height: 1.3;
+            text-shadow: 2px 2px 5px #000;
         }
 
-        .video-overlay-action { bottom: 25px; right: 5%; width: auto; }
+        .video-overlay-action { bottom: 35px; right: 5%; width: auto; }
         .btn-video { padding: 10px 12px; font-size: 8px; background: #fff; color: #000; }
     }
 </style>
