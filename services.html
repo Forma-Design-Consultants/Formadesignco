@@ -193,6 +193,11 @@
         }
         .service-card:hover .card-bg { transform: scale(1.1); opacity: 0.2; }
 
+        /* Make the whole card act like a link (for MODULE _01) */
+        .service-card-link { display: block; text-decoration: none; color: inherit; }
+        .service-card-link:focus { outline: 2px solid #fff; outline-offset: 4px; }
+        .service-card { cursor: pointer; }
+
         /* ================= MOBILE OPTIMIZATIONS (SYNCED) ================= */
         @media (max-width: 1024px) {
             .service-grid { grid-template-columns: repeat(2, 1fr); }
@@ -258,17 +263,20 @@
         </div>
         
         <div class="service-grid">
-            <div class="service-card">
-                <img src="https://images.unsplash.com/photo-1721244654394-36a7bc2da288?w=600&h=800&fit=crop" class="card-bg">
-                <div class="service-card-content">
-                    <span class="module-tag" style="color:#888; font-size:10px; letter-spacing: 2px;">MODULE _01</span>
-                    <h3>Architectural Design</h3>
-                    <p class="service-desc">Conceptualizing futuristic structures through advanced spatial modeling and noir aesthetics.</p>
+            <!-- CLICKABLE MODULE _01 -->
+            <a href="floorplans.html" class="service-card-link" aria-label="View Module 01 - Architectural Design">
+                <div class="service-card">
+                    <img src="https://images.unsplash.com/photo-1721244654394-36a7bc2da288?w=600&h=800&fit=crop" class="card-bg" alt="">
+                    <div class="service-card-content">
+                        <span class="module-tag" style="color:#888; font-size:10px; letter-spacing: 2px;">MODULE _01</span>
+                        <h3>Architectural Design</h3>
+                        <p class="service-desc">Conceptualizing futuristic structures through advanced spatial modeling and noir aesthetics.</p>
+                    </div>
                 </div>
-            </div>
+            </a>
 
             <div class="service-card">
-                <img src="https://images.unsplash.com/photo-1627141234469-24711efb373c?w=600&h=800&fit=crop" class="card-bg">
+                <img src="https://images.unsplash.com/photo-1627141234469-24711efb373c?w=600&h=800&fit=crop" class="card-bg" alt="">
                 <div class="service-card-content">
                     <span class="module-tag" style="color:#888; font-size:10px; letter-spacing: 2px;">MODULE _02</span>
                     <h3>ADU Development</h3>
@@ -277,7 +285,7 @@
             </div>
 
             <div class="service-card">
-                <img src="https://images.pexels.com/photos/17174767/pexels-photo-17174767.jpeg?w=600&h=800&fit=crop" class="card-bg">
+                <img src="https://images.pexels.com/photos/17174767/pexels-photo-17174767.jpeg?w=600&h=800&fit=crop" class="card-bg" alt="">
                 <div class="service-card-content">
                     <span class="module-tag" style="color:#888; font-size:10px; letter-spacing: 2px;">MODULE _03</span>
                     <h3>Contractor Sourcing</h3>
@@ -286,7 +294,7 @@
             </div>
 
             <div class="service-card">
-                <img src="https://images.unsplash.com/photo-1721244653757-b76cc4679dfb?w=600&h=800&fit=crop" class="card-bg">
+                <img src="https://images.unsplash.com/photo-1721244653757-b76cc4679dfb?w=600&h=800&fit=crop" class="card-bg" alt="">
                 <div class="service-card-content">
                     <span class="module-tag" style="color:#888; font-size:10px; letter-spacing: 2px;">MODULE _04</span>
                     <h3>Project Strategy</h3>
@@ -295,7 +303,7 @@
             </div>
 
             <div class="service-card">
-                <img src="https://images.unsplash.com/photo-1742415106160-594d07f6cc23?w=600&h=800&fit=crop" class="card-bg">
+                <img src="https://images.unsplash.com/photo-1742415106160-594d07f6cc23?w=600&h=800&fit=crop" class="card-bg" alt="">
                 <div class="service-card-content">
                     <span class="module-tag" style="color:#888; font-size:10px; letter-spacing: 2px;">MODULE _05</span>
                     <h3>Financing Guidance</h3>
@@ -306,12 +314,9 @@
     </div>
 
     <footer style="background-color: rgba(0,0,0,0.9); color: #fff; padding: 80px 0; text-align: center; border-top: 1px solid #1a1a1a;">
-        <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" style="width: 100px; filter: invert(1); margin-bottom: 20px;">
+        <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" style="width: 100px; filter: invert(1); margin-bottom: 20px;" alt="FORMA logo">
         <p style="font-size: 12px; letter-spacing: 2px; opacity: 0.5;">© 2026 FORMA DESIGN CONSULTANTS</p>
     </footer>
 
 </body>
 </html>
-
-
-
