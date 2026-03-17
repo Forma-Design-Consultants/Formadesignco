@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>FORMA | floorplans</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/jpeg" href="logo1.jpg" />
+
+  <style>
+    :root {
+      --safe-top: env(safe-area-inset-top, 20px);
+      --header-height: 100px;
+    }
+
+    body {
+      background-color: #000;
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      color: #fff;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 3000;
+      height: var(--header-height);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 0 40px;
+      height: 100%;
+      box-sizing: border-box;
+    }
+
+    .logo { height: 85px; width: auto; transition: height 0.3s ease; }
+
+    .nav-right-group {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 20px;
+      align-items: center;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #000;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    nav ul li a.active {
+      font-weight: 700;
+      border-bottom: 2px solid #000;
+      padding-bottom: 5px;
+    }
+
+    .nav-cta-btn {
+      background-color: #000;
+      color: #fff !important;
+      padding: 12px 24px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-decoration: none;
+      border: 1px solid #000;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .nav-cta-btn:hover {
+      background-color: #fff;
+      color: #000 !important;
+    }
+
+    @media (max-width: 768px) {
+      header { height: auto; padding: 10px 0; }
+      .nav-container { flex-direction: column; gap: 10px; }
+      .logo { height: 50px; }
+      .nav-right-group { flex-direction: column; gap: 10px; width: 100%; padding-bottom: 10px; }
+      nav ul { gap: 10px; flex-wrap: wrap; justify-content: center; }
+      nav ul li a { font-size: 9px; }
+      .nav-cta-btn { padding: 8px 16px; font-size: 9px; width: 80%; text-align: center; }
+      .process-wrapper { padding-top: 280px !important; }
+    }
+
+    .video-bg-container {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .process-video-bg {
+      min-width: 100%; min-height: 100%;
+      width: auto; height: auto;
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      opacity: 0.25;
+    }
+
+    .process-wrapper {
+      position: relative;
+      z-index: 100;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: calc(var(--header-height) + 60px) 20px 100px 20px;
+      text-align: center;
+    }
+
+    .process-header {
+      margin-bottom: 40px;
+      display: block;
+      width: 100%;
+    }
+
+    .process-header span {
+      font-size: 13px;
+      letter-spacing: 6px;
+      color: #ffffff;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 12px;
+      font-weight: 200;
+    }
+
+    .process-header h1 {
+      font-size: clamp(32px, 8vw, 52px);
+      letter-spacing: 4px;
+      margin: 0;
+      font-weight: 400;
+      text-transform: uppercase;
+      color: #ffffff;
+    }
+
+    /* ===== STEP SECTIONS NON-ALTERNATING ===== */
+    .steps {
+      position: relative;
+      z-index: 100;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .step-section {
+      position: relative;
+      display: grid;
+      grid-template-columns: 70% 30%; /* Image 70% / Text 30% */
+      align-items: stretch;
+      min-height: 100vh;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      overflow: hidden;
+      margin-bottom: 80px;
+      transform: translateZ(0);
+    }
+
+    .step-media {
+      grid-column: 1;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+    }
+
+    .step-content { grid-column: 2; }
+
+    .step-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top; /* important part of image visible */
+      filter: grayscale(0.25);
+      transition: transform .6s ease, filter .4s ease, opacity .4s ease;
+      opacity: 0.95;
+      will-change: transform;
+      backface-visibility: hidden;
+    }
+
+    .step-section:hover .step-media img {
+      transform: scale(1.04);
+      filter: grayscale(0);
+      opacity: 1;
+    }
+
+    .step-content {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(24px, 5vw, 64px);
+      background: linear-gradient(0deg, rgba(0,0,0,.55), rgba(0,0,0,.25));
+      border-left: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .step-content-inner {
+      width: 100%;
+      max-width: 560px;
+      text-align: left;
+    }
+
+    .step-num {
+      display: inline-block;
+      font-size: 12px;
+      letter-spacing: 3px;
+      color: #BBB;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .step-title {
+      margin: 0 0 14px 0;
+      font-size: clamp(20px, 3.3vw, 28px);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .step-desc {
+      margin: 0;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .step-section { grid-template-columns: 60% 40%; min-height: 95vh; }
+    }
+
+    @media (max-width: 768px) {
+      .step-section {
+        grid-template-columns: 1fr;  
+        min-height: auto;             
+      }
+      .step-media {
+        position: relative;
+        height: 60vh;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+      }
+      .step-media img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+      }
+      .step-content {
+        border: none;
+        padding: 24px;
+      }
+      .step-content-inner {
+        max-width: 640px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Video Background -->
+  <div class="video-bg-container">
+    <video autoplay muted loop playsinline class="process-video-bg">
+      <source src="VIDEO_BACKGROUND3.mp4" type="video/mp4" />
+    </video>
+  </div>
+
+  <!-- Fixed Header -->
+  <header>
+    <div class="nav-container">
+      <a href="index.html">
+        <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA Logo" class="logo" />
+      </a>
+      <div class="nav-right-group">
+        <nav>
+          <ul>
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="services.html" class="active">SERVICES</a></li>
+            <li><a href="packages.html">PACKAGES</a></li>
+            <li><a href="process.html">PROCESS</a></li>
+            <li><a href="locations.html">LOCATIONS</a></li>
+            <li><a href="contact.html">CONTACT</a></li>
+          </ul>
+        </nav>
+        <a href="estimate.html" class="nav-cta-btn">Free Estimate</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div class="process-wrapper">
+    <div class="process-header">
+      <span>Architectural Design</span>
+      <h1>Floor Plans</h1>
+    </div>
+
+    <!-- ======= FULL-SCREEN STEP SECTIONS (NON-ALTERNATING) ======= -->
+    <section class="steps">
+
+      <!-- STEP 01 -->
+      <section class="step-section">
+        <div class="step-media">
+          <img src="./Assets/fplan8.png" alt="ADU - 565 DAVIS 1 BED 1 BTH FLIPPED" loading="lazy" />
+        </div>
+        <div class="step-content">
+          <div class="step-content-inner">
+            <span class="step-num">01</span>
+            <h2 class="step-title">ADU - 565 DAVIS 1 BED 1 BTH FLIPPED</h2>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 02 -->
+      <section class="step-section">
+        <div class="step-media">
+          <img src="./Assets/fplan7.png" alt="ADU - 565 DAVIS 1 BED 1 BTH" loading="lazy" />
+        </div>
+        <div class="step-content">
+          <div class="step-content-inner">
+            <span class="step-num">02</span>
+            <h2 class="step-title">ADU - 565 DAVIS 1 BED 1 BTH</h2>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 03 -->
+      <section class="step-section">
+        <div class="step-media">
+          <img src="./Assets/fplan6.png" alt="ADU - 500 Tomahawk 1 BED 1 BTH" loading="lazy" />
+        </div>
+        <div class="step-content">
+          <div class="step-content-inner">
+            <span class="step-num">03</span>
+            <h2 class="step-title">ADU - 500 Tomahawk 1 BED 1 BTH</h2>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 04 -->
+      <section class="step-section">
+        <div class="step-media">
+          <img src="./Assets/fplan5.png" alt="ADU - 2 BEDROOM ADU 750 MARINA" loading="lazy" />
+        </div>
+        <div class="step-content">
+          <div class="step-content-inner">
+            <span class="step-num">04</span>
+            <h2 class="step-title">ADU - 2 BEDROOM ADU 750 MARINA</h2>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 05 -->
+      <section class="step-section">
+        <div class="step-media">
+          <img src="./Assets/fplan4.png" alt="ADU - 2 BEDROOM 2 BATH ADU 749" loading="lazy" />
+        </div>
+        <div class="step-content">
+          <div class="step-content-inner">
+            <span class="step-num">05</span>
+            <h2 class="step-title">ADU - 2 BEDROOM 2 BATH ADU 749</h2>
+          </div>
+        </div>
+
+      </section>
+        <section class="step-section">
+        <div class="step-media">
+          <img src="./Assets/fplan9.png" alt="ADU - 2 BEDROOM 2 BATH ADU 749" loading="lazy" />
+        </div>
+        <div class="step-content">
+          <div class="step-content-inner">
+            <span class="step-num">06</span>
+            <h2 class="step-title">3 bed 2 bath - 1150 SQ FT ADU</h2>
+          </div>
+        </div>
+      </section>
+
+    </section>
+    <!-- ======= /FULL-SCREEN STEP SECTIONS ======= -->
+
+  </div>
+
+  <!-- Footer -->
+  <footer style="background-color: rgb(0, 0, 0); color: #fff; padding: 80px 0; text-align: center; border-top: 1px solid #1a1a1a; position: relative; z-index: 2100;">
+    <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA Logo" style="width: 100px; filter: invert(1); margin-bottom: 20px;" />
+    <p style="font-size: 12px; letter-spacing: 2px; opacity: 0.5;">© 2026 FORMA DESIGN CONSULTANTS</p>
+  </footer>
+
+</body>
+</html>
