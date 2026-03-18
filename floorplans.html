@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>FORMA | floorplans</title>
+  <title>FORMA | Floor Plans</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/jpeg" href="logo1.jpg" />
 
@@ -22,6 +22,7 @@
       overflow-x: hidden;
     }
 
+    /* ================= HEADER ================= */
     header {
       background: #fff;
       border-bottom: 1px solid #eee;
@@ -94,17 +95,7 @@
       color: #000 !important;
     }
 
-    @media (max-width: 768px) {
-      header { height: auto; padding: 10px 0; }
-      .nav-container { flex-direction: column; gap: 10px; }
-      .logo { height: 50px; }
-      .nav-right-group { flex-direction: column; gap: 10px; width: 100%; padding-bottom: 10px; }
-      nav ul { gap: 10px; flex-wrap: wrap; justify-content: center; }
-      nav ul li a { font-size: 9px; }
-      .nav-cta-btn { padding: 8px 16px; font-size: 9px; width: 80%; text-align: center; }
-      .process-wrapper { padding-top: 280px !important; }
-    }
-
+    /* ================= VIDEO BACKGROUND ================= */
     .video-bg-container {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -121,12 +112,13 @@
       opacity: 0.25;
     }
 
-  .process-wrapper {
+    /* ================= PROCESS WRAPPER ================= */
+    .process-wrapper {
       position: relative;
       z-index: 100;
       width: 100%;
-      max-width: 100%;
-      margin: 0;
+      max-width: 1200px;
+      margin: 0 auto;
       padding: calc(var(--header-height) + 60px) 20px 100px 20px;
       text-align: center;
     }
@@ -156,42 +148,40 @@
       color: #ffffff;
     }
 
-    /* ===== STEP SECTIONS NON-ALTERNATING ===== */
+    /* ================= STEP SECTIONS (NON-ALTERNATING) ================= */
     .steps {
       position: relative;
       z-index: 100;
       width: 100%;
       margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 60px;
     }
 
     .step-section {
-      position: relative;
       display: grid;
       grid-template-columns: 2fr 1fr;
       align-items: stretch;
-      min-height: auto;
-      height: auto;
+      min-height: 500px;
       background: rgba(255,255,255,0.02);
       border: 1px solid rgba(255,255,255,0.06);
       overflow: hidden;
-      margin-bottom: 80px;
     }
 
     .step-media {
       grid-column: 1;
       position: relative;
-      overflow: hidden; 
+      overflow: hidden;
       display: flex;
       min-height: 500px;
     }
-
-    .step-content { grid-column: 2; }
 
     .step-media img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center top; /* important part of image visible */
+      object-position: center top;
       filter: grayscale(0.25);
       transition: transform .6s ease, filter .4s ease, opacity .4s ease;
       opacity: 0.95;
@@ -206,6 +196,7 @@
     }
 
     .step-content {
+      grid-column: 2;
       position: relative;
       display: flex;
       align-items: center;
@@ -247,42 +238,76 @@
       font-size: 15px;
     }
 
-    
+    /* ================= MEDIA QUERIES ================= */
     @media (max-width: 1024px) {
-      .step-section { grid-template-columns: 60% 40%; min-height: 95vh; }
+      .step-section { grid-template-columns: 60% 40%; min-height: 450px; }
     }
 
     @media (max-width: 768px) {
-       .step-section {
-        grid-template-columns: 1fr;
+      /* HEADER */
+      header { height: auto; padding: 10px 0; }
+      .nav-container { flex-direction: column; gap: 10px; }
+      .logo { height: 50px; }
+      .nav-right-group { flex-direction: column; gap: 10px; width: 100%; padding-bottom: 10px; }
+      nav ul { gap: 10px; flex-wrap: wrap; justify-content: center; }
+      nav ul li a { font-size: 9px; }
+      .nav-cta-btn { padding: 8px 16px; font-size: 9px; width: 80%; text-align: center; }
+
+      /* MOBILE FLEXIBLE STEPS */
+      .process-wrapper { padding-top: 220px !important; }
+      .steps { display: flex; flex-direction: column; gap: 40px; }
+
+      .step-section {
+        display: flex;
+        flex-direction: column;
+        border-left: none;
+        border: 1px solid rgba(255,255,255,0.06);
       }
 
       .step-media {
-        height: 50vh;
-        min-height: unset;
+        width: 100%;
+        height: auto;
+        min-height: 250px;
+      }
+
+      .step-media img {
+        width: 100%;
+        height: auto;
+        object-fit: contain; /* ensures full image visible */
       }
 
       .step-content {
         border: none;
         padding: 20px;
+        text-align: center;
+        background: rgba(0,0,0,0.6);
       }
 
       .step-content-inner {
-        max-width: 640px;
+        max-width: 100%;
+        text-align: center;
+      }
+
+      .step-title {
+        font-size: clamp(18px, 5vw, 24px);
+      }
+
+      .step-num {
+        font-size: 11px;
       }
     }
   </style>
 </head>
 <body>
 
-
+  <!-- VIDEO BACKGROUND -->
   <div class="video-bg-container">
     <video autoplay muted loop playsinline class="process-video-bg">
       <source src="VIDEO_BACKGROUND3.mp4" type="video/mp4" />
     </video>
   </div>
 
-
+  <!-- HEADER -->
   <header>
     <div class="nav-container">
       <a href="index.html">
@@ -304,16 +329,14 @@
     </div>
   </header>
 
-
+  <!-- PROCESS WRAPPER -->
   <div class="process-wrapper">
     <div class="process-header">
       <span>Architectural Design</span>
       <h1>Floor Plans</h1>
     </div>
 
- 
     <section class="steps">
-
       <!-- STEP 01 -->
       <section class="step-section">
         <div class="step-media">
@@ -377,11 +400,12 @@
             <h2 class="step-title">ADU - 2 BEDROOM 2 BATH ADU 749</h2>
           </div>
         </div>
-
       </section>
-        <section class="step-section">
+
+      <!-- STEP 06 -->
+      <section class="step-section">
         <div class="step-media">
-          <img src="./Assets/fplan9.png" alt="ADU - 2 BEDROOM 2 BATH ADU 749" loading="lazy" />
+          <img src="./Assets/fplan9.png" alt="3 bed 2 bath - 1150 SQ FT ADU" loading="lazy" />
         </div>
         <div class="step-content">
           <div class="step-content-inner">
@@ -390,16 +414,13 @@
           </div>
         </div>
       </section>
-
     </section>
-    <!-- ======= /FULL-SCREEN STEP SECTIONS ======= -->
-
   </div>
 
-  <!-- Footer -->
-  <footer style="background-color: rgb(0, 0, 0); color: #fff; padding: 80px 0; text-align: center; border-top: 1px solid #1a1a1a; position: relative; z-index: 2100;">
-    <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA Logo" style="width: 100px; filter: invert(1); margin-bottom: 20px;" />
-    <p style="font-size: 12px; letter-spacing: 2px; opacity: 0.5;">© 2026 FORMA DESIGN CONSULTANTS</p>
+  <!-- FOOTER -->
+  <footer style="background-color: rgb(0,0,0); color:#fff; padding: 80px 0; text-align:center; border-top: 1px solid #1a1a1a;">
+    <img src="https://customer-assets.emergentagent.com/job_forma-build/artifacts/zipfdj6c_logo1.jpg" alt="FORMA Logo" style="width:100px; filter: invert(1); margin-bottom:20px;" />
+    <p style="font-size: 12px; letter-spacing: 2px; opacity:0.5;">© 2026 FORMA DESIGN CONSULTANTS</p>
   </footer>
 
 </body>
