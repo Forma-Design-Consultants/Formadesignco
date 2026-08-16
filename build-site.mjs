@@ -80,7 +80,7 @@ page({file:'404.html',title:'Page Not Found | Forma Design Consultants',descript
 
 writeFileSync('introduction.html',`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ADU Design | Forma</title><meta name="robots" content="noindex,follow"><link rel="canonical" href="${ORIGIN}/adu-design.html"><meta http-equiv="refresh" content="0; url=adu-design.html"><script>location.replace('adu-design.html'+location.search+location.hash)</script></head><body><p>This page moved to <a href="adu-design.html">ADU design</a>.</p></body></html>`);
 
-const sitemapFiles=['','services.html','custom-home-design.html','adu.html','adu-design.html','garage-conversion.html','additions-remodels.html','permit-services.html','commercial-plans.html','process.html','packages.html','team.html','consultant.html','contact.html','partner.html','estimate.html','floorplans.html','gallery.html','locations.html',...cities.map(c=>c[2]),'adu-privacy.html','privacy.html','terms.html'];
+const sitemapFiles=['','services.html','custom-home-design.html','adu.html','adu-fit.html','adu-design.html','garage-conversion.html','additions-remodels.html','permit-services.html','commercial-plans.html','process.html','packages.html','team.html','consultant.html','contact.html','partner.html','estimate.html','floorplans.html','gallery.html','locations.html',...cities.map(c=>c[2]),'adu-privacy.html','privacy.html','terms.html'];
 writeFileSync('sitemap.xml',`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapFiles.map(f=>`  <url><loc>${ORIGIN}/${f}</loc><changefreq>${f===''?'weekly':'monthly'}</changefreq><priority>${f===''?'1.0':f.includes('adu-plans-')?'0.7':'0.8'}</priority></url>`).join('\n')}\n</urlset>\n`);
 writeFileSync('robots.txt',`User-agent: *\nAllow: /\n\nSitemap: ${ORIGIN}/sitemap.xml\n`);
 writeFileSync('site.webmanifest',JSON.stringify({name:'Forma Design Consultants',short_name:'Forma',start_url:'/',display:'standalone',background_color:'#f5f3ee',theme_color:'#0a0a0a'},null,2)+'\n');
@@ -98,7 +98,7 @@ for(const file of readdirSync('.').filter(name=>name.endsWith('.html'))){
     html=html.replace('<section class="split">','<section class="concept-ribbon" aria-label="Forma design concepts"><a href="gallery.html"><img src="media/adu-concept-1.webp" loading="lazy" alt="Compact modern backyard home concept"><span>Compact living / Concept 01</span></a><a href="gallery.html"><img src="media/adu-concept-2.webp" loading="lazy" alt="Modern accessory dwelling unit concept"><span>ADU study / Concept 02</span></a><a href="floorplans.html"><img src="media/plan-concept-1.webp" loading="lazy" alt="Sample residential floor plan study"><span>Plan study / Concept 03</span></a></section><section class="split">');
   }
   if(file==='adu-design.html'){
-    html=html.replace('<a class="button" href="consultant.html">Request a consultation</a>','<div class="button-row"><a class="button" href="adu.html">Check my property</a><a class="button ghost" href="consultant.html">Request a consultation</a></div>');
+    html=html.replace('<a class="button" href="consultant.html">Request a consultation</a>','<div class="button-row"><a class="button" href="adu-fit.html">Try the visual fit check</a><a class="button ghost" href="adu.html">Guided property planner</a><a class="button ghost" href="consultant.html">Request a consultation</a></div>');
   }
   writeFileSync(file,html);
 }
