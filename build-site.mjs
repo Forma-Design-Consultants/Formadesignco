@@ -1,4 +1,4 @@
-import {writeFileSync} from 'node:fs';
+import {readFileSync,readdirSync,writeFileSync} from 'node:fs';
 
 const ORIGIN='https://www.formadesignconsultants.com';
 const year=new Date().getFullYear();
@@ -78,4 +78,18 @@ const sitemapFiles=['','services.html','adu-design.html','garage-conversion.html
 writeFileSync('sitemap.xml',`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapFiles.map(f=>`  <url><loc>${ORIGIN}/${f}</loc><changefreq>${f===''?'weekly':'monthly'}</changefreq><priority>${f===''?'1.0':f.includes('adu-plans-')?'0.7':'0.8'}</priority></url>`).join('\n')}\n</urlset>\n`);
 writeFileSync('robots.txt',`User-agent: *\nAllow: /\n\nSitemap: ${ORIGIN}/sitemap.xml\n`);
 writeFileSync('site.webmanifest',JSON.stringify({name:'Forma Design Consultants',short_name:'Forma',start_url:'/',display:'standalone',background_color:'#f5f3ee',theme_color:'#0a0a0a'},null,2)+'\n');
+
+// Blend the original Forma visual identity into every generated page.
+for(const file of readdirSync('.').filter(name=>name.endsWith('.html'))){
+  let html=readFileSync(file,'utf8');
+  html=html.replace('<link rel="stylesheet" href="style.css">','<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="visual-refresh.css">');
+  html=html.replaceAll('<a class="brand" href="index.html" aria-label="Forma Design Consultants home"><span class="brand-mark">F</span>FORMA</a>','<a class="brand" href="index.html" aria-label="Forma Design Consultants home"><img class="brand-logo" src="logo1.jpg" width="700" height="665" alt="Forma Design Consultants"></a>');
+  html=html.replaceAll('<a class="footer-brand" href="index.html">FORMA</a>','<a class="footer-brand" href="index.html" aria-label="Forma home"><img class="footer-logo" src="logo1.jpg" width="700" height="665" alt="Forma Design Consultants"></a>');
+  if(file==='index.html'){
+    html=html.replace('<img class="hero-media" src="media/adu-hero.webp" width="1408" height="768" alt="Concept visualization of a modern California accessory dwelling unit">','<video class="hero-media hero-video" autoplay muted loop playsinline preload="metadata" poster="media/adu-hero.webp" aria-hidden="true"><source src="media/forma-hero.mp4" type="video/mp4"></video>');
+    html=html.replace('</div></div></section><div class="trust-strip">','</div><div class="hero-index" aria-hidden="true"><span>FORMA / 01</span><span>DESIGN · DOCUMENT · COORDINATE</span></div></section><div class="trust-strip">');
+    html=html.replace('<section class="split">','<section class="concept-ribbon" aria-label="Forma design concepts"><a href="gallery.html"><img src="media/adu-concept-1.webp" loading="lazy" alt="Compact modern backyard home concept"><span>Compact living / Concept 01</span></a><a href="gallery.html"><img src="media/adu-concept-2.webp" loading="lazy" alt="Modern accessory dwelling unit concept"><span>ADU study / Concept 02</span></a><a href="floorplans.html"><img src="media/plan-concept-1.webp" loading="lazy" alt="Sample residential floor plan study"><span>Plan study / Concept 03</span></a></section><section class="split">');
+  }
+  writeFileSync(file,html);
+}
 console.log(`Generated ${sitemapFiles.length+3} public files.`);
