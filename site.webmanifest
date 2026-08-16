@@ -1,0 +1,8 @@
+{
+  "name": "Forma Design Consultants",
+  "short_name": "Forma",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f3ee",
+  "theme_color": "#0a0a0a"
+}
