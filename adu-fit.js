@@ -34,7 +34,7 @@
     'fresno': { name: 'Fresno County Regional Parcels', url: 'https://services3.arcgis.com/ibgDyuD2DLBge82s/arcgis/rest/services/REGIONAL_PARCELS_VW/FeatureServer/11' },
     'kern': { name: 'Kern County Assessor Parcels', url: 'https://services5.arcgis.com/Y8jwjGUWbRjuqpG5/arcgis/rest/services/Assessor_Parcels_Land_2025/FeatureServer/0' },
     'los angeles': { name: 'Los Angeles County Parcels', url: 'https://public.gis.lacounty.gov/public/rest/services/LACounty_Cache/LACounty_Parcel/MapServer/0' },
-    'merced': { name: 'Merced County Assessor Parcels', url: 'https://maps.countyofmerced.com/server/rest/services/Assessor_Merced_County/Merced_County_Assessor_Parcel/FeatureServer/0' },
+    'merced': { name: 'Merced County Parcels', url: 'https://services2.arcgis.com/pp15b0fTKaiCm2n7/arcgis/rest/services/Merced_County_Parcels_View_Layer/FeatureServer/0' },
     'san diego': { name: 'SANDAG Parcels', url: 'https://geo.sandag.org/server/rest/services/Hosted/Parcels/FeatureServer/0' },
     'santa clara': { name: 'Santa Clara County Public Parcels', url: 'https://services2.arcgis.com/tcv2cMrq63AgvbHF/arcgis/rest/services/Parcels_Public_View/FeatureServer/0' },
     'contra costa': { name: 'Contra Costa County Assessment Parcels', url: 'https://gis.cccounty.us/arcgis/rest/services/CCMAP/Assessment_Parcels_ArcPro/MapServer/0' }
@@ -187,20 +187,23 @@
   function queryParcel(center, county) {
     var source = parcelSources[normalizeCounty(county)];
     if (!source) return Promise.resolve(null);
+    var controller = new AbortController();
+    var timeout = setTimeout(function () { controller.abort(); }, 8000);
     var params = new URLSearchParams({
       geometry: center.lng + ',' + center.lat,
       geometryType: 'esriGeometryPoint', inSR: '4326', spatialRel: 'esriSpatialRelIntersects',
       distance: '35', units: 'esriSRUnit_Meter', outFields: '*', returnGeometry: 'true', outSR: '4326',
       resultRecordCount: '10', f: 'geojson'
     });
-    return fetch(source.url + '/query?' + params.toString(), { headers: { Accept: 'application/geo+json,application/json' } })
+    return fetch(source.url + '/query?' + params.toString(), { headers: { Accept: 'application/geo+json,application/json' }, signal: controller.signal })
       .then(function (response) { if (!response.ok) throw new Error('parcel service'); return response.json(); })
       .then(function (data) {
         if (data.error) throw new Error(data.error.message || 'parcel service');
         var feature = selectFeature(data.features, center);
         if (!feature) return null;
         return { feature: feature, source: source.name, apn: extractAPN(feature.properties) };
-      }).catch(function () { return null; });
+      }).catch(function () { return null; })
+      .finally(function () { clearTimeout(timeout); });
   }
   function useManualParcel(message) {
     parcelGeo = null; parcelSource = 'Manual outline'; parcelAPN = '';
