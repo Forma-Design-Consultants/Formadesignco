@@ -8,6 +8,8 @@
   var parcelGeo = null;
   var parcelSource = 'Manual outline';
   var parcelAPN = '';
+  var placementTouched = false;
+  var autoPlacementFound = false;
   var map = L.map('map', { zoomControl: true, maxZoom: 22 }).setView([origin.lat, origin.lng], 19);
 
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
@@ -108,6 +110,7 @@
     });
   }
   function resetCenters() {
+    placementTouched = false; autoPlacementFound = false;
     if (parcelGeo) {
       houseCenter = { lat: lotCenter.lat, lng: lotCenter.lng };
       chooseAduPlacement();
@@ -118,7 +121,8 @@
   }
   function chooseAduPlacement() {
     var build = safeBuildable();
-    if (!build) { aduCenter = featureCenter(activeParcel()); return; }
+    placementTouched = false; autoPlacementFound = false;
+    if (!build) { aduCenter = featureCenter(activeParcel()); return false; }
     var bbox = turf.bbox(build);
     var house = geo(rect(houseCenter, vals.houseWidth, vals.houseDepth, vals.houseAngle));
     var houseZone = turf.buffer(house, vals.structureGap, { units: 'feet' });
@@ -137,7 +141,9 @@
         }
       }
     }
+    autoPlacementFound = Boolean(best);
     aduCenter = best || featureCenter(build);
+    return autoPlacementFound;
   }
   function sync() {
     Object.keys(vals).forEach(function (key) { if (el(key)) vals[key] = num(key); });
@@ -158,7 +164,9 @@
     var houseZone = turf.buffer(house, vals.structureGap, { units: 'feet' });
     var clear = turf.booleanDisjoint(adu, houseZone);
     var fits = inside && clear;
-    setGeoLayer('adu', adu, { color: fits ? '#178354' : '#c23b32', weight: 4, fillColor: fits ? '#178354' : '#c23b32', fillOpacity: 0.38 }, Math.round(vals.aduWidth * vals.aduDepth) + ' sq ft ADU', 'adu-label');
+    var awaitingPlacement = searched && !autoPlacementFound && !placementTouched;
+    var aduColor = awaitingPlacement ? '#a66b08' : fits ? '#178354' : '#c23b32';
+    setGeoLayer('adu', adu, { color: aduColor, weight: 4, fillColor: aduColor, fillOpacity: 0.38 }, Math.round(vals.aduWidth * vals.aduDepth) + ' sq ft ADU', 'adu-label');
     markers.lot.setLatLng(lotCenter);
     markers.house.setLatLng(houseCenter);
     markers.adu.setLatLng(aduCenter);
@@ -166,12 +174,14 @@
     box.className = 'status ' + (fits ? 'good' : 'bad');
     if (!searched) {
       box.className = 'status'; el('statusTitle').textContent = 'Enter an address to begin'; el('statusText').textContent = 'The parcel border will load automatically where a supported public source is available.';
+    } else if (awaitingPlacement) {
+      box.className = 'status'; el('statusTitle').textContent = 'Place the ADU on the property'; el('statusText').textContent = 'Drag the green-and-gold ADU handle into the yard. Align the blue home outline if needed; the result will update as you move it.';
     } else if (fits) {
       el('statusTitle').textContent = 'Likely fits under these assumptions'; el('statusText').textContent = 'The ADU is inside the green planning envelope and clear of the approximate home footprint.';
     } else {
       el('statusTitle').textContent = 'Placement conflict detected'; el('statusText').textContent = !build ? 'The parcel is too small for the selected edge clearance.' : !inside ? 'Move or rotate the ADU until it is completely inside the green area.' : 'Move the ADU farther from the approximate existing-home footprint.';
     }
-    window.fitResult = fits ? 'Likely fits under entered assumptions' : 'Placement conflict detected';
+    window.fitResult = awaitingPlacement ? 'Placement not yet confirmed' : fits ? 'Likely fits under entered assumptions' : 'Placement conflict detected';
   }
   function extractAPN(properties) {
     var keys = Object.keys(properties || {});
@@ -287,9 +297,9 @@
     lotCenter = { lat: next.lat, lng: next.lng };
     houseCenter = move(houseCenter, east, north); aduCenter = move(aduCenter, east, north); draw();
   });
-  markers.house.on('drag', function (event) { houseCenter = event.target.getLatLng(); draw(); });
-  markers.adu.on('drag', function (event) { aduCenter = event.target.getLatLng(); draw(); });
-  Object.keys(vals).forEach(function (id) { if (el(id)) el(id).addEventListener('input', sync); });
+  markers.house.on('drag', function (event) { placementTouched = true; houseCenter = event.target.getLatLng(); draw(); });
+  markers.adu.on('drag', function (event) { placementTouched = true; aduCenter = event.target.getLatLng(); draw(); });
+  Object.keys(vals).forEach(function (id) { if (el(id)) el(id).addEventListener('input', function () { if (!/^lot/.test(id)) placementTouched = true; sync(); }); });
   el('aduPreset').addEventListener('change', function () {
     if (this.value === 'custom') return;
     var dimensions = this.value.split(','); el('aduWidth').value = dimensions[0]; el('aduDepth').value = dimensions[1];
