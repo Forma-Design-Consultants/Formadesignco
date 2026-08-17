@@ -102,6 +102,11 @@
     } catch (error) { return null; }
   }
   function parcelArea() { return Math.round(turf.area(activeParcel()) * 10.7639); }
+  function setStage(stage) {
+    document.querySelectorAll('.progress li').forEach(function (item) {
+      item.classList.toggle('active', Number(item.getAttribute('data-stage')) <= stage);
+    });
+  }
   function resetCenters() {
     if (parcelGeo) {
       houseCenter = { lat: lotCenter.lat, lng: lotCenter.lng };
@@ -119,10 +124,10 @@
     var houseZone = turf.buffer(house, vals.structureGap, { units: 'feet' });
     var best = null;
     var bestDistance = -1;
-    for (var x = 0; x <= 10; x += 1) {
-      for (var y = 0; y <= 10; y += 1) {
-        var lng = bbox[0] + (bbox[2] - bbox[0]) * x / 10;
-        var lat = bbox[1] + (bbox[3] - bbox[1]) * y / 10;
+    for (var x = 0; x <= 32; x += 1) {
+      for (var y = 0; y <= 32; y += 1) {
+        var lng = bbox[0] + (bbox[2] - bbox[0]) * x / 32;
+        var lat = bbox[1] + (bbox[3] - bbox[1]) * y / 32;
         var candidate = { lat: lat, lng: lng };
         var adu = geo(rect(candidate, vals.aduWidth, vals.aduDepth, vals.aduAngle));
         var fullyInside = turf.booleanWithin(adu, build);
@@ -207,25 +212,41 @@
   }
   function useManualParcel(message) {
     parcelGeo = null; parcelSource = 'Manual outline'; parcelAPN = '';
+    document.body.classList.remove('has-parcel');
     markers.lot.setOpacity(1); markers.lot.dragging.enable();
     el('manualLot').open = true;
     el('parcelMode').className = 'parcel-readout';
     el('parcelMode').textContent = message + ' Parcel reference lines are still shown where available. Use the black handle and manual dimensions to align the dashed outline.';
-    resetCenters(); draw();
+    setStage(2); resetCenters(); draw();
+  }
+  function geocodeAddress(query) {
+    var nominatim = 'https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=us&addressdetails=1&q=' + encodeURIComponent(query);
+    return fetch(nominatim, { headers: { Accept: 'application/json' } })
+      .then(function (response) { if (!response.ok) return []; return response.json(); })
+      .catch(function () { return []; })
+      .then(function (rows) {
+        if (rows.length) return rows[0];
+        var esri = 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?f=json&countryCode=USA&maxLocations=1&outFields=Subregion,Region,Postal&SingleLine=' + encodeURIComponent(query);
+        return fetch(esri, { headers: { Accept: 'application/json' } })
+          .then(function (response) { if (!response.ok) throw new Error('address service'); return response.json(); })
+          .then(function (data) {
+            if (!data.candidates || !data.candidates.length) throw new Error('not found');
+            var candidate = data.candidates[0];
+            return { lat: candidate.location.y, lon: candidate.location.x, display_name: candidate.address, address: { county: candidate.attributes.Subregion || '' } };
+          });
+      });
   }
   function findAddress() {
     var query = el('address').value.trim();
     if (!query) return;
     var button = el('find');
     button.disabled = true; button.textContent = 'Finding…'; el('searchNote').textContent = 'Locating the address…';
-    fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=us&addressdetails=1&q=' + encodeURIComponent(query), { headers: { Accept: 'application/json' } })
-      .then(function (response) { if (!response.ok) throw new Error('address service'); return response.json(); })
-      .then(function (rows) {
-        if (!rows.length) throw new Error('not found');
-        var row = rows[0];
+    geocodeAddress(query)
+      .then(function (row) {
         var center = { lat: Number(row.lat), lng: Number(row.lon) };
         searched = true; addressText = row.display_name; countyName = row.address.county || '';
         lotCenter = center; houseCenter = { lat: center.lat, lng: center.lng }; aduCenter = move(center, 0, 45);
+        el('mapAddress').textContent = addressText;
         map.setView([center.lat, center.lng], 20);
         el('searchNote').textContent = 'Address found. Looking up the parcel boundary…';
         return queryParcel(center, countyName).then(function (result) { return { result: result, center: center }; });
@@ -237,15 +258,21 @@
           return;
         }
         parcelGeo = payload.result.feature; parcelSource = payload.result.source; parcelAPN = payload.result.apn;
+        document.body.classList.add('has-parcel'); setStage(3);
         markers.lot.setOpacity(0); markers.lot.dragging.disable(); el('manualLot').open = false;
         el('parcelMode').className = 'parcel-readout loaded';
         el('parcelMode').textContent = 'Public parcel loaded from ' + parcelSource + (parcelAPN ? ' · APN ' + parcelAPN : '') + ' · approximately ' + parcelArea().toLocaleString() + ' sq ft.';
+        el('resultCounty').textContent = countyName || 'California';
+        el('resultParcel').textContent = parcelAPN || 'Loaded';
+        el('resultArea').textContent = parcelArea().toLocaleString() + ' sq ft';
+        el('mapAddress').textContent = addressText;
         houseCenter = payload.center; chooseAduPlacement(); draw();
         map.fitBounds(L.geoJSON(parcelGeo).getBounds(), { padding: [42, 42], maxZoom: 21 });
         el('searchNote').textContent = 'Found: ' + addressText;
+        if (window.innerWidth <= 880) setTimeout(function () { document.querySelector('.map-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 250);
       })
       .catch(function () { el('searchNote').textContent = 'Address not found. Try including the city, state, and ZIP code.'; })
-      .finally(function () { button.disabled = false; button.textContent = 'Find parcel'; });
+      .finally(function () { button.disabled = false; button.textContent = 'Check lot'; });
   }
 
   markers.lot = marker(lotCenter, '#111', 'parcel');
@@ -268,12 +295,26 @@
     var dimensions = this.value.split(','); el('aduWidth').value = dimensions[0]; el('aduDepth').value = dimensions[1];
     vals.aduWidth = Number(dimensions[0]); vals.aduDepth = Number(dimensions[1]); chooseAduPlacement(); draw();
   });
+  document.querySelectorAll('.model-choice').forEach(function (choice) {
+    choice.addEventListener('click', function () {
+      document.querySelectorAll('.model-choice').forEach(function (item) { item.classList.remove('selected'); });
+      choice.classList.add('selected');
+      var dimensions = choice.getAttribute('data-size').split(',');
+      el('aduPreset').value = choice.getAttribute('data-size');
+      el('aduWidth').value = dimensions[0]; el('aduDepth').value = dimensions[1];
+      vals.aduWidth = Number(dimensions[0]); vals.aduDepth = Number(dimensions[1]);
+      if (searched) setStage(3);
+      chooseAduPlacement(); draw();
+    });
+  });
   el('find').addEventListener('click', findAddress);
   el('address').addEventListener('keydown', function (event) { if (event.key === 'Enter') findAddress(); });
   el('reset').addEventListener('click', function () { resetCenters(); draw(); });
+  el('autoPlace').addEventListener('click', function () { chooseAduPlacement(); draw(); });
   el('zoom').addEventListener('click', function () {
     if (parcelGeo) map.fitBounds(L.geoJSON(parcelGeo).getBounds(), { padding: [42, 42], maxZoom: 21 }); else map.setView(lotCenter, 20);
   });
+  ['name', 'email', 'phone'].forEach(function (id) { el(id).addEventListener('focus', function () { if (searched) setStage(4); }); });
 
   if (window.emailjs) emailjs.init('alap2C2Fda-y4hFG8');
   el('submit').addEventListener('click', function () {
