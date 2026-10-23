@@ -1,3 +1,4 @@
+import {demoProperty,siteRecord,siteSVG} from '../../../../lib/site-planner.mjs';
 import {planSVG} from '../../../../lib/architect.mjs';
 import {env} from 'cloudflare:workers';
 import {normalize,generate} from '../../../../lib/geometry.mjs';
@@ -23,8 +24,8 @@ async function handle(request:Request){
  await db.batch([db.prepare('DELETE FROM studio_preview_projects WHERE expires<=?').bind(now),db.prepare('DELETE FROM studio_preview_requests WHERE expires<=?').bind(now)]);
  if(action==='session'&&request.method==='GET')return reply({account:true,integration:'disabled',mode:'private-demo',retentionDays:7});
  if(action==='concepts'&&request.method==='POST')return reply({concepts:Array.from({length:b.type==='ADU'&&Number(b.beds??2)===2&&Number(b.baths??1)===1&&Number(b.area)>=700&&Number(b.area)<=900?2:10},(_,i)=>generate(b,i))});
- if(action==='property'&&request.method==='POST')return reply({status:'unverified',sources:[],message:'Demo preview: no parcel, zoning or live feasibility lookup is connected. Site dimensions and buffers are assumptions.'});
- if(action==='export'&&request.method==='GET'){const r:any=await db.prepare('SELECT data FROM studio_preview_projects WHERE id=? AND owner=? AND expires>?').bind(url.searchParams.get('id'),owner,now).first();if(!r)return reply({error:'Project not found'},404);const data=JSON.parse(r.data);if(!data.concept.architecture)return reply({error:'Architectural ADU required'},400);return new Response(planSVG(data.concept),{headers:{...headers,'Content-Type':'image/svg+xml','Content-Disposition':'attachment; filename="forma-adu-floor-plan.svg"'}});}
+ if(action==='property'&&request.method==='POST')return reply({property:demoProperty(normalize(b.parameters)),status:'demo-unverified',sources:[{kind:'synthetic',title:'Forma demo geometry',url:null}],message:'Demo preview: no parcel, zoning or live feasibility lookup is connected. Site dimensions and buffers are assumptions.'});
+ if(action==='export'&&request.method==='GET'){const r:any=await db.prepare('SELECT data FROM studio_preview_projects WHERE id=? AND owner=? AND expires>?').bind(url.searchParams.get('id'),owner,now).first();if(!r)return reply({error:'Project not found'},404);const data=JSON.parse(r.data);if(!data.concept.architecture)return reply({error:'Architectural ADU required'},400);return new Response(url.searchParams.get('site')==='1'?siteSVG(data.concept):planSVG(data.concept),{headers:{...headers,'Content-Type':'image/svg+xml','Content-Disposition':url.searchParams.get('site')==='1'?'attachment; filename="forma-site-plan.svg"':'attachment; filename="forma-adu-floor-plan.svg"'}});}
  if(action==='projects'&&request.method==='GET'){
  const rows=await db.prepare('SELECT id,data,updated FROM studio_preview_projects WHERE owner=? AND expires>? ORDER BY updated DESC').bind(owner,now).all();
  return reply({projects:rows.results.map((r:any)=>({...JSON.parse(r.data),id:r.id,updated:new Date(r.updated).toISOString()}))});
@@ -38,7 +39,7 @@ async function handle(request:Request){
  if(b.id&&!await db.prepare('SELECT id FROM studio_preview_projects WHERE id=? AND owner=? AND expires>?').bind(pid,owner,now).first())return reply({error:'Project not found'},404);
  const count:any=await db.prepare('SELECT COUNT(*) AS n FROM studio_preview_projects WHERE owner=?').bind(owner).first();
  if(!b.id&&count.n>=50)return reply({error:'Demo limit reached. Delete your demo data before saving more.'},429);
- const data={address,parameters,variant,concept:generate(parameters,variant)};
+ const data={address,parameters,variant,concept:generate(parameters,variant),site:siteRecord(generate(parameters,variant),pid)};
  if(b.id)await db.prepare('UPDATE studio_preview_projects SET data=?,updated=?,expires=? WHERE id=? AND owner=?').bind(JSON.stringify(data),now,now+TTL,pid,owner).run();
  else await db.prepare('INSERT INTO studio_preview_projects(id,owner,data,updated,expires) VALUES(?,?,?,?,?)').bind(pid,owner,JSON.stringify(data),now,now+TTL).run();
  return reply({id:pid,...data});

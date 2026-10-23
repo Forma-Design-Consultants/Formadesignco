@@ -32,7 +32,7 @@ export function validateADU(c){const issues=[];const byId=Object.fromEntries(c.w
 
  const bath=c.rooms.find(r=>r.id==='bath');if(bath.d<5.5)issues.push('Bathroom depth below the 5′-6″ planning allowance.');
  const reach=new Set(['outside']);for(let i=0;i<c.rooms.length+2;i++)for(const d of c.doors){if(reach.has(d.from))reach.add(d.to);if(reach.has(d.to))reach.add(d.from);}for(const r of c.rooms)if(!reach.has(r.id))issues.push('Room has no connected doorway: '+r.name);
- const p=c.parameters,fw=p.rotation%180?c.depth:c.width,fd=p.rotation%180?c.width:c.depth;if(fw+2*p.setback+2*Math.abs(p.offsetX)>p.width||fd+2*p.setback+2*Math.abs(p.offsetY)>p.depth)issues.push('Footprint exceeds assumed site envelope.');
+ const p=c.parameters,fw=Math.abs(Math.cos(p.rotation*Math.PI/180))*c.width+Math.abs(Math.sin(p.rotation*Math.PI/180))*c.depth,fd=Math.abs(Math.sin(p.rotation*Math.PI/180))*c.width+Math.abs(Math.cos(p.rotation*Math.PI/180))*c.depth;if(fw+2*p.setback+2*Math.abs(p.offsetX)>p.width||fd+2*p.setback+2*Math.abs(p.offsetY)>p.depth)issues.push('Footprint exceeds assumed site envelope.');
  if(!issues.length)issues.push('Planning checks passed: connected rooms, bounded openings and a 3′-6″ public-to-hall opening. Professional code and clearance review still required.');return issues;}
 const e=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const feet=n=>{let inches=Math.round(n*12);return `${Math.floor(inches/12)}′-${inches%12}″`;};

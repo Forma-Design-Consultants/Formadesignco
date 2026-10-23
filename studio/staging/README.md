@@ -35,3 +35,9 @@ Hosted owner sign-in is enforced by Sites. Local browser QA uses a synthetic dev
 5. Require Cody's explicit approval of a working preview before merging PR 18 or changing production hosting, DNS, website files or Intelligence records.
 
 Plan-generation limitations remain those in `../README.md`: conceptual rectangular space allocation and massing only, not permit-ready design, verified feasibility, construction estimates or Revit exports.
+
+## Site Planner update
+
+The private preview now includes the Forma Site Planner described in `../README.md`. Use Demo property, California, choose a floor plan, then click Place selected plan on site. Drag in Site (2D), rotate with the degree slider, or use the one-foot movement buttons. Site 3D shows matching placement. Save and reopen retains property assumptions and transform. Site-mode SVG and JSON exports include the site plan/metadata. The preview remains demo-only and owner-private with the existing retention, privacy, disabled-outreach and production approval controls.
+
+Real aerial imagery and verified parcel sources require a configured licensed provider, provenance and coordinate conversion; no new access is needed to test the demo. No map API key is stored or requested for this milestone. Physical iPad/iPhone Safari touch behavior and completed browser downloads remain acceptance checks, distinct from the responsive Chrome viewport and API tests already completed.

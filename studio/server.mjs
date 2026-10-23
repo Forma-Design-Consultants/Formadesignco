@@ -1,3 +1,4 @@
+import {demoProperty,siteRecord,siteSVG} from './site-planner.mjs';
 import {planSVG} from './architect.mjs';
 import http from 'node:http';
 import {readFile,stat,mkdir} from 'node:fs/promises';
@@ -36,12 +37,12 @@ const server=http.createServer(async(req,res)=>{
  }
  if(path==='logout'&&req.method==='POST'){db.prepare('DELETE FROM sessions WHERE token=?').run(s.token);res.setHeader('Set-Cookie','studio_session=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0');return json(res,200,{ok:true});}
  if(path==='concepts'&&req.method==='POST')return json(res,200,{concepts:Array.from({length:b.type==='ADU'&&Number(b.beds??2)===2&&Number(b.baths??1)===1&&Number(b.area)>=700&&Number(b.area)<=900?2:10},(_,i)=>generate(b,i))});
- if(path==='property'&&req.method==='POST')return json(res,200,{address:String(b.address||'').slice(0,300),status:'unverified',sources:[],message:'Parcel, zoning, utilities, setbacks and project eligibility require verification. No live property lookup is configured.'});
- if(path==='export'&&req.method==='GET'){const r=db.prepare('SELECT data FROM projects WHERE id=? AND owner=?').get(url.searchParams.get('id'),s.owner);if(!r)return json(res,404,{error:'Project not found'});const data=JSON.parse(r.data);if(!data.concept.architecture)return json(res,400,{error:'Architectural ADU required'});res.writeHead(200,{'Content-Type':'image/svg+xml','Content-Disposition':'attachment; filename="forma-adu-floor-plan.svg"','Cache-Control':'no-store'});res.end(planSVG(data.concept));return;}
+ if(path==='property'&&req.method==='POST')return json(res,200,{property:demoProperty(normalize(b.parameters)),address:String(b.address||'').slice(0,300),status:'demo-unverified',sources:[],message:'Parcel, zoning, utilities, setbacks and project eligibility require verification. No live property lookup is configured.'});
+ if(path==='export'&&req.method==='GET'){const r=db.prepare('SELECT data FROM projects WHERE id=? AND owner=?').get(url.searchParams.get('id'),s.owner);if(!r)return json(res,404,{error:'Project not found'});const data=JSON.parse(r.data);if(!data.concept.architecture)return json(res,400,{error:'Architectural ADU required'});res.writeHead(200,{'Content-Type':'image/svg+xml','Content-Disposition':url.searchParams.get('site')==='1'?'attachment; filename="forma-site-plan.svg"':'attachment; filename="forma-adu-floor-plan.svg"','Cache-Control':'no-store'});res.end(url.searchParams.get('site')==='1'?siteSVG(data.concept):planSVG(data.concept));return;}
  if(path==='projects'&&req.method==='GET')return json(res,200,{projects:db.prepare('SELECT id,data,updated FROM projects WHERE owner=? ORDER BY updated DESC').all(s.owner).map(r=>({...JSON.parse(r.data),id:r.id,updated:r.updated}))});
  if(path==='projects'&&req.method==='POST'){
  const parameters=normalize(b.parameters),variant=Number(b.variant||0);if(!Number.isInteger(variant)||variant<0||variant>9)throw Error('Invalid concept');const pid=b.id||id();if(b.id&&!db.prepare('SELECT id FROM projects WHERE id=? AND owner=?').get(b.id,s.owner))return json(res,404,{error:'Project not found'});
- const data={address:String(b.address||'').slice(0,300),parameters,variant,concept:generate(parameters,variant)};db.prepare('INSERT INTO projects VALUES(?,?,?,?) ON CONFLICT(id) DO UPDATE SET data=excluded.data,updated=excluded.updated').run(pid,s.owner,JSON.stringify(data),new Date().toISOString());return json(res,200,{id:pid,...data});
+ const data={address:String(b.address||'').slice(0,300),parameters,variant,concept:generate(parameters,variant),site:siteRecord(generate(parameters,variant),pid)};db.prepare('INSERT INTO projects VALUES(?,?,?,?) ON CONFLICT(id) DO UPDATE SET data=excluded.data,updated=excluded.updated').run(pid,s.owner,JSON.stringify(data),new Date().toISOString());return json(res,200,{id:pid,...data});
  }
  if(path==='handoff'&&req.method==='POST'){
  const project=db.prepare('SELECT data FROM projects WHERE id=? AND owner=?').get(b.projectId,s.owner);if(!project)return json(res,404,{error:'Save this project first'});
