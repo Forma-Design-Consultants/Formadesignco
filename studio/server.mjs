@@ -1,3 +1,4 @@
+import {planSVG} from './architect.mjs';
 import http from 'node:http';
 import {readFile,stat,mkdir} from 'node:fs/promises';
 import {resolve,extname,dirname} from 'node:path';
@@ -34,8 +35,9 @@ const server=http.createServer(async(req,res)=>{
  db.prepare('DELETE FROM sessions WHERE token=?').run(s.token);const token=id();db.prepare('INSERT INTO sessions VALUES(?,?,?)').run(hash(token),user.id,Date.now()+7*86400000);res.setHeader('Set-Cookie',`studio_session=${token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=604800${process.env.NODE_ENV==='production'?'; Secure':''}`);return json(res,200,{ok:true});
  }
  if(path==='logout'&&req.method==='POST'){db.prepare('DELETE FROM sessions WHERE token=?').run(s.token);res.setHeader('Set-Cookie','studio_session=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0');return json(res,200,{ok:true});}
- if(path==='concepts'&&req.method==='POST')return json(res,200,{concepts:Array.from({length:10},(_,i)=>generate(b,i))});
+ if(path==='concepts'&&req.method==='POST')return json(res,200,{concepts:Array.from({length:b.type==='ADU'&&Number(b.beds??2)===2&&Number(b.baths??1)===1&&Number(b.area)>=700&&Number(b.area)<=900?2:10},(_,i)=>generate(b,i))});
  if(path==='property'&&req.method==='POST')return json(res,200,{address:String(b.address||'').slice(0,300),status:'unverified',sources:[],message:'Parcel, zoning, utilities, setbacks and project eligibility require verification. No live property lookup is configured.'});
+ if(path==='export'&&req.method==='GET'){const r=db.prepare('SELECT data FROM projects WHERE id=? AND owner=?').get(url.searchParams.get('id'),s.owner);if(!r)return json(res,404,{error:'Project not found'});const data=JSON.parse(r.data);if(!data.concept.architecture)return json(res,400,{error:'Architectural ADU required'});res.writeHead(200,{'Content-Type':'image/svg+xml','Content-Disposition':'attachment; filename="forma-adu-floor-plan.svg"','Cache-Control':'no-store'});res.end(planSVG(data.concept));return;}
  if(path==='projects'&&req.method==='GET')return json(res,200,{projects:db.prepare('SELECT id,data,updated FROM projects WHERE owner=? ORDER BY updated DESC').all(s.owner).map(r=>({...JSON.parse(r.data),id:r.id,updated:r.updated}))});
  if(path==='projects'&&req.method==='POST'){
  const parameters=normalize(b.parameters),variant=Number(b.variant||0);if(!Number.isInteger(variant)||variant<0||variant>9)throw Error('Invalid concept');const pid=b.id||id();if(b.id&&!db.prepare('SELECT id FROM projects WHERE id=? AND owner=?').get(b.id,s.owner))return json(res,404,{error:'Project not found'});

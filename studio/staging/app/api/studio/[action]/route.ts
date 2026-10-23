@@ -1,3 +1,4 @@
+import {planSVG} from '../../../../lib/architect.mjs';
 import {env} from 'cloudflare:workers';
 import {normalize,generate} from '../../../../lib/geometry.mjs';
 export const dynamic='force-dynamic';
@@ -21,8 +22,9 @@ async function handle(request:Request){
  // Expired records are never returned, and are physically removed on the next API request.
  await db.batch([db.prepare('DELETE FROM studio_preview_projects WHERE expires<=?').bind(now),db.prepare('DELETE FROM studio_preview_requests WHERE expires<=?').bind(now)]);
  if(action==='session'&&request.method==='GET')return reply({account:true,integration:'disabled',mode:'private-demo',retentionDays:7});
- if(action==='concepts'&&request.method==='POST')return reply({concepts:Array.from({length:10},(_,i)=>generate(b,i))});
+ if(action==='concepts'&&request.method==='POST')return reply({concepts:Array.from({length:b.type==='ADU'&&Number(b.beds??2)===2&&Number(b.baths??1)===1&&Number(b.area)>=700&&Number(b.area)<=900?2:10},(_,i)=>generate(b,i))});
  if(action==='property'&&request.method==='POST')return reply({status:'unverified',sources:[],message:'Demo preview: no parcel, zoning or live feasibility lookup is connected. Site dimensions and buffers are assumptions.'});
+ if(action==='export'&&request.method==='GET'){const r:any=await db.prepare('SELECT data FROM studio_preview_projects WHERE id=? AND owner=? AND expires>?').bind(url.searchParams.get('id'),owner,now).first();if(!r)return reply({error:'Project not found'},404);const data=JSON.parse(r.data);if(!data.concept.architecture)return reply({error:'Architectural ADU required'},400);return new Response(planSVG(data.concept),{headers:{...headers,'Content-Type':'image/svg+xml','Content-Disposition':'attachment; filename="forma-adu-floor-plan.svg"'}});}
  if(action==='projects'&&request.method==='GET'){
  const rows=await db.prepare('SELECT id,data,updated FROM studio_preview_projects WHERE owner=? AND expires>? ORDER BY updated DESC').bind(owner,now).all();
  return reply({projects:rows.results.map((r:any)=>({...JSON.parse(r.data),id:r.id,updated:new Date(r.updated).toISOString()}))});
