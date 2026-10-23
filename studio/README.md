@@ -38,7 +38,7 @@ The generator is a space-allocation study, not an AI architect or permit-ready f
 
 Five automated test cases exercise 60 concept/type combinations, area coverage and nonoverlap, placement/rotation and room warnings, invalid inputs, persistent project lifecycle, cross-session access denial, consent, account rotation/login/logout, cross-origin rejection, private-source denial and basic routes/security headers. Existing site validation passes on 37 root HTML pages.
 
-Browser QA was blocked by the managed browser URL security policy. No browser render, mobile screenshot, visual inspection or end-to-end browser pass is claimed. The preview supervisor starts successfully, and the HTTP API/HTML routes were tested directly.
+The follow-up private staging adapter in `staging/` resolves the preview-hosting milestone. Real local Chrome browser QA now covers desktop plus 390px mobile and 820px tablet iframe viewports. See `staging/README.md` for the precise scope and remaining hosted sign-in verification limits; screenshots are in `qa-evidence/`. Eight automated cases now pass across the original and staging backends. No live Intelligence integration or production migration is included.
 
 ## Approval gate
 

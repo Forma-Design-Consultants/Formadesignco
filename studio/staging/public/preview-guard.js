@@ -1,0 +1,1 @@
+document.addEventListener('submit',e=>{e.preventDefault();e.stopImmediatePropagation();alert('Private preview: live marketing inquiries are disabled.');},true);
