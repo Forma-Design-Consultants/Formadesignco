@@ -3,3 +3,5 @@
 .drawing{height:650px}.concept-picker{grid-template-columns:repeat(2,1fr)}@media(max-width:760px){.drawing{height:490px}}
 
 .site-active{touch-action:none;user-select:none}.canvas-toolbar{flex-wrap:wrap}.site-moves{display:flex;gap:8px;flex-wrap:wrap}.site-moves button{min-height:44px;min-width:60px;background:white;border:1px solid #aaa;padding:8px}#site-readout{font-size:.77rem;line-height:1.8;padding:12px;background:#f3f2ed}#site-planner-controls{border-top:1px solid #ddd;margin-top:20px;padding-top:12px}.view-switch{flex-wrap:wrap}.site-active:focus{outline:2px solid #58734b}
+
+#property-results{display:grid;gap:8px}#property-results button{white-space:normal;text-align:left;min-height:44px}#property-details textarea{width:100%;max-width:100%;font:12px monospace}#property-provenance{overflow-wrap:anywhere}#property-details input[type=checkbox]{width:auto}#property-details summary{min-height:44px;cursor:pointer}

@@ -1,3 +1,4 @@
+import {readiness,searchAddresses,searchParcels,aerialResponse,unseal,correctParcel} from '../../../../lib/property-provider.mjs';
 import {demoProperty,siteRecord,siteSVG} from '../../../../lib/site-planner.mjs';
 import {planSVG} from '../../../../lib/architect.mjs';
 import {env} from 'cloudflare:workers';
@@ -22,10 +23,15 @@ async function handle(request:Request){
  const now=Date.now();
  // Expired records are never returned, and are physically removed on the next API request.
  await db.batch([db.prepare('DELETE FROM studio_preview_projects WHERE expires<=?').bind(now),db.prepare('DELETE FROM studio_preview_requests WHERE expires<=?').bind(now)]);
+ if(action==='providers'&&request.method==='GET')return reply(readiness(env));
+ if(action==='address-search'&&request.method==='POST')return reply(await searchAddresses(b.query,env,owner));
+ if(action==='parcel-search'&&request.method==='POST')return reply(await searchParcels(b.ticket,env,owner));
+ if(action==='parcel-correction'&&request.method==='POST')return reply({property:await correctParcel(b.ticket,b.geometry,b.reason,env,owner)});
+ if(action==='aerial'&&request.method==='GET')return aerialResponse(url.searchParams.get('ticket'),env,owner);
  if(action==='session'&&request.method==='GET')return reply({account:true,integration:'disabled',mode:'private-demo',retentionDays:7});
  if(action==='concepts'&&request.method==='POST')return reply({concepts:Array.from({length:b.type==='ADU'&&Number(b.beds??2)===2&&Number(b.baths??1)===1&&Number(b.area)>=700&&Number(b.area)<=900?2:10},(_,i)=>generate(b,i))});
  if(action==='property'&&request.method==='POST')return reply({property:demoProperty(normalize(b.parameters)),status:'demo-unverified',sources:[{kind:'synthetic',title:'Forma demo geometry',url:null}],message:'Demo preview: no parcel, zoning or live feasibility lookup is connected. Site dimensions and buffers are assumptions.'});
- if(action==='export'&&request.method==='GET'){const r:any=await db.prepare('SELECT data FROM studio_preview_projects WHERE id=? AND owner=? AND expires>?').bind(url.searchParams.get('id'),owner,now).first();if(!r)return reply({error:'Project not found'},404);const data=JSON.parse(r.data);if(!data.concept.architecture)return reply({error:'Architectural ADU required'},400);return new Response(url.searchParams.get('site')==='1'?siteSVG(data.concept):planSVG(data.concept),{headers:{...headers,'Content-Type':'image/svg+xml','Content-Disposition':url.searchParams.get('site')==='1'?'attachment; filename="forma-site-plan.svg"':'attachment; filename="forma-adu-floor-plan.svg"'}});}
+ if(action==='export'&&request.method==='GET'){const r:any=await db.prepare('SELECT data FROM studio_preview_projects WHERE id=? AND owner=? AND expires>?').bind(url.searchParams.get('id'),owner,now).first();if(!r)return reply({error:'Project not found'},404);const data=JSON.parse(r.data);if(!data.concept.architecture)return reply({error:'Architectural ADU required'},400);return new Response(url.searchParams.get('site')==='1'?siteSVG({...data.concept,property:data.site.property.verification==='demo-unverified'?undefined:{...data.site.property,aerial:{...data.site.property.aerial,url:null}}}):planSVG(data.concept),{headers:{...headers,'Content-Type':'image/svg+xml','Content-Disposition':url.searchParams.get('site')==='1'?'attachment; filename="forma-site-plan.svg"':'attachment; filename="forma-adu-floor-plan.svg"'}});}
  if(action==='projects'&&request.method==='GET'){
  const rows=await db.prepare('SELECT id,data,updated FROM studio_preview_projects WHERE owner=? AND expires>? ORDER BY updated DESC').bind(owner,now).all();
  return reply({projects:rows.results.map((r:any)=>({...JSON.parse(r.data),id:r.id,updated:new Date(r.updated).toISOString()}))});
@@ -34,12 +40,14 @@ async function handle(request:Request){
  const parameters=normalize(b.parameters),variant=Number(b.variant??0);
  if(!Number.isInteger(variant)||variant<0||variant>9)return reply({error:'Invalid concept'},400);
  const address=String(b.address||'Demo property, California').slice(0,300);
- if(!address.toLowerCase().startsWith('demo'))return reply({error:'Use a demo property label beginning with “Demo”. Real customer addresses are disabled in this preview.'},400);
+ let property;if(b.propertyTicket){if(!readiness(env).ready)return reply({error:readiness(env).message},503);property=await unseal(b.propertyTicket,env,owner,'property');}
+ if(!property&&!address.toLowerCase().startsWith('demo'))return reply({error:'Use a demo property label beginning with “Demo”. Real customer addresses are disabled in this preview.'},400);
  const pid=b.id||crypto.randomUUID();
  if(b.id&&!await db.prepare('SELECT id FROM studio_preview_projects WHERE id=? AND owner=? AND expires>?').bind(pid,owner,now).first())return reply({error:'Project not found'},404);
  const count:any=await db.prepare('SELECT COUNT(*) AS n FROM studio_preview_projects WHERE owner=?').bind(owner).first();
  if(!b.id&&count.n>=50)return reply({error:'Demo limit reached. Delete your demo data before saving more.'},429);
- const data={address,parameters,variant,concept:generate(parameters,variant),site:siteRecord(generate(parameters,variant),pid)};
+ const concept={...generate(parameters,variant),...(property?{property:{...property,ticket:b.propertyTicket}}:{})};
+ const data={address,parameters,variant,concept,site:siteRecord(concept,pid)};
  if(b.id)await db.prepare('UPDATE studio_preview_projects SET data=?,updated=?,expires=? WHERE id=? AND owner=?').bind(JSON.stringify(data),now,now+TTL,pid,owner).run();
  else await db.prepare('INSERT INTO studio_preview_projects(id,owner,data,updated,expires) VALUES(?,?,?,?,?)').bind(pid,owner,JSON.stringify(data),now,now+TTL).run();
  return reply({id:pid,...data});
@@ -55,5 +63,5 @@ async function handle(request:Request){
  }
  if(action==='delete-data'&&request.method==='POST'&&b.confirm===true){await db.batch([db.prepare('DELETE FROM studio_preview_projects WHERE owner=?').bind(owner),db.prepare('DELETE FROM studio_preview_requests WHERE owner=?').bind(owner)]);return reply({ok:true});}
  return reply({error:'Endpoint unavailable in this private demo.'},404);
- }catch{return reply({error:'Unable to process this preview request.'},400);}
+ }catch(e){return reply({error:e instanceof Error&&!/SQL|D1|JSON|HMAC|crypto|base64/i.test(e.message)?e.message:'Unable to process this preview request.'},400);}
 }
