@@ -1,0 +1,1 @@
+const tablet=new URLSearchParams(location.search).get('size')==='tablet';document.querySelector('iframe').style.width=tablet?'820px':'390px';document.querySelector('iframe').style.height=tablet?'1024px':'844px';

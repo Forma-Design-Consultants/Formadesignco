@@ -1,0 +1,28 @@
+/* Original Forma visual identity, refined for the rebuilt site. */
+.site-header{background:rgba(255,255,255,.97);border-bottom-color:#e8e8e8}
+.nav-wrap{min-height:96px;padding-inline:32px}
+.brand{display:inline-flex;align-items:center;text-decoration:none}
+.brand-logo{width:94px;height:89px;object-fit:cover}
+.site-nav{gap:28px}
+.hero{min-height:calc(100vh - 96px);align-items:center}
+.hero-media{opacity:.66;filter:grayscale(.72) contrast(1.1)}
+.hero-video{animation:formaZoom 14s ease-out both}
+.hero-content{padding-inline:32px;animation:formaRise .9s ease-out both}
+.hero h1{max-width:1040px;font-weight:300;letter-spacing:-.045em}
+.hero-index{position:absolute;z-index:2;left:32px;right:32px;bottom:22px;display:flex;justify-content:space-between;font-size:.62rem;font-weight:800;letter-spacing:.18em}
+.page-hero{position:relative;isolation:isolate;padding-top:170px;background:#060606 url('media/adu-hero.webp') center/cover no-repeat;overflow:hidden}
+.page-hero:before{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.95),rgba(0,0,0,.58))}
+.page-hero:after{content:"";position:absolute;z-index:-1;inset:0;background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);background-size:64px 64px;mask-image:linear-gradient(90deg,#000,transparent)}
+.concept-ribbon{display:grid;grid-template-columns:repeat(3,1fr);background:#000}
+.concept-ribbon a{position:relative;display:block;overflow:hidden;min-height:460px}
+.concept-ribbon img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(.55) brightness(.72);transition:.6s ease}
+.concept-ribbon a:hover img{transform:scale(1.055);filter:grayscale(0) brightness(.88)}
+.concept-ribbon span{position:absolute;z-index:1;left:24px;right:24px;bottom:22px;color:#fff;font-size:.66rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.site-footer{background:#050505}
+.footer-brand{display:block;width:138px}
+.footer-logo{width:138px;height:131px;object-fit:cover;filter:invert(1)}
+@keyframes formaRise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+@keyframes formaZoom{from{transform:scale(1.07)}to{transform:scale(1)}}
+@media(max-width:900px){.nav-wrap{min-height:78px}.brand-logo{width:74px;height:70px}.site-nav{top:78px}.concept-ribbon{grid-template-columns:1fr}.concept-ribbon a{min-height:390px}}
+@media(max-width:600px){.hero{min-height:calc(100svh - 78px)}.hero-index{left:20px;right:20px}.hero-index span:last-child{display:none}}
+@media(prefers-reduced-motion:reduce){.hero-video{animation:none}}

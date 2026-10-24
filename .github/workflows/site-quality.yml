@@ -15,8 +15,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
       - run: node --check site.js
       - run: node --check form-handler.js
       - run: node --check build-site.mjs
       - run: node validate-site.mjs
+      - run: node --check studio/app.js
+      - run: npm test

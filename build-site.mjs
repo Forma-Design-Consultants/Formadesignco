@@ -2,7 +2,7 @@ import {readFileSync,readdirSync,writeFileSync} from 'node:fs';
 
 const ORIGIN='https://www.formadesignconsultants.com';
 const year=new Date().getFullYear();
-const nav=[['Services','services.html'],['ADUs','adu-design.html'],['Process','process.html'],['Locations','locations.html'],['About','team.html']];
+const nav=[['Services','services.html'],['ADUs','adu-design.html'],['Process','process.html'],['Locations','locations.html'],['About','team.html'],['Forma Studio','studio']];
 const esc=s=>s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 const schema=extra=>JSON.stringify({'@context':'https://schema.org','@graph':[{'@type':'Organization','@id':ORIGIN+'/#organization',name:'Forma Design Consultants',alternateName:['Forma','Forma Consulting Co.'],legalName:'Forma Consulting Co. LLC',url:ORIGIN+'/',logo:ORIGIN+'/logo1.jpg',telephone:'+1-209-449-6705',email:'cody@formadco.com',contactPoint:{'@type':'ContactPoint',telephone:'+1-209-449-6705',email:'cody@formadco.com',contactType:'customer service',areaServed:'US-CA',availableLanguage:['English','Spanish']},sameAs:['https://www.instagram.com/forma_consultants/'],areaServed:{'@type':'State',name:'California'},description:'Residential and light-commercial design, permit coordination, and consultant coordination in California.'},{'@type':'WebSite','@id':ORIGIN+'/#website',url:ORIGIN+'/',name:'Forma Design Consultants',alternateName:'Forma Consulting Co.',publisher:{'@id':ORIGIN+'/#organization'}},extra].filter(Boolean)}).replaceAll('<','\\u003c');
 function header(active=''){

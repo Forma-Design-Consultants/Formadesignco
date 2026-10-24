@@ -1,0 +1,2 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import {spawnSync} from 'node:child_process';import {fileURLToPath} from 'node:url';
+test('browser and staging consume exact canonical geometry/runtime module mirrors',()=>{const r=spawnSync(process.execPath,[fileURLToPath(new URL('../sync-runtime.mjs',import.meta.url)),'--check'],{encoding:'utf8'});assert.equal(r.status,0,r.stderr);});
