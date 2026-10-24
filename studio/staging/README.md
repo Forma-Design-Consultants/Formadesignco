@@ -1,43 +1,37 @@
-# Forma Studio PR 18 private staging
+# Forma Studio PR #18 private staging
 
-This is the preview adapter for the canonical `development/forma-studio` branch. It uses the Sites Vinext/Cloudflare Worker runtime and an isolated D1 database. Source is maintained in this branch; the separate Sites source repository is a deployment mirror only. The preview does not run the standalone Node/SQLite server or change production hosting.
+This is the current customer workspace for development/forma-studio. It uses the existing Sites Vinext/Cloudflare Worker runtime and isolated D1 database. Canonical source is in this GitHub branch; the separate Sites source repository is a deployment mirror. The marketing website, production DNS and Forma Intelligence are untouched.
 
-## Access and testing
+Read [../README.md](../README.md) for the current feature inventory and limits, [../DEVELOPMENT_STATUS.md](../DEVELOPMENT_STATUS.md) for the execution checkpoint, and [../LAUNCH_READINESS.md](../LAUNCH_READINESS.md) before considering any external access.
 
-Owner-private Sites access requires the owner's ChatGPT sign-in. No preview password, email registration or recovery database is created. Verification and recovery are handled by the owner's ChatGPT account. Do not invite external testers without reviewing access, privacy and production-auth requirements.
+## Owner testing
 
-Use `Demo property, California` as the property label, `Demo Tester` as the contact name, and `tester@example.com` as the email. Real parcel lookup and Intelligence integrations are disabled. Existing copied marketing forms are intercepted before submission and cannot send live inquiries.
+Open https://forma-studio-pr18-preview.justwulfy.chatgpt.site/studio with the existing owner's ChatGPT account. Owner-private access is preserved; no new customer password or recovery database is created.
 
-Test: select each project type, change area/rooms, explore ten concepts, switch plan/site/3D, adjust site placement, save a project, reload and reopen it through My projects, and save a consented demo review request. Account shows the platform sign-in model. My projects includes deletion of all owned preview data.
+Keep the property label Demo property, California. Try the four architectural starts, open Edit this floor plan, enable direct editing, move a partition or edit a selected room/opening/fixture, and use Undo/Redo. Resize only with attention to warnings. Place the selected edited plan on the demo lot, rotate/nudge/drag, and compare matching cutaway/exterior 3D with concept roof and camera controls.
 
-API records are scoped to the platform-supplied authenticated user ID. Records expire after seven days and are excluded immediately; physical deletion of expired rows occurs on the next API request. A user may delete their own projects and review requests immediately. Limits: 50 projects and 20 review requests per owner. No live emails, CRM records, parcel searches or costs are created. Database tables and source files are not publicly served.
+Give the design a name, save, reopen through My projects, duplicate a separate plan/placement option and compare two or three saved designs. Version history restores an old snapshot as a new revision. Trash is reversible until expiry; Privacy & data offers current-data download and explicit permanent erasure. Autosave is opt-in and starts only after the first save. A changed revision in another tab is rejected instead of silently overwriting it.
 
-## Build and test
+Use Demo Tester and tester@example.com for feasibility/consultation/proposal review requests. Service choices, notes, consent, selected geometry and property assumptions stay together in My review requests. This is an isolated staging outbox: no emails or production CRM/Intelligence writes occur.
 
-Use the Sites install/build/package helpers from the Sites skill. `node --test tests/*.test.mjs` tests the staging API against an in-memory SQLite adapter, including auth rejection, cross-origin protection, owner isolation, consent, demo-only restrictions, expiry/purge, erasure and all six project categories. Migrations are generated from `db/schema.ts` and committed under `drizzle/`; publishing applies them only to this preview's D1 database.
+Spanish primary controls are beta; technical warnings/exports are not fully localized. Other project types are scoped briefs and space studies, not complete architectural engines.
 
-The developer-only synthetic local identity is guarded by `import.meta.env.DEV` in the preserved starter Worker entrypoint. Hosted builds eliminate that branch. Hosted requests must have identity headers supplied by Sites; no anonymous or bypass-token writes are accepted.
+## Property providers
 
-## Browser QA
+Live lookup remains disabled without credentials, license confirmation and budget. See [../REAL_PROPERTY_INTEGRATION.md](../REAL_PROPERTY_INTEGRATION.md). Explicit search is the default. Opt-in 900 ms debounced autocomplete is available only when the licensed provider gate is ready and counts against the same 30-provider-request daily quota. No live integration has been accepted by fixture tests.
 
-Desktop Chrome: existing homepage/navigation, Studio navigation, property input, six project types and ten-concept counts, plan/site/3D, concept selection, save/reload/reopen, restored type/area, consented demo handoff and account dialog checked.
+## Storage and auth
 
-Mobile 390x844 and tablet 820x1024: real iframe viewports using `/qa.html?size=mobile` and `/qa.html?size=tablet` in Chrome. These are responsive browser checks, not physical iPhone/iPad device tests. Mobile menu, property input, concept generation/selection and 3D verified; tablet site view verified. Same-origin framing is allowed only to enable the QA harness. Desktop, mobile and tablet screenshots are committed with the PR evidence.
+Records are owned by the platform-supplied stable user ID, with email required for the private preview. Synthetic local identity exists only in development and is eliminated from hosted builds. Do not bypass dispatch auth or reuse provider/bypass tokens as user credentials.
 
-Hosted owner sign-in is enforced by Sites. Local browser QA uses a synthetic development identity; the browser did not exercise ChatGPT sign-in/recovery or two real hosted accounts. Account isolation is tested against the API implementation. Do not describe these as hosted multi-account end-to-end tests.
+Projects, trash, review requests and history snapshots expire after seven days; expired rows are filtered immediately and physically purged on subsequent API use. Histories cap at 20 snapshots per project; the owner limit is 50 projects and 20 requests. Current-data export excludes history snapshots and removes signed tickets/image URLs. Permanent erasure removes owned projects, histories and review requests; owner/day provider quota counters expire separately.
 
-## Later production proposal — approval required
+New snapshots retain the generated base model plus bounded edit operations. Server replay and optimistic compare-and-swap protect architectural geometry and concurrent updates. Old compatibility projects without stored bases are reconstructed from their original parameters; this is a legacy migration path, not a promise of cross-version CAD fidelity.
 
-1. Keep the current marketing site and custom-domain DNS unchanged during development.
-2. For launch, approve either a same-origin proxy for `/studio` and `/api/studio/*` to a hardened backend or a deliberate whole-domain hosting migration. GitHub Pages alone cannot run either backend. This preview is not a proxy implementation for the custom domain.
-3. Decide production customer authentication, email verification/recovery, per-user access, retention/deletion, backups, monitoring and privacy terms before public access. Staging ChatGPT owner sign-in is not the final customer account flow.
-4. Verify and implement a narrow server-to-server Forma Intelligence API with scoped credentials and allowlisted public data. No live Intelligence access is configured here.
-5. Require Cody's explicit approval of a working preview before merging PR 18 or changing production hosting, DNS, website files or Intelligence records.
+## Build and validation
 
-Plan-generation limitations remain those in `../README.md`: conceptual rectangular space allocation and massing only, not permit-ready design, verified feasibility, construction estimates or Revit exports.
+Use the Sites skill's existing-project open/build/package workflow; preserve the ID in .openai/hosting.json. Generate append-only migrations from db/schema.ts. Local D1 needs pending migrations applied with the starter's Wrangler --local command; hosted publication applies its own copies before Worker upload. Do not replay or edit applied migrations.
 
-## Site Planner update
+From repository root: npm test and npm run check. From staging: node node_modules/typescript/bin/tsc --noEmit. Build with the Sites helper. Owner-preview publication is authorized; production publication is not.
 
-The private preview now includes the Forma Site Planner described in `../README.md`. Use Demo property, California, choose a floor plan, then click Place selected plan on site. Drag in Site (2D), rotate with the degree slider, or use the one-foot movement buttons. Site 3D shows matching placement. Save and reopen retains property assumptions and transform. Site-mode SVG and JSON exports include the site plan/metadata. The preview remains demo-only and owner-private with the existing retention, privacy, disabled-outreach and production approval controls.
-
-Real aerial imagery and verified parcel sources require a configured licensed provider, provenance and coordinate conversion; no new access is needed to test the demo. No map API key is stored or requested for this milestone. Physical iPad/iPhone Safari touch behavior and completed browser downloads remain acceptance checks, distinct from the responsive Chrome viewport and API tests already completed.
+See the checkpoint for exact automated/browser/export results. Responsive iframe QA is not physical iPhone/iPad or Safari certification. Revit import, live provider alignment, full Spanish, external tester accounts and actual Intelligence delivery remain incomplete.

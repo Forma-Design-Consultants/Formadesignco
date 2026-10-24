@@ -1,12 +1,13 @@
 import {buildADU} from './architect.mjs';
-export const types=['ADU','Custom home','Addition','Garage conversion','Duplex / multifamily','Commercial / tenant improvement'];
+import {catalogADU,architecturalRanges} from './catalog.mjs';
+export const types=['ADU','Custom home','Addition','Garage conversion','Duplex / multifamily','Commercial / tenant improvement','Attached ADU','Junior ADU','Affordable housing','Small residential development','Commercial building','Tenant improvement'];
 export function normalize(input={}){
  const num=(key,fallback,min,max)=>{const n=Number(input[key]??fallback);if(!Number.isFinite(n)||n<min||n>max)throw Error(`Invalid ${key}`);return n;};
  const type=input.type??'ADU';if(!types.includes(type))throw Error('Invalid project type');
  return {publicDepth:num('publicDepth',12.5,11.5,13),bedSplit:num('bedSplit',12.5,11,14),type,area:num('area',800,200,20000),beds:Math.round(num('beds',2,0,8)),baths:Math.round(num('baths',1,1,6)),units:Math.round(num('units',2,2,20)),width:num('width',40,10,300),depth:num('depth',60,10,500),setback:num('setback',4,0,50),rotation:num('rotation',0,0,359),offsetX:num('offsetX',0,-200,200),offsetY:num('offsetY',0,-200,200),style:['Modern','Traditional','Contemporary'].includes(input.style)?input.style:'Modern'};
 }
 export function generate(input,variant=0){
- const p=normalize(input);if(p.type==='ADU'&&p.beds===2&&p.baths===1&&p.area>=700&&p.area<=900)return buildADU(p,variant);const commercial=p.type.startsWith('Commercial'),multi=p.type.startsWith('Duplex');
+ const p=normalize(input);if(p.type==='ADU'&&p.baths===1&&architecturalRanges[p.beds]&&p.area>=architecturalRanges[p.beds][0]&&p.area<=architecturalRanges[p.beds][1])return p.beds===2?buildADU(p,variant):catalogADU(p,variant);const commercial=p.type.startsWith('Commercial')||p.type==='Tenant improvement',multi=p.type.startsWith('Duplex')||['Affordable housing','Small residential development'].includes(p.type);
  const ratio=[1.25,1,1.6,.8,2,1.1,1.4,.7,1.8,.9][variant%10];
  const w=Math.sqrt(p.area*ratio),d=p.area/w;
  const names=commercial?['Reception','Flexible work area','Meeting room','Restroom','Storage']:['Living / kitchen',...Array.from({length:p.beds},(_,i)=>`Bedroom ${i+1}`),...Array.from({length:p.baths},(_,i)=>`Bath ${i+1}`),'Utility / storage'];

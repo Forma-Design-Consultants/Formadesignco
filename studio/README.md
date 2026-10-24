@@ -1,71 +1,41 @@
-# Forma Studio development version
+# Forma Studio - development branch
 
-Target: https://www.formadesignconsultants.com/studio
+Owner-private preview: https://forma-studio-pr18-preview.justwulfy.chatgpt.site/studio
 
-This is an isolated development branch. No production deployment, main-branch merge, existing customer-data changes, or Intelligence writes are included.
+Future production route: https://www.formadesignconsultants.com/studio. Production is unchanged. PR #18 remains draft on development/forma-studio. No production hosting, DNS, customer records, email or Intelligence integration is changed or authorized.
 
-## Run the working preview
+## Current implementation
 
-Requires Node 24 or later. No dependencies or installation are needed.
+The current customer workspace is staging/, a Vinext/Cloudflare Worker app with account-scoped D1 persistence. Its source is canonical in this GitHub branch; the separate Sites repository is a deployment mirror. The root Node/SQLite server and original static client remain a compatibility harness for the initial milestone; they do not contain the full advanced staging UI and must not be deployed as the current platform.
 
-```sh
-git clone --branch development/forma-studio https://github.com/Forma-Design-Consultants/Formadesignco.git
-cd Formadesignco
-npm run dev
-```
+- Architectural starts: 400 SF studio (20×20), 600 SF one-bedroom (20×30), existing 750 SF two-bedroom (25×30), 1,050 SF three-bedroom (34×30.88). Two mirrored options each. All have one bathroom, wall assemblies, hosted openings, kitchen/bath fixtures, storage, dimensions, room schedules and net/gross area. Parameter changes can expose warnings; these are concepts, not guaranteed valid or permit-ready designs.
+- Direct editor: select/drag partitions, openings and fixtures; resize rooms through adjoining partitions; edit opening offsets/widths; resize footprint; choose bed/shower presets; undo/redo/reset. Numeric controls complement graphical interaction. The server replays bounded commands against a stored base model, rather than trusting arbitrary client geometry.
+- Validation: wall bounds/junctions, room overlap/dimensions/connectivity, opening bounds/overlap, fixture bounds/wall collisions, sampled door swings, area accounting and site intersections. This is not complete code, egress, accessibility, structural or MEP validation. Resized junctions and fixed-size fixtures explicitly require review.
+- Site Planner: exact footprint/plan placement, arbitrary rotation, pointer drag, precise nudges, lot-line distances, building intersections, source/assumption labels and matching cutaway/exterior 3D. Geometry-based plan IDs distinguish edits and remain stable across placement. Drawing zoom/pan does not change real-world measurements.
+- 3D: shared wall solids, opening voids and fixtures; cutaway/full exterior, flat/gable/hidden conceptual roof, orbit, zoom/pan. This is a schematic orthographic SVG projection, not a photorealistic renderer, terrain model or BIM model. Complex overlapping-object occlusion still needs acceptance testing.
+- Projects: names/notes, multiple properties/designs/placements, duplication, comparison, optional autosave after first save, optimistic revisions, up to 20 snapshots, restore as a new revision, reversible trash, explicit account erasure/export. New snapshots retain their base model for deterministic replay after generator changes.
+- Exports: vector floor/site SVG, structured JSON, floor PDF or two-sheet floor+site PDF, feet-based layered DXF. Imagery/auth tickets are excluded. PDF rendering and independent DXF parser audit are checked; Revit import is not certified.
+- Feasibility: mapped lot area, footprint/known-structure ratios and geometric conflicts. Jurisdiction, legal setbacks, height, easements, utilities and fire requirements stay unknown without authoritative sources. No buildability or cost promise.
+- Twelve project categories support scoped briefs/studies: detached/attached/junior ADUs, custom homes, additions, conversions, duplex/multifamily, affordable housing, residential development, commercial buildings/TI. Only supported detached ADU combinations use the detailed architectural generator; other categories remain labeled space studies.
+- Review: feasibility/consultation/proposal requests store the edited project, placement, sources, assumptions, demo contacts, services, notes and consent in an owner-scoped staging outbox. Nothing is sent to Forma, email or production Intelligence.
+- Spanish primary controls are a labeled beta. Some technical warnings, selectors and exports remain English; full localization is unfinished.
 
-Open http://localhost:4173/studio. The existing website is also served at `/` so its navigation can be reviewed in context. `npm test` runs geometry and HTTP/security tests. `npm run check` checks the existing website.
+## Real-property access remains blocked
 
-## Implemented
+Server-side Mapbox/Regrid integration is implemented and fixture-tested, but no live connection is claimed. Required: dedicated MAPBOX_ACCESS_TOKEN (permanent Geocoding v6 plus Static Images), REGRID_API_TOKEN (California polygons), confirmed licensed display/storage/derived-export uses, provider spending cap and authorized public/demo test property. We generate PROPERTY_SIGNING_SECRET; PROPERTY_LICENSE_CONFIRMED and REAL_PROPERTY_ENABLED remain disabled until approved/configured.
 
-- Separate Studio page with existing branding, responsive controls and dedicated navigation link on current marketing pages. Existing page content and shared styles are preserved. Navigation generator includes the new entry.
-- Six project types: ADU, custom home, addition, garage conversion, duplex/multifamily, commercial/TI. Adaptive brief questions, ten aspect-ratio concepts, structured rectangular room geometry, room-area schedule, conceptual 3D massing and assumed site placement with rotation/offsets.
-- Explicit site assumptions, footprint and bedroom-size warnings. No fabricated parcel boundaries, zoning, eligibility, building costs, or source citations.
-- Server-side project persistence in a local SQLite database, owner-scoped project reads/updates, guest sessions, development registration/sign-in/sign-out, scrypt password hashes, session rotation and expiry, HttpOnly SameSite cookies (Secure in production), JSON-only mutations, same-origin checks, response CSP, request/body limits and no client-side service credentials.
-- Exportable structured JSON brief for downstream design work. Consent-based local review outbox containing project and contact information; it does not send emails or create Intelligence records.
+See [REAL_PROPERTY_INTEGRATION.md](REAL_PROPERTY_INTEGRATION.md) for providers, sources, prices and coordinate assumptions. No subscription was purchased. Missing data never becomes invented real geometry. Holed/multipart parcels, over 128 vertices or over 1,500-foot extents remain unsupported; real building outlines are not connected. Use the labeled synthetic demo while credentials are unavailable.
 
-## Integration findings and release blockers
+## Development, tests and privacy
 
-The marketing repository is a static site. GitHub Pages cannot execute this Node backend. Do not merge this page alone and assume persistence/integrations will work. A separately hosted API and same-origin reverse proxy for `/api/studio/*` are required, or a deliberate hosting migration approved by Cody. `/studio` should resolve to `studio/index.html` without changing existing URLs. No hosting migration is made here.
+Use the Sites skill's existing-project workflow with staging/.openai/hosting.json. Dependencies are configured. Generate append-only migrations from staging/db/schema.ts; do not modify applied migrations. Apply pending migrations separately to local D1 before browser QA with the starter's documented Wrangler --local command. Only the separate owner-private preview is an authorized hosting target.
 
-The published Forma Intelligence Site did not declare an MCP server when inspected. This is not proof that no REST endpoints exist. A supported, authenticated Studio-facing API contract and staging credentials must be verified against its source before connecting. Do not expose the internal dashboard, forward internal records to customers, reuse Sites dispatch bypass credentials, or guess endpoints. A restricted server-to-server integration must return an allowlisted public property/feasibility DTO, preserve source URLs and verification status, and accept idempotent CRM/design handoffs. Local requests remain `pending-configuration` and are not automatically delivered.
+From the repository root: npm test runs compatibility, staging, geometry, provider and export tests; npm run check validates 37 marketing HTML pages. From staging: node node_modules/typescript/bin/tsc --noEmit checks TypeScript. Build/package with the Sites helper. Browser QA uses desktop Chrome and 390/820px iframe viewports. Physical devices/Safari and hosted multi-account acceptance remain separate gates.
 
-Email verification, recovery, robust production authentication/rate limiting, project deletion/retention controls, production observability/backups, and consent/privacy review remain release blockers. Development account passwords should be unique test values. The local database is ignored by Git.
+Owner-private ChatGPT sign-in supplies identity. The synthetic local identity is development-only and compiled out of hosted builds. Project/version/outbox actions are account-scoped. Records expire in seven days; histories also cap at 20 snapshots. Trash is recoverable until expiry. Permanent erasure removes owned projects, histories and review requests. Provider quota counters retain only owner/day/count and expire separately. Provider secrets never reach the browser.
 
-The generator is a space-allocation study, not an AI architect or permit-ready floor plan. Rooms partition a rectangle exactly but do not yet resolve circulation, doors/windows, existing conditions, full code compliance, project-specific construction assemblies, photorealistic renders, actual parcel maps, independently verified feasibility, real cost ranges, Revit export or Studio Pro editing. Area totals exclude wall thickness. Multifamily unit access/common areas require professional design. The 3D tab is conceptual massing with assumed 10-foot walls; it is not a construction model. No cost quote is calculated without a verified estimating basis.
+## Remaining work and launch gate
 
-## Verification
+The complete platform and all twelve live workflow acceptance steps are NOT complete. Live property lookup and actual review delivery require external access/authorization. Full Spanish, complex GIS/site cases, arbitrary CAD topology, richer room requirements, non-ADU architectural engines, uploads, native BIM/IFC, production customer auth, device/accessibility certification and operational hardening remain open. A milestone passing is not full platform completion.
 
-Five automated test cases exercise 60 concept/type combinations, area coverage and nonoverlap, placement/rotation and room warnings, invalid inputs, persistent project lifecycle, cross-session access denial, consent, account rotation/login/logout, cross-origin rejection, private-source denial and basic routes/security headers. Existing site validation passes on 37 root HTML pages.
-
-The follow-up private staging adapter in `staging/` resolves the preview-hosting milestone. Real local Chrome browser QA now covers desktop plus 390px mobile and 820px tablet iframe viewports. See `staging/README.md` for the precise scope and remaining hosted sign-in verification limits; screenshots are in `qa-evidence/`. Eight automated cases now pass across the original and staging backends. No live Intelligence integration or production migration is included.
-
-## Approval gate
-
-Cody must review a working preview and explicitly approve before any merge or production deployment. No production environment variables, DNS, GitHub Pages settings, access settings or Intelligence configuration were changed.
-
-## Architectural ADU milestone
-
-The architectural generator now supports a 25-foot-wide, single-story 2-bedroom/1-bath ADU in the 700–900 gross square-foot range. The default is 25×30 feet = 750 gross SF, approximately 672.64 SF of interior floor after unioning floor-level wall footprints. Net floor includes closets and doorway thresholds; room rectangle schedules include closet zones before closet partitions. Gross area is outside-face footprint, not a jurisdiction's verified fee/energy area.
-
-The explicit model has 6-inch exterior walls, 5-inch interior partitions, 9-foot assumed wall heights, hosted door/window openings, swing directions, closets, kitchen cabinetry/sink/range/refrigerator, tub, toilet, vanity, laundry, linen and schematic furniture. The plan SVG has exterior/room dimensions, feet/inches, a graphic scale and concept labeling. The editable parameters are total gross area, living depth, bedroom split and mirrored orientation; editing is parametric, not arbitrary wall dragging or a CAD editor. SVG and JSON export preserve vectors/geometry. The 3D tab derives its wall solids and fixture bounds from the same model, with walls cut at 3′-6″ and roof hidden; window portions above that cut are not visible. Orbit changes projection only.
-
-Two mirrored ADU options replace ten repeated diagrams in this slice. Other project types and unsupported room combinations remain legacy space studies. Warnings identify infeasible bathroom depth, site-envelope exceedance, fixture overlaps/bounds and wall collisions; these are planning constraints, not a full code checker. Door graph reachability is checked, but full accessibility, egress qualification, door maneuvering clearances, structure, energy and MEP remain professional design tasks. Some edits deliberately produce warnings; a warning does not establish a valid layout. DXF and Revit export remain later work.
-
-Automated tests verify the default layout, net/gross sum, room nonoverlap, door graph reachability, opening host bounds/nonoverlap, doorway voids, mirrored geometry, parameter recomputation, identical wall solids used for rendering, SVG dimensions and fixture serialization, 3D orbit, and invalid-edit warnings. Local Chrome visually verified plan details, two variants, bedroom-width editing, 3D orbit and saving/restoring an edited plan. SVG download event capture timed out in the managed browser; SVG serialization is tested independently and should be checked by the owner in the private preview.
-
-## Forma Site Planner milestone
-
-Select an architectural ADU, then use **Place selected plan on site** or **Site**. The default schematic demo lot is 60×100 feet with a synthetic existing home. The exact selected plan is rendered inside its 25×30-foot footprint at the same feet-based scale. Pointer dragging, one-foot movement buttons, keyboard arrows, and arbitrary 0–359-degree rotation update placement without changing the plan. Site 3D renders the same transformed wall/fixture geometry on that same parcel. Dragging occurs in the 2D Site view; the 3D view is the synchronized placement preview with orbit.
-
-Distances are minimum planar distances from the rotated footprint to finite parcel-line segments and to the synthetic existing structure, measured at the exterior wall footprint. No eave, porch, overhang, equipment, utility, easement or fire-separation envelope is included. Boundary crossing, touching/overlapping the existing home, and falling below the assumed uniform buffer produce warnings. These warnings are not zoning compliance determinations. The buffer is user-assumed, not sourced law.
-
-Saved projects now include a site record with geometry-based plan ID, saved-project ID, exact placement transform, actual plan walls/openings/fixtures, synthetic property source/verification data and preliminary analysis. SVG export from Site/Site 3D downloads a site plan; JSON includes the site record. SVG export endpoints remain owner-scoped. Existing saved projects without a site record are reconstructed from their saved dimensions/placement parameters using the demo adapter.
-
-`site-planner.mjs` defines the property-data contract, demo provider and verified-provider adapter boundary. Real provider data must supply feet-based local coordinates, parcel geometry, source URLs and explicit verified status. Actual provider lookup, georeferencing aerial pixels, imagery licensing/API keys, surveyed boundaries and jurisdiction setback rules are NOT connected. The current client always uses the clearly labeled demo provider. No invented real parcel geometry or aerial imagery is presented.
-
-Nineteen automated tests pass. New checks cover transformations at seven angles, footprint area/edge preservation, analytical lot/structure distances, contact/intersection, boundary crossing, assumed buffers, source metadata, shared 2D/3D input, saved placement and owner-scoped site SVG export. Desktop Chrome QA verified actual pointer dragging, 37-degree rotation, keyboard movement, buffer warning, matching site 3D, save/full reload/reopen. Responsive browser QA at 390×844 (mobile) and 820×1024 (iPad-sized) verified rotation, movement controls, site/3D switching and no horizontal overflow. These are iframe viewport tests, not physical iPad/iPhone or Safari touch tests. The implementation uses Pointer Events, pointer capture and touch-action:none while dragging; physical touch testing remains an owner acceptance check. Screenshots are under qa-evidence/site-planner-*.
-
-## Licensed real-property staging milestone
-
-See [REAL_PROPERTY_INTEGRATION.md](REAL_PROPERTY_INTEGRATION.md) for the Mapbox/Regrid adapters, provider comparison, exact secret/license requirements, 27-test results and browser limits. Live lookup is deliberately disabled until licensed credentials are configured. Demo placement and the owner-private preview remain available; no production change is authorized.
+See [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md) for the backlog/checkpoint, [REVIT_HANDOFF.md](REVIT_HANDOFF.md) for interchange limits, and [LAUNCH_READINESS.md](LAUNCH_READINESS.md) for deployment/security gates. Do not request production launch until the complete system is reviewed and Cody explicitly approves a separate merge/deployment plan.

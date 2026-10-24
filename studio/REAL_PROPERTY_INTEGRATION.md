@@ -36,7 +36,7 @@ Owner also needs to specify a provider-side monthly spending cap and one authori
 
 ## Implemented flow and geometry
 
-1. Explicit address search (not billed on each keystroke) requests at most five address candidates, filters California by provider region metadata, and shows match/coordinate accuracy.
+1. Explicit address search is the default, requesting at most five address candidates, filtering California by provider region metadata, and showing match/coordinate accuracy. Optional autocomplete is opt-in, disabled without readiness, debounced 900 ms and counted against the same 30-request daily quota; it sends typed text to Mapbox only when enabled. Its request contract is fixture-tested, not accepted as a live connection.
 2. User selects an address; a signed, seven-day, account-bound ticket authorizes a 10-meter-radius Regrid lookup with limit five. User must select and visually confirm the parcel/APN. Nearby/stacked parcels are not automatically chosen.
 3. Accepts valid closed single polygons (including one-part MultiPolygons) up to 128 vertices and 10–1,500-foot extents. Rejects missing, self-crossing, degenerate, holed and multipart geometry without inventing rectangles. Larger/complex properties require a later GIS workflow.
 4. WGS84 boundaries become local east/south feet using Web Mercator scaled by cosine of anchor latitude. This is a local planning approximation, not a cadastral/survey projection. At 1,500 feet, latitude scale variation is small but nonzero; professional survey control remains required. Origin, scale, original WGS84 ring, provider ID/APN, retrieval/source dates and verification state are saved.
